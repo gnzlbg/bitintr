@@ -11,5 +11,5 @@ keywords = ["portable", "bit", "manipulation", "intrinsics"]
 license = "MIT"
 build = "build.rs"
 
-[build-dependencies.rustc_version]
-git = "https://github.com/Kimundi/rustc-version-rs"
+[build-dependencies]
+rustc_version = "0.1.*"
