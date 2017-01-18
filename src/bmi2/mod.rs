@@ -1,4 +1,4 @@
-//! Bit Manipulation Instruction (BMI) Set 2.
+//! Bit Manipulation Instruction (BMI) Set 2.0.
 //!
 //! For a quick overview see
 //! [wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2_.28Bit_Manipulation_Instruction_Set_2.29).
