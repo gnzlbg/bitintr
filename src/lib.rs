@@ -3,24 +3,15 @@
 #![feature(platform_intrinsics)]
 #![feature(i128_type)]
 
-//! Bit Manipulation Intrinsics
+//! Portable Bit Manipulation Intrinsics
 //!
-//! This crate implements a low-level wrapper over the raw bit manipulation
-//! intrinsics supported by modern CPUs. Its purpose is to allow higher-level
-//! bit manipulation abstractions to easily use platform-specific intrinsics
-//! when available.
+//! Portable implementation of bitwise manipulation instructions. The intrinsics
+//! are:
 //!
-//! The intrinsics are named after the CPU instructions, use platform specific
-//! functionality when available (detected through `target_feature` flags), and
-//! fall back to software emulation otherwise.
-//!
-//! Currently, following architectures and instruction sets are implemented:
-//!
-//! - x86:
-//!     - ABM: Advanced Bit Manipulation.
-//!     - BMI: Bit Manipulation Instruction Set 1.
-//!     - BMI2: Bit Manipulation Instruction Set 2 (partial).
-//!     - TBM: Trailing Bit Manipulation.
+//! - named after the corresponding CPU instruction, 
+//! - organized in instruction set modules: `bitintr::{instruction_set}::{intrinsic}`, and
+//! - implemented for all integer types, with software fallback depending on the
+//!   integer type and the instruction sets supported by the target.
 
 mod int;
 

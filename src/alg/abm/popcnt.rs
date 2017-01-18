@@ -8,6 +8,9 @@ use int::Int;
 ///
 /// [`POPCNT`](http://www.felixcloutier.com/x86/POPCNT.html): Population Count (supports 16/32/64 bit registers).
 ///
+/// Note: Intel considers it part of SSE4.2 but advertises it with its own CPUID
+/// flag.
+///
 /// # Example
 /// ```
 /// use bitintr::abm::popcnt;

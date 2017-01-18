@@ -5,19 +5,6 @@
 //! The reference is [AMD64 Architecture Programmer's Manual, Volume 3:
 //! General-Purpose and System
 //! Instructions](http://support.amd.com/TechDocs/24594.pdf).
-//!
-//! It consists of the following instructions:
-//!
-//! - `BEXTRi`.
-//! - `BLCFILL`.
-//! - `BLCI`.
-//! - `BLCIC`.
-//! - `BLCMSK`.
-//! - `BLCS`.
-//! - `BLSFILL`.
-//! - `BLSIC`.
-//! - `T1MSKC`.
-//! - `TZMSK`.
 
 mod bextri;
 

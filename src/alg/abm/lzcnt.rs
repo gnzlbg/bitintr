@@ -11,6 +11,9 @@ use int::Int;
 /// [`LZCNT`](http://www.felixcloutier.com/x86/LZCNT.html): Count the number of
 /// leading zero bits (supports 16/32/64 bit registers).
 ///
+/// Note: This instruction is officialy part of BMI1 but Intel and AMD CPUs
+/// advertise it as being part of ABM.
+///
 /// # Example
 /// ```
 /// use bitintr::abm::lzcnt;

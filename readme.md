@@ -1,8 +1,8 @@
-# Bitwise Manipulation Intrinsics
+# Portable Bitwise Manipulation Intrinsics
 
 [![Travis build status][travis-shield]][travis] [![Coveralls.io code coverage][coveralls-shield]][coveralls] [![Docs][docs-shield]][docs] [![License][license-shield]][license]
 
-> Portable bitwise manipulation instructions (**nightly-only**)
+> This crate is **nightly-only**.
 
 Portable implementation of bitwise manipulation instructions. The intrinsics
 are:
