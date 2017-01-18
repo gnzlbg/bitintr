@@ -37,7 +37,7 @@ fn main() {
 
 ## Supported compilers
 
-> The minimum requires rustc version is >= **1.4.0**.
+> The minimum required rustc version is >= **1.4.0**.
 
 When compiled with a rust stable compiler the intrinsics are implemented using
 the software fallback. In release builds LLVM _often_ generates the corresponding
