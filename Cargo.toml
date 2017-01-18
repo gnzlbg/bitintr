@@ -10,6 +10,3 @@ readme = "readme.md"
 keywords = ["bit", "byte", "algorithm", "bitwise", "word", "intrinsics",
             "bit manipulation"]
 license = "MIT"
-
-[dependencies]
-clippy = {version = "0.0.80", optional = true}
