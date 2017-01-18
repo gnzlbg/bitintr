@@ -48,7 +48,7 @@ generate the corresponding CPU instruction in _all_ cases:
 
 - `cfg_target_feature` for target-dependent behavior,
 - `platform_intrinsics` for using the bitwise manipulation intrinsics, and
-- `u128` support for _efficient_ lossless unsigned 64bit multiplication.
+- `u128` support for _efficient_ 64bit multiplication.
 
 <!-- Links -->
 [travis-shield]: https://img.shields.io/travis/gnzlbg/bitintr.svg?style=flat-square
