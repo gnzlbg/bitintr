@@ -1,6 +1,6 @@
 # Portable Bitwise Manipulation Intrinsics
 
-[![Travis build status][travis-shield]][travis] [![Coveralls.io code coverage][coveralls-shield]][coveralls] [![Docs][docs-shield]][docs] [![License][license-shield]][license]
+[![crates.io version][crate-shield]][crate] [![Travis build status][travis-shield]][travis] [![Coveralls.io code coverage][coveralls-shield]][coveralls] [![Docs][docs-shield]][docs] [![License][license-shield]][license]
 
 > `0b0000_0010_1001_1010`
 
@@ -58,7 +58,9 @@ generate the corresponding CPU instruction in _all_ cases:
 [docs-shield]: https://img.shields.io/badge/docs-online-blue.svg?style=flat-square
 [docs]: https://gnzlbg.github.io/bitintr
 [license-shield]: https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square
-[license]: https://github.com/gnzlbg/bitintr/blob/master/LICENSE
+[license]: https://github.com/gnzlbg/bitintr/blob/master/license.md
+[crate-shield]: https://img.shields.io/crates/v/bitintr.svg?style=flat-square
+[crate]: https://crates.io/crates/bitintr
 [abm_link]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#ABM_.28Advanced_Bit_Manipulation.29
 [tbm_link]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#TBM_.28Trailing_Bit_Manipulation.29
 [bmi1_link]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI1_.28Bit_Manipulation_Instruction_Set_1.29
