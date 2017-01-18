@@ -2,7 +2,6 @@
 
 use std::ops::{Add, Sub, Mul, Div};
 use std::ops::{Not, BitAnd, BitOr, BitXor, Shl, Shr};
-use std::ops::{AddAssign, BitAndAssign, BitOrAssign};
 use std::cmp::{PartialEq, PartialOrd};
 use std::mem::size_of;
 
@@ -19,9 +18,6 @@ pub trait Int
     + BitXor<Output=Self>
     + Shr<Self, Output=Self>
     + Shl<Self, Output=Self>
-    + AddAssign
-    + BitAndAssign
-    + BitOrAssign
     + PartialEq + PartialOrd
 {
     fn one() -> Self;

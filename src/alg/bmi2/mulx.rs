@@ -29,11 +29,36 @@ impl MULX for u32 {
     }
 }
 
+#[cfg(RUSTC_IS_NIGHTLY)]
 impl MULX for u64 {
     fn mulx(self, y: u64) -> (u64, u64) {
         let result: u128 = (self as u128) * (y as u128);
         let hi = (result >> 64) as u64;
         (result as u64, hi)
+    }
+}
+
+#[cfg(not(RUSTC_IS_NIGHTLY))]
+impl MULX for u64 {
+    fn mulx(self, y: u64) -> (u64, u64) {
+        let u1 = self & 0xffffffff;
+        let v1 = y & 0xffffffff;
+        let t = u1 * v1;
+        let w3 = t & 0xffffffff;
+        let k = t >> 32;
+        
+        let x = self >> 32;
+        let t1 = (x * v1) + k;
+        let k1 = t1 & 0xffffffff;
+        let w1 = t1 >> 32;
+        
+        let y1 = y >> 32;
+        let t2 = (u1 * y1) + k1;
+        let k2 = t2 >> 32;
+        
+        let hi = (x * y1) + w1 + k2;
+        let lo = (t2 << 32) + w3;
+        (lo, hi)
     }
 }
 
@@ -72,7 +97,6 @@ impl MULX for i64 {
         unsafe { mem::transmute((self as u64).mulx(y as u64)) }
     }
 }
-
 
 impl MULX for isize {
     fn mulx(self, y: isize) -> (isize, isize) {

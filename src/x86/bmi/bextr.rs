@@ -1,6 +1,7 @@
 use int::IntF32T64;
 use alg;
 
+#[cfg(RUSTC_IS_NIGHTLY)]
 mod intrinsics {
     use int::IntF32T64;
     use std::mem::size_of;
@@ -24,10 +25,16 @@ mod intrinsics {
 
 }
 
+#[cfg(RUSTC_IS_NIGHTLY)]
 pub fn bextr<T: IntF32T64>(source: T, start: T, length: T) -> T {
     if cfg!(target_feature = "bmi") {
         unsafe { intrinsics::bextr(source, start, length) }
     } else {
         alg::bmi::bextr(source, start, length)
     }
+}
+
+#[cfg(not(RUSTC_IS_NIGHTLY))]
+pub fn bextr<T: IntF32T64>(source: T, start: T, length: T) -> T {
+        alg::bmi::bextr(source, start, length)
 }

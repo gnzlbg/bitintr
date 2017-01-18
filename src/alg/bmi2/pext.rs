@@ -38,10 +38,10 @@ pub fn pext<T: Int>(x: T, mask_: T) -> T {
             break;
         }
         if x & mask & (mask.wrapping_neg()) != T::zero() {
-            res |= bb;
+            res = res | bb;
         }
-        mask &= mask - T::one();
-        bb += bb;
+        mask = mask & (mask - T::one());
+        bb = bb + bb;
     }
     res
 }

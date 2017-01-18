@@ -1,6 +1,7 @@
 use int::IntF32T64;
 use alg;
 
+#[cfg(RUSTC_IS_NIGHTLY)]
 mod intrinsics {
     use int::IntF32T64;
     use std::mem::size_of;
@@ -22,10 +23,16 @@ mod intrinsics {
 
 } // mod intrinsics
 
+#[cfg(RUSTC_IS_NIGHTLY)]
 pub fn pdep<T: IntF32T64>(x: T, mask_: T) -> T {
     if cfg!(target_feature = "bmi2") {
         unsafe { intrinsics::pdep(x, mask_) }
     } else {
         alg::bmi2::pdep(x, mask_)
     }
+}
+
+#[cfg(not(RUSTC_IS_NIGHTLY))]
+pub fn pdep<T: IntF32T64>(x: T, mask_: T) -> T {
+        alg::bmi2::pdep(x, mask_)
 }

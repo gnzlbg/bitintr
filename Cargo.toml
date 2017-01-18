@@ -9,3 +9,8 @@ repository = "https://github.com/gnzlbg/bitintr"
 readme = "readme.md"
 keywords = ["portable", "bit", "manipulation", "intrinsics"]
 license = "MIT"
+build = "build.rs"
+
+
+[build-dependencies.rustc_version]
+git = "https://github.com/Kimundi/rustc-version-rs"

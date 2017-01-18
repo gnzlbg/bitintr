@@ -1,6 +1,7 @@
 use int::IntF32T64;
 use alg;
 
+#[cfg(RUSTC_IS_NIGHTLY)]
 mod intrinsics {
     use int::IntF32T64;
     use std::mem::size_of;
@@ -21,11 +22,17 @@ mod intrinsics {
 
 } // mod intrinsics
 
+#[cfg(RUSTC_IS_NIGHTLY)]
 pub fn bzhi<T: IntF32T64>(x: T, bit_position: T) -> T {
-    debug_assert!(bit_position < T::bit_size());
     if cfg!(target_feature = "bmi2") {
+        debug_assert!(bit_position < T::bit_size());
         unsafe { intrinsics::bzhi(x, bit_position) }
     } else {
         alg::bmi2::bzhi(x, bit_position)
     }
+}
+
+#[cfg(not(RUSTC_IS_NIGHTLY))]
+pub fn bzhi<T: IntF32T64>(x: T, bit_position: T) -> T {
+    alg::bmi2::bzhi(x, bit_position)
 }

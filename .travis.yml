@@ -9,6 +9,9 @@ addons:
     - binutils-dev
 rust:
 - nightly
+- stable
+- 1.4.0
+
 before_script:
 - ! 'pip install ''travis-cargo<0.2'' --user &&
 

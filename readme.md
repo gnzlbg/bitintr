@@ -2,7 +2,7 @@
 
 [![Travis build status][travis-shield]][travis] [![Coveralls.io code coverage][coveralls-shield]][coveralls] [![Docs][docs-shield]][docs] [![License][license-shield]][license]
 
-> `0b0000_0010_1001_1010` (**nightly-only**)
+> `0b0000_0010_1001_1010`
 
 The intrinsics are named after their CPU instruction and organized in modules
 named after their instruction set: `bitintr::{instruction_set}::{intrinsic_name}`.
@@ -35,15 +35,20 @@ fn main() {
 }
 ```
 
-## Nightly-only
+## Supported compilers
 
-This crate relies on the following nightly features:
+> The minimum requires rustc version is >= **1.4.0**.
+
+When compiled with a rust stable compiler the intrinsics are implemented using
+the software fallback. In release builds LLVM _often_ generates the corresponding
+CPU instruction.
+
+When compiled with a rust nightly compiler the following features are used to
+generate the corresponding CPU instruction in _all_ cases:
 
 - `cfg_target_feature` for target-dependent behavior,
 - `platform_intrinsics` for using the bitwise manipulation intrinsics, and
 - `u128` support for _efficient_ lossless unsigned 64bit multiplication.
-
-For more information, visit the [documentation page][docs].
 
 <!-- Links -->
 [travis-shield]: https://img.shields.io/travis/gnzlbg/bitintr.svg?style=flat-square

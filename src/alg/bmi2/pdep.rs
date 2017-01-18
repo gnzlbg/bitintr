@@ -37,10 +37,10 @@ pub fn pdep<T: Int>(x: T, mask_: T) -> T {
             break;
         }
         if (x & bb) != T::zero() {
-            res |= mask & mask.wrapping_neg();
+            res = res | (mask & mask.wrapping_neg());
         }
-        mask &= mask - T::one();
-        bb += bb;
+        mask = mask & (mask - T::one());
+        bb = bb + bb;
     }
     res
 }
