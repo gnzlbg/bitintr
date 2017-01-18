@@ -1,4 +1,4 @@
-use int::{Int, IntF32T64};
+use int::IntF32T64;
 use alg;
 use x86;
 
@@ -6,12 +6,20 @@ pub trait BEXTRI {
     fn bextri(self, Self) -> Self;
 }
 
-impl<T: Int> BEXTRI for T {
-    default fn bextri(self, range: Self) -> Self {
-        alg::bmi::bextri(self, range)
-    }
+macro_rules! alg_impl {
+    ($T:ty) => (
+        impl BEXTRI for $T {
+            fn bextri(self, range: Self) -> Self {
+                alg::bmi::bextri(self, range)
+            }
+        }
+    )
 }
 
+alg_impl!(u8);
+alg_impl!(u16);
+alg_impl!(i8);
+alg_impl!(i16);
 
 impl<T: IntF32T64> BEXTRI for T {
     fn bextri(self, range: Self) -> Self {

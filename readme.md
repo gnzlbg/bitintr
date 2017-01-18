@@ -2,16 +2,14 @@
 
 [![Travis build status][travis-shield]][travis] [![Coveralls.io code coverage][coveralls-shield]][coveralls] [![Docs][docs-shield]][docs] [![License][license-shield]][license]
 
-> This crate is **nightly-only**.
+> `0b0000_0010_1001_1010` (**nightly-only**)
 
-Portable implementation of bitwise manipulation instructions. The intrinsics
-are:
+The intrinsics are named after their CPU instruction and organized in modules
+named after their instruction set: `bitintr::{instruction_set}::{intrinsic_name}`.
 
-- named after the corresponding CPU instruction, 
-- organized in instruction set modules:
-  `bitintr::{instruction_set}::{intrinsic}`, and
-- implemented for all integer types, with software fallback depending on the
-  integer type and the instruction sets supported by the target.
+They are implemented for all integer types _except_ `u128/i128`. Whether a
+fallback software implementation is used depends on the integer types involved
+and the instruction sets supported by the target.
 
 The following instruction sets are implemented:
 
@@ -23,15 +21,17 @@ The following instruction sets are implemented:
 ## Example
 
 ```rust
-use bitintr::bmi2::pdep;
+extern crate bitintr;
+use bitintr::bmi2::*;
+
 fn main() {
-  let x = 1;
-  let y = 0;
-  // Intrinsics can be used as methods:
-  let method_call = x.pdep(y);
-  // And as free function calls:
-  let free_call = pdep(x, y);
-  assert_eq!(method_call, free_call);
+    let x = 1;
+    let y = 0;
+    // Intrinsics can be used as methods:
+    let method_call = x.pdep(y);
+    // And as free function calls:
+    let free_call = pdep(x, y);
+    assert_eq!(method_call, free_call);
 }
 ```
 
@@ -39,11 +39,9 @@ fn main() {
 
 This crate relies on the following nightly features:
 
-- `specialization` for selecting better algorithms for
-different sets of integer types,
 - `cfg_target_feature` for target-dependent behavior,
 - `platform_intrinsics` for using the bitwise manipulation intrinsics, and
-- `u128` support for efficient lossless unsigned 64bit multiplication.
+- `u128` support for _efficient_ lossless unsigned 64bit multiplication.
 
 For more information, visit the [documentation page][docs].
 

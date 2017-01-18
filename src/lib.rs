@@ -1,4 +1,3 @@
-#![feature(specialization)]
 #![feature(cfg_target_feature)]
 #![feature(platform_intrinsics)]
 #![feature(i128_type)]

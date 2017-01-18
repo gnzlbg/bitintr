@@ -7,11 +7,10 @@
 //! A-Z](http://www.intel.de/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-instruction-set-reference-manual-325383.pdf).
 
 mod bzhi;
-mod mulx;
 mod pdep;
 mod pext;
 
 pub use bmi2::bzhi::*;
-pub use bmi2::mulx::*;
+pub use alg::bmi2::mulx::*;
 pub use bmi2::pdep::*;
 pub use bmi2::pext::*;

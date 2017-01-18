@@ -1,4 +1,4 @@
-use int::{Int, IntF32T64};
+use int::IntF32T64;
 use alg;
 use x86;
 
@@ -6,11 +6,20 @@ pub trait PEXT {
     fn pext(self, Self) -> Self;
 }
 
-impl<T: Int> PEXT for T {
-    default fn pext(self, y: Self) -> Self {
-        alg::bmi2::pext(self, y)
-    }
+macro_rules! alg_impl {
+    ($T:ty) => (
+        impl PEXT for $T {
+            fn pext(self, y: Self) -> Self {
+                alg::bmi2::pext(self, y)
+            }
+        }
+    )
 }
+
+alg_impl!(u8);
+alg_impl!(u16);
+alg_impl!(i8);
+alg_impl!(i16);
 
 impl<T: IntF32T64> PEXT for T {
     fn pext(self, y: Self) -> Self {

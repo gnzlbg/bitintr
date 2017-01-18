@@ -1,9 +1,9 @@
 //! Bit Manipulation Instruction (BMI) Set 2.0: software fallback.
 
-mod bzhi;
-mod mulx;
-mod pdep;
-mod pext;
+pub mod bzhi;
+pub mod mulx;
+pub mod pdep;
+pub mod pext;
 
 pub use alg::bmi2::bzhi::*;
 pub use alg::bmi2::mulx::*;

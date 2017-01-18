@@ -1,4 +1,4 @@
-use int::{Int, IntF32T64};
+use int::IntF32T64;
 use alg;
 use x86;
 
@@ -6,11 +6,20 @@ pub trait BZHI {
     fn bzhi(self, Self) -> Self;
 }
 
-impl<T: Int> BZHI for T {
-    default fn bzhi(self, y: Self) -> Self {
-        alg::bmi2::bzhi(self, y)
-    }
+macro_rules! alg_impl {
+    ($T:ty) => (
+        impl BZHI for $T {
+            fn bzhi(self, y: Self) -> Self {
+                alg::bmi2::bzhi(self, y)
+            }
+        }
+    )
 }
+
+alg_impl!(u8);
+alg_impl!(u16);
+alg_impl!(i8);
+alg_impl!(i16);
 
 impl<T: IntF32T64> BZHI for T {
     fn bzhi(self, y: Self) -> Self {

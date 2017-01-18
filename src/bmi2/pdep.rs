@@ -1,4 +1,4 @@
-use int::{Int, IntF32T64};
+use int::IntF32T64;
 use alg;
 use x86;
 
@@ -6,11 +6,21 @@ pub trait PDEP {
     fn pdep(self, Self) -> Self;
 }
 
-impl<T: Int> PDEP for T {
-    default fn pdep(self, y: Self) -> Self {
-        alg::bmi2::pdep(self, y)
-    }
+macro_rules! alg_impl {
+    ($T:ty) => (
+        impl PDEP for $T {
+            fn pdep(self, y: Self) -> Self {
+                alg::bmi2::pdep(self, y)
+            }
+        }
+    )
 }
+
+alg_impl!(u8);
+alg_impl!(u16);
+alg_impl!(i8);
+alg_impl!(i16);
+
 
 impl<T: IntF32T64> PDEP for T {
     fn pdep(self, y: Self) -> Self {
