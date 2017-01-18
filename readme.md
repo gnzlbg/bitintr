@@ -50,6 +50,15 @@ generate the corresponding CPU instruction in _all_ cases:
 - `platform_intrinsics` for using the bitwise manipulation intrinsics, and
 - `u128` support for _efficient_ 64bit multiplication.
 
+## License
+
+Licensed under the [MIT license][license].
+
+## Contribution
+
+Yes please! Just note that all contributions shall be licensed as above without
+any additional terms or conditions.
+
 <!-- Links -->
 [travis-shield]: https://img.shields.io/travis/gnzlbg/bitintr.svg?style=flat-square
 [travis]: https://travis-ci.org/gnzlbg/bitintr
