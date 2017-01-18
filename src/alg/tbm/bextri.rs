@@ -1,22 +1,5 @@
-use int::{Int, IntF32T64};
+use int::Int;
 use alg;
-use x86;
-
-pub trait BEXTRI {
-    fn bextri(self, start: Self, length: Self) -> Self;
-}
-
-impl<T: Int> BEXTRI for T {
-    default fn bextri(self, start: T, length: T) -> T {
-        alg::tbm::bextri(self, start, length)
-    }
-}
-
-impl<T: IntF32T64> BEXTRI for T {
-    fn bextri(self, start: T, length: T) -> T {
-        x86::bmi::bextr(self, start, length)
-    }
-}
 
 /// Bit Field Extract (immediate form).
 ///
@@ -43,6 +26,16 @@ impl<T: IntF32T64> BEXTRI for T {
 ///
 /// assert_eq!(bextri(0b0101_0000u8, 4, 4), 0b0000_0101u8);
 /// ```
-pub fn bextri<T: BEXTRI>(x: T, y: T, z: T) -> T {
-    BEXTRI::bextri(x, y, z)
+pub fn bextri<T: Int>(source: T, start: T, length: T) -> T {
+    alg::bmi::bextr(source, start, length)
+}
+
+pub trait BEXTRI {
+    fn bextri(self, start: Self, length: Self) -> Self;
+}
+
+impl<T: Int> BEXTRI for T {
+    fn bextri(self, start: T, length: T) -> T {
+        bextri(self, start, length)
+    }
 }

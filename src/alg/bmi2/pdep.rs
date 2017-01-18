@@ -1,22 +1,4 @@
-use int::{Int, IntF32T64};
-use alg;
-use x86;
-
-pub trait PDEP {
-    fn pdep(self, Self) -> Self;
-}
-
-impl<T: Int> PDEP for T {
-    default fn pdep(self, y: Self) -> Self {
-        alg::bmi2::pdep(self, y)
-    }
-}
-
-impl<T: IntF32T64> PDEP for T {
-    fn pdep(self, y: Self) -> Self {
-        x86::bmi2::pdep(self, y)
-    }
-}
+use int::Int;
 
 /// Parallel bits deposit.
 ///
@@ -46,6 +28,29 @@ impl<T: IntF32T64> PDEP for T {
 /// assert_eq!(pdep(n, m0), s0);
 /// assert_eq!(pdep(n, m1), s1);
 /// ```
-pub fn pdep<T: PDEP>(x: T, y: T) -> T {
-    PDEP::pdep(x, y)
+pub fn pdep<T: Int>(x: T, mask_: T) -> T {
+    let mut res = T::zero();
+    let mut mask = mask_;
+    let mut bb = T::one();
+    loop {
+        if mask == T::zero() {
+            break;
+        }
+        if (x & bb) != T::zero() {
+            res |= mask & mask.wrapping_neg();
+        }
+        mask &= mask - T::one();
+        bb += bb;
+    }
+    res
+}
+
+pub trait PDEP {
+    fn pdep(self, Self) -> Self;
+}
+
+impl<T: Int> PDEP for T {
+    fn pdep(self, y: Self) -> Self {
+        pdep(self, y)
+    }
 }

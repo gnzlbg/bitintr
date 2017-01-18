@@ -1,4 +1,4 @@
-//! Bit Manipulation Instruction (BMI) Set 1.
+//! Bit Manipulation Instruction (BMI) Set 1.0.
 //!
 //! For a quick overview see
 //! [wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI1_.28Bit_Manipulation_Instruction_Set_1.29).
@@ -17,16 +17,13 @@
 //!   advertise it as ABM).
 //!
 
-mod andn;
 mod bextr;
-mod blsi;
-mod blsmsk;
-mod blsr;
-mod tzcnt;
+mod bextri;
 
-pub use bmi::andn::*;
 pub use bmi::bextr::*;
-pub use bmi::blsi::*;
-pub use bmi::blsmsk::*;
-pub use bmi::blsr::*;
-pub use bmi::tzcnt::*;
+pub use bmi::bextri::*;
+pub use alg::bmi::andn::*;
+pub use alg::bmi::blsi::*;
+pub use alg::bmi::blsmsk::*;
+pub use alg::bmi::blsr::*;
+pub use alg::bmi::tzcnt::*;

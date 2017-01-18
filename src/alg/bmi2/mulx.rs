@@ -1,13 +1,81 @@
-use int::Int;
-use alg;
+use std::mem;
 
 pub trait MULX {
     fn mulx(self, Self, &mut Self) -> Self;
 }
 
-impl<T: Int + alg::bmi2::MULX> MULX for T {
-    default fn mulx(self, y: Self, hi: &mut Self) -> Self {
-        alg::bmi2::mulx(self, y, hi)
+impl MULX for u8 {
+    fn mulx(self, y: u8, p: &mut u8) -> u8 {
+        let result: u16 = (self as u16) * (y as u16);
+        *p = (result >> 8) as u8;
+        result as u8
+    }
+}
+
+impl MULX for u16 {
+    fn mulx(self, y: u16, p: &mut u16) -> u16 {
+        let result: u32 = (self as u32) * (y as u32);
+        *p = (result >> 16) as u16;
+        result as u16
+    }
+}
+
+impl MULX for u32 {
+    fn mulx(self, y: u32, p: &mut u32) -> u32 {
+        let result: u64 = (self as u64) * (y as u64);
+        *p = (result >> 32) as u32;
+        result as u32
+    }
+}
+
+impl MULX for u64 {
+    fn mulx(self, y: u64, hi: &mut u64) -> u64 {
+        let result: u128 = (self as u128) * (y as u128);
+        *hi = (result >> 64) as u64;
+        result as u64
+    }
+}
+
+impl MULX for usize {
+    fn mulx(self, y: usize, p: &mut usize) -> usize {
+        match mem::size_of::<usize>() * 8 {
+            8 => (self as u8).mulx(y as u8, unsafe { mem::transmute(p) }) as usize,
+            16 => (self as u16).mulx(y as u16, unsafe { mem::transmute(p) }) as usize,
+            32 => (self as u32).mulx(y as u32, unsafe { mem::transmute(p) }) as usize,
+            64 => (self as u64).mulx(y as u64, unsafe { mem::transmute(p) }) as usize,
+            _ => unreachable!(),
+        }
+    }
+}
+
+impl MULX for i8 {
+    fn mulx(self, y: i8, p: &mut i8) -> i8 {
+        (self as u8).mulx(y as u8, unsafe { mem::transmute(p) }) as i8
+    }
+}
+
+impl MULX for i16 {
+    fn mulx(self, y: i16, p: &mut i16) -> i16 {
+        (self as u16).mulx(y as u16, unsafe { mem::transmute(p) }) as i16
+    }
+}
+
+impl MULX for i32 {
+    fn mulx(self, y: i32, p: &mut i32) -> i32 {
+        (self as u32).mulx(y as u32, unsafe { mem::transmute(p) }) as i32
+    }
+}
+
+impl MULX for i64 {
+    fn mulx(self, y: i64, p: &mut i64) -> i64 {
+        (self as u64).mulx(y as u64, unsafe { mem::transmute(p) }) as i64
+    }
+}
+
+
+impl MULX for isize {
+    fn mulx(self, y: isize, p: &mut isize) -> isize {
+        (self as usize).mulx(y as usize, unsafe { mem::transmute(p) }) as isize
     }
 }
 
@@ -69,6 +137,6 @@ impl<T: Int + alg::bmi2::MULX> MULX for T {
 ///   assert_eq!(hi, 0b00110001u64);
 /// }
 /// ```
-pub fn mulx<T: MULX + alg::bmi2::MULX>(x: T, y: T, hi: &mut T) -> T {
-    MULX::mulx(x, y, hi)
+pub fn mulx<T: MULX>(x: T, y: T, hi: &mut T) -> T {
+    x.mulx(y, hi)
 }

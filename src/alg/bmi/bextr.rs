@@ -1,23 +1,4 @@
-use int::{Int, IntF32T64};
-use alg;
-use x86;
-
-pub trait BEXTR {
-    fn bextr(self, Self, Self) -> Self;
-}
-
-impl<T: Int> BEXTR for T {
-    default fn bextr(self, start: Self, length: Self) -> Self {
-        alg::bmi::bextr(self, start, length)
-    }
-}
-
-
-impl<T: IntF32T64> BEXTR for T {
-    fn bextr(self, start: Self, length: Self) -> Self {
-        x86::bmi::bextr(self, start, length)
-    }
-}
+use int::Int;
 
 /// Bit Field Extract.
 ///
@@ -44,6 +25,16 @@ impl<T: IntF32T64> BEXTR for T {
 /// 
 /// assert_eq!(bextr(0b0101_0000u8, 4, 4), 0b0000_0101u8);
 /// ```
-pub fn bextr<T: BEXTR>(x: T, y: T, z: T) -> T {
-    BEXTR::bextr(x, y, z)
+pub fn bextr<T: Int>(source: T, start: T, length: T) -> T {
+    (source >> start) & ((T::one() << length) - T::one())
+}
+
+pub trait BEXTR {
+    fn bextr(self, Self, Self) -> Self;
+}
+
+impl<T: Int> BEXTR for T {
+    fn bextr(self, start: Self, length: Self) -> Self {
+        bextr(self, start, length)
+    }
 }

@@ -1,6 +1,7 @@
 #![feature(specialization)]
 #![feature(cfg_target_feature)]
 #![feature(platform_intrinsics)]
+#![feature(i128_type)]
 
 //! Bit Manipulation Intrinsics
 //!
@@ -23,15 +24,10 @@
 
 mod int;
 
-pub mod x86;
-pub mod alg;
+mod x86;
+mod alg;
 
-mod abm;
-mod tbm;
-mod bmi;
-mod bmi2;
-
-pub use abm::*;
-pub use tbm::*;
-pub use bmi::*;
-pub use bmi2::*;
+pub mod abm;
+pub mod tbm;
+pub mod bmi;
+pub mod bmi2;

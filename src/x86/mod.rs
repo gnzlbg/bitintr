@@ -2,7 +2,5 @@
 //!
 //! Bit manipulation intrinsics of the `x86` and `x86_64` architectures.
 
-pub mod abm;
 pub mod bmi;
 pub mod bmi2;
-pub mod tbm;

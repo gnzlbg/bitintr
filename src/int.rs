@@ -32,8 +32,11 @@ pub trait Int
     fn leading_zeros(self) -> Self;
     fn trailing_zeros(self) -> Self;
     fn wrapping_neg(self) -> Self;
+    fn wrapping_add(self, Self) -> Self;
+    fn wrapping_sub(self, Self) -> Self;
     fn to_u32(self) -> u32;
     fn to_u64(self) -> u64;
+    fn from_u16(u16) -> Self;
     fn from_u32(u32) -> Self;
     fn from_u64(u64) -> Self;
 }
@@ -63,8 +66,15 @@ macro_rules! int_impl {
             fn wrapping_neg(self) -> $T {
                 self.wrapping_neg() as $T
             }
+            fn wrapping_add(self, o: Self) -> $T {
+                self.wrapping_add(o) as $T
+            }
+            fn wrapping_sub(self, o: Self) -> $T {
+                self.wrapping_sub(o) as $T
+            }
             fn to_u32(self) -> u32 { self as u32 }
             fn to_u64(self) -> u64 { self as u64 }
+            fn from_u16(x: u16) -> Self { x as Self }
             fn from_u32(x: u32) -> Self { x as Self }
             fn from_u64(x: u64) -> Self { x as Self }
 

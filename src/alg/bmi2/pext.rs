@@ -1,22 +1,4 @@
-use int::{Int, IntF32T64};
-use alg;
-use x86;
-
-pub trait PEXT {
-    fn pext(self, Self) -> Self;
-}
-
-impl<T: Int> PEXT for T {
-    default fn pext(self, y: Self) -> Self {
-        alg::bmi2::pext(self, y)
-    }
-}
-
-impl<T: IntF32T64> PEXT for T {
-    fn pext(self, y: Self) -> Self {
-        x86::bmi2::pext(self, y)
-    }
-}
+use int::Int;
 
 /// Parallel bits extract.
 ///
@@ -47,6 +29,30 @@ impl<T: IntF32T64> PEXT for T {
 /// assert_eq!(pext(n, m0), s0);
 /// assert_eq!(pext(n, m1), s1);
 /// ```
-pub fn pext<T: PEXT>(x: T, y: T) -> T {
-    PEXT::pext(x, y)
+pub fn pext<T: Int>(x: T, mask_: T) -> T {
+    let mut res = T::zero();
+    let mut mask = mask_;
+    let mut bb = T::one();
+    loop {
+        if mask == T::zero() {
+            break;
+        }
+        if x & mask & (mask.wrapping_neg()) != T::zero() {
+            res |= bb;
+        }
+        mask &= mask - T::one();
+        bb += bb;
+    }
+    res
 }
+
+pub trait PEXT {
+    fn pext(self, Self) -> Self;
+}
+
+impl<T: Int> PEXT for T {
+    fn pext(self, y: Self) -> Self {
+        pext(self, y)
+    }
+}
+

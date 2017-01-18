@@ -8,7 +8,7 @@
 //!
 //! It consists of the following instructions:
 //!
-//! - `BEXTRi` (TODO).
+//! - `BEXTRi`.
 //! - `BLCFILL`.
 //! - `BLCI`.
 //! - `BLCIC`.
@@ -20,23 +20,14 @@
 //! - `TZMSK`.
 
 mod bextri;
-mod blcfill;
-mod blcic;
-mod blci;
-mod blcmsk;
-mod blcs;
-mod blsfill;
-mod blsic;
-mod t1mskc;
-mod tzmsk;
 
 pub use tbm::bextri::*;
-pub use tbm::blcfill::*;
-pub use tbm::blcic::*;
-pub use tbm::blci::*;
-pub use tbm::blcmsk::*;
-pub use tbm::blcs::*;
-pub use tbm::blsfill::*;
-pub use tbm::blsic::*;
-pub use tbm::t1mskc::*;
-pub use tbm::tzmsk::*;
+pub use alg::tbm::blcfill::*;
+pub use alg::tbm::blcic::*;
+pub use alg::tbm::blci::*;
+pub use alg::tbm::blcmsk::*;
+pub use alg::tbm::blcs::*;
+pub use alg::tbm::blsfill::*;
+pub use alg::tbm::blsic::*;
+pub use alg::tbm::t1mskc::*;
+pub use alg::tbm::tzmsk::*;
