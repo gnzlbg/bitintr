@@ -34,5 +34,5 @@ pub fn pdep<T: IntF32T64>(x: T, mask_: T) -> T {
 
 #[cfg(not(RUSTC_IS_NIGHTLY))]
 pub fn pdep<T: IntF32T64>(x: T, mask_: T) -> T {
-        alg::bmi2::pdep(x, mask_)
+    alg::bmi2::pdep(x, mask_)
 }

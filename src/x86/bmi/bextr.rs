@@ -36,5 +36,5 @@ pub fn bextr<T: IntF32T64>(source: T, start: T, length: T) -> T {
 
 #[cfg(not(RUSTC_IS_NIGHTLY))]
 pub fn bextr<T: IntF32T64>(source: T, start: T, length: T) -> T {
-        alg::bmi::bextr(source, start, length)
+    alg::bmi::bextr(source, start, length)
 }

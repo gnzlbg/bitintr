@@ -46,16 +46,16 @@ impl MULX for u64 {
         let t = u1 * v1;
         let w3 = t & 0xffffffff;
         let k = t >> 32;
-        
+
         let x = self >> 32;
         let t1 = (x * v1) + k;
         let k1 = t1 & 0xffffffff;
         let w1 = t1 >> 32;
-        
+
         let y1 = y >> 32;
         let t2 = (u1 * y1) + k1;
         let k2 = t2 >> 32;
-        
+
         let hi = (x * y1) + w1 + k2;
         let lo = (t2 << 32) + w3;
         (lo, hi)
@@ -65,10 +65,22 @@ impl MULX for u64 {
 impl MULX for usize {
     fn mulx(self, y: usize) -> (usize, usize) {
         match mem::size_of::<usize>() * 8 {
-            8 => { let tmp = (self as u8).mulx(y as u8); (tmp.0 as usize, tmp.1 as usize) },
-            16 => { let tmp = (self as u16).mulx(y as u16); (tmp.0 as usize, tmp.1 as usize) },
-            32 => { let tmp = (self as u32).mulx(y as u32); (tmp.0 as usize, tmp.1 as usize) },
-            64 => { let tmp = (self as u64).mulx(y as u64); (tmp.0 as usize, tmp.1 as usize) },
+            8 => {
+                let tmp = (self as u8).mulx(y as u8);
+                (tmp.0 as usize, tmp.1 as usize)
+            }
+            16 => {
+                let tmp = (self as u16).mulx(y as u16);
+                (tmp.0 as usize, tmp.1 as usize)
+            }
+            32 => {
+                let tmp = (self as u32).mulx(y as u32);
+                (tmp.0 as usize, tmp.1 as usize)
+            }
+            64 => {
+                let tmp = (self as u64).mulx(y as u64);
+                (tmp.0 as usize, tmp.1 as usize)
+            }
             _ => unreachable!(),
         }
     }

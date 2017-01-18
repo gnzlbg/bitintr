@@ -32,5 +32,5 @@ pub fn bextri<T: IntF32T64>(source: T, range: T) -> T {
 
 #[cfg(not(RUSTC_IS_NIGHTLY))]
 pub fn bextri<T: IntF32T64>(source: T, range: T) -> T {
-        alg::bmi::bextri(source, range)
+    alg::bmi::bextri(source, range)
 }
