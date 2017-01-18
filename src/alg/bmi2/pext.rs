@@ -55,4 +55,3 @@ impl<T: Int> PEXT for T {
         pext(self, y)
     }
 }
-

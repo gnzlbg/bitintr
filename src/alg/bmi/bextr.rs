@@ -22,7 +22,7 @@ use int::Int;
 ///
 /// ```
 /// use bitintr::bmi::bextr;
-/// 
+///
 /// assert_eq!(bextr(0b0101_0000u8, 4, 4), 0b0000_0101u8);
 /// ```
 pub fn bextr<T: Int>(source: T, start: T, length: T) -> T {

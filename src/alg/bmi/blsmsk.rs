@@ -16,7 +16,7 @@ use int::Int;
 ///
 /// ```
 /// use bitintr::bmi::blsmsk;
-/// 
+///
 /// assert_eq!(blsmsk(0b0011_0000u8), 0b0001_1111u8);
 /// assert_eq!(blsmsk(0b0000_0000u8), 0b1111_1111u8);
 /// ```

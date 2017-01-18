@@ -29,7 +29,9 @@ pub trait LZCNT {
 }
 
 impl<T: Int> LZCNT for T {
-    fn lzcnt(self) -> T { lzcnt(self) }
+    fn lzcnt(self) -> T {
+        lzcnt(self)
+    }
 }
 
 #[cfg(test)]

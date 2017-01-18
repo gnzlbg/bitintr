@@ -15,7 +15,7 @@ use int::Int;
 ///
 /// ```
 /// use bitintr::bmi::blsr;
-/// 
+///
 /// assert_eq!(blsr(0b0011_0000u8), 0b0010_0000u8);
 /// ```
 pub fn blsr<T: Int>(x: T) -> T {

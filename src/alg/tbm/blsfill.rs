@@ -30,4 +30,3 @@ impl<T: Int> BLSFILL for T {
         blsfill(self)
     }
 }
-

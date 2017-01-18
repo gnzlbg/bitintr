@@ -7,7 +7,7 @@
 //! Portable implementation of bitwise manipulation instructions. The intrinsics
 //! are:
 //!
-//! - named after the corresponding CPU instruction, 
+//! - named after the corresponding CPU instruction,
 //! - organized in instruction set modules: `bitintr::{instruction_set}::{intrinsic}`, and
 //! - implemented for all integer types, with software fallback depending on the
 //!   integer type and the instruction sets supported by the target.

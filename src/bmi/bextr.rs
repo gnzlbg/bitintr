@@ -49,7 +49,7 @@ impl<T: IntF32T64> BEXTR for T {
 ///
 /// ```
 /// use bitintr::bmi::bextr;
-/// 
+///
 /// assert_eq!(bextr(0b0101_0000u8, 4, 4), 0b0000_0101u8);
 /// ```
 pub fn bextr<T: BEXTR>(x: T, y: T, z: T) -> T {

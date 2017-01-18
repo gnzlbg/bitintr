@@ -24,7 +24,7 @@ use int::Int;
 /// assert_eq!(tzcnt(0b0000_0001u64), 0u64);
 /// ```
 pub fn tzcnt<T: Int>(x: T) -> T {
-    x.trailing_zeros()  // TODO: ... write the algorithm
+    x.trailing_zeros() // TODO: ... write the algorithm
 }
 
 pub trait TZCNT {
