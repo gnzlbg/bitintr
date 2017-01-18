@@ -2,11 +2,10 @@
 name = "bitintr"
 version = "0.1.0"
 authors = ["gnzlbg <gonzalobg88@gmail.com>"]
-description = "Bit manipulation intrinsics."
+description = "Portable Bit Manipulation Intrinsics."
 documentation = "https://gnzlbg.github.io/bitintr"
 homepage = "https://gnzlbg.github.io/bitintr"
 repository = "https://github.com/gnzlbg/bitintr"
 readme = "readme.md"
-keywords = ["bit", "byte", "algorithm", "bitwise", "word", "intrinsics",
-            "bit manipulation"]
+keywords = ["portable", "bit", "manipulation", "intrinsics"]
 license = "MIT"
