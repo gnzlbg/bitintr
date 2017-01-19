@@ -38,6 +38,12 @@ pub trait Int
     fn from_u64(u64) -> Self;
     fn rotate_left(self, u32) -> Self;
     fn rotate_right(self, u32) -> Self;
+    fn swap_bytes(self) -> Self;
+    fn from_be(self) -> Self;
+    fn from_le(self) -> Self;
+    fn to_be(self) -> Self;
+    fn to_le(self) -> Self;
+    fn pow(self, exp: u32) -> Self;
 }
 
 macro_rules! int_impl {
@@ -83,6 +89,28 @@ macro_rules! int_impl {
 
             fn rotate_left(self, n: u32) -> Self { (self as $T).rotate_left(n) }
             fn rotate_right(self, n: u32) -> Self { (self as $T).rotate_right(n) }
+            fn swap_bytes(self) -> Self { <$T>::swap_bytes(self) }
+
+            fn from_be(self) -> Self {
+                <$T>::from_be(self)
+            }
+
+            fn from_le(self) -> Self {
+                <$T>::from_le(self)
+            }
+
+            fn to_be(self) -> Self {
+                <$T>::to_be(self)
+            }
+
+            fn to_le(self) -> Self {
+                <$T>::to_le(self)
+            }
+
+            fn pow(self, exp: u32) -> Self {
+                <$T>::pow(self, exp)
+            }
+
         }
     )
 }
