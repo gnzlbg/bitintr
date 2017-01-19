@@ -17,7 +17,11 @@ mod int;
 mod x86;
 mod alg;
 
+pub use int::Int;
+
 pub mod abm;
 pub mod tbm;
 pub mod bmi;
 pub mod bmi2;
+
+
