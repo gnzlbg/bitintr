@@ -22,6 +22,7 @@ pub trait Int
 {
     fn one() -> Self;
     fn zero() -> Self;
+    fn byte_size() -> Self;
     fn bit_size() -> Self;
     fn count_ones(self) -> Self;
     fn count_zeros(self) -> Self;
@@ -43,8 +44,12 @@ macro_rules! int_impl {
             fn one() -> Self { 1 as Self }
             fn zero() -> Self { 0 as Self }
 
+            fn byte_size() -> Self {
+                size_of::<Self>() as Self
+            }
+
             fn bit_size() -> Self {
-                (size_of::<Self>() * 8) as Self
+                (Self::byte_size() * 8) as Self
             }
 
             fn count_ones(self) -> $T {
