@@ -36,6 +36,8 @@ pub trait Int
     fn from_u16(u16) -> Self;
     fn from_u32(u32) -> Self;
     fn from_u64(u64) -> Self;
+    fn rotate_left(self, u32) -> Self;
+    fn rotate_right(self, u32) -> Self;
 }
 
 macro_rules! int_impl {
@@ -79,8 +81,10 @@ macro_rules! int_impl {
             fn from_u32(x: u32) -> Self { x as Self }
             fn from_u64(x: u64) -> Self { x as Self }
 
+            fn rotate_left(self, n: u32) -> Self { (self as $T).rotate_left(n) }
+            fn rotate_right(self, n: u32) -> Self { (self as $T).rotate_right(n) }
         }
-        )
+    )
 }
 
 
