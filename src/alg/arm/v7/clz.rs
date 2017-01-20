@@ -3,7 +3,7 @@ use alg;
 
 /// Count Leading Zeros.
 ///
-/// See [`abm::lzcnt`](fn.lzcnt.html).
+/// See [`abm::lzcnt`](../../x86/abm/fn.lzcnt.html).
 ///
 /// # Example
 ///

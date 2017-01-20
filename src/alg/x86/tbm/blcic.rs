@@ -21,6 +21,7 @@ pub fn blcic<T: Int>(x: T) -> T {
     !x & (x.wrapping_add(T::one()))
 }
 
+/// Method version of [`blcic`](fn.blcic.html).
 pub trait BLCIC {
     fn blcic(self) -> Self;
 }

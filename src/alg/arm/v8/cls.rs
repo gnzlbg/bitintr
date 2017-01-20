@@ -10,7 +10,7 @@ use int::Int;
 ///
 /// # Assembly Instructions
 ///
-/// - [`CLS`][http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0487a.k_10775/index.html]:
+/// - [`CLS`](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0487a.k_10775/index.html):
 ///   - Description: Count leading sign bits.
 ///   - Architecture: ARMv8.
 ///   - Registers: 32/64 bits.

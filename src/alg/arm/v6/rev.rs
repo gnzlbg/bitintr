@@ -7,7 +7,7 @@ use int::Int;
 ///
 /// # Assembly Instructions
 ///
-/// - [`REV`][http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0419c/index.html]:
+/// - [`REV`](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0419c/index.html):
 ///   - Description: Reverses the byte order in a register.
 ///   - Architecture: ARMv6, ARMv7, ARMv8.
 ///   - Registers: 32 (v6, v7)/64 (v8) bits.
