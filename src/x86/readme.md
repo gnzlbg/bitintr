@@ -1,3 +1,7 @@
-# X86 and X86_64 intrinsics
+# X86, X86_64, AMD64 intrinsics
 
-Target-specific intrinsics with software fallback.
+The `intrinsics` module abstracts the compiler hooks for calling the intrinsics
+directly.
+
+The instruction set modules (`abm`, `tbm`, `bmi`, `bmi2`) export the target
+specific intrinsics with software fallback.

@@ -15,6 +15,7 @@ and the instruction sets supported by the target.
 The following instruction sets are implemented:
 
 - ARM (`bitintr::arm`):
+  - [`ARMv5`][armv5_link]: (`bitintr::arm::v6`).
   - [`ARMv6`][armv6_link]: (`bitintr::arm::v6`).
   - [`ARMv7`][armv7_link]: (`bitintr::arm::v7`).
   - [`ARMv8`][armv8_link]: (`bitintr::arm::v8`).
@@ -83,3 +84,7 @@ any additional terms or conditions.
 [tbm_link]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#TBM_.28Trailing_Bit_Manipulation.29
 [bmi1_link]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI1_.28Bit_Manipulation_Instruction_Set_1.29
 [bmi2_link]: https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2_.28Bit_Manipulation_Instruction_Set_2.29
+[armv5_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0100i/index.html
+[armv6_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0419c/index.html
+[armv7_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0403e.b/index.html
+[armv8_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0487a.k_10775/index.html
