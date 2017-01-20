@@ -1,5 +1,7 @@
 # Module structure
 
+TODO
+
 The library is split into multiple modules:
 
 - `alg`: _Portable software emulation_ of all the intrinsics for all integer types.
@@ -10,6 +12,7 @@ The library is split into multiple modules:
   the CPU does not support the intrinsic these fall back to software emulation.
   Platforms available:
   - `x86`.
+  - `arm::v{6|7|8}`.
 
 - _Generic intrinsics_: these work for all integer types. These use CPU intrinsics
   when available for the particular integer type and CPU, and fall back to

@@ -1,38 +1,65 @@
 use int::IntF32T64;
 use alg;
+use x86;
 
-#[cfg(RUSTC_IS_NIGHTLY)]
-mod intrinsics {
-    use int::IntF32T64;
-    use std::mem::size_of;
+/// Method version of [`pdep`](fn.pdep.html).
+pub trait PDEP {
+    fn pdep(self, Self) -> Self;
+}
 
-    #[allow(dead_code)]
-    extern "platform-intrinsic" {
-        fn x86_bmi2_pdep_32(x: u32, y: u32) -> u32;
-        fn x86_bmi2_pdep_64(x: u64, y: u64) -> u64;
-    }
-
-    pub unsafe fn pdep<T: IntF32T64>(x: T, y: T) -> T {
-        match size_of::<T>() * 8 {
-            32 => T::from_u32(x86_bmi2_pdep_32(x.to_u32(), y.to_u32())),
-            64 => T::from_u64(x86_bmi2_pdep_64(x.to_u64(), y.to_u64())),
-            _ => unreachable!(),
+macro_rules! alg_impl {
+    ($T:ty) => (
+        impl PDEP for $T {
+            fn pdep(self, y: Self) -> Self {
+                alg::x86::bmi2::pdep(self, y)
+            }
         }
-    }
+    )
+}
+
+alg_impl!(u8);
+alg_impl!(u16);
+alg_impl!(i8);
+alg_impl!(i16);
 
 
-} // mod intrinsics
-
-#[cfg(RUSTC_IS_NIGHTLY)]
-pub fn pdep<T: IntF32T64>(x: T, mask_: T) -> T {
-    if cfg!(target_feature = "bmi2") {
-        unsafe { intrinsics::pdep(x, mask_) }
-    } else {
-        alg::bmi2::pdep(x, mask_)
+impl<T: IntF32T64> PDEP for T {
+    fn pdep(self, y: Self) -> Self {
+        x86::intrinsics::bmi2::pdep(self, y)
     }
 }
 
-#[cfg(not(RUSTC_IS_NIGHTLY))]
-pub fn pdep<T: IntF32T64>(x: T, mask_: T) -> T {
-    alg::bmi2::pdep(x, mask_)
+/// Parallel bits deposit.
+///
+/// Scatter contiguous low order bits of `x` to the result at the positions
+/// specified by the `mask_`.
+///
+/// All other bits (bits not set in the mask) of the result are set to zero.
+///
+/// **Keywords**: Parallel bits deposit, scatter bits.
+///
+/// # Assembly Instructions
+///
+/// - [`PDEP`](http://www.felixcloutier.com/x86/PDEP.html):
+///   - Description: Parallel bits deposit.
+///   - Architecture: x86.
+///   - Instruction set: BMI2.
+///   - Registers: 32/64 bit.
+///
+/// # Example
+/// ```
+/// use bitintr::x86::bmi2::*;
+/// let n  = 0b1011_1110_1001_0011u16;
+///
+/// let m0 = 0b0110_0011_1000_0101u16;
+/// let s0 = 0b0000_0010_0000_0101u16;
+///
+/// let m1 = 0b1110_1011_1110_1111u16;
+/// let s1 = 0b1110_1001_0010_0011u16;
+///
+/// assert_eq!(pdep(n, m0), s0);
+/// assert_eq!(n.pdep(m1), s1);
+/// ```
+pub fn pdep<T: PDEP>(x: T, y: T) -> T {
+    PDEP::pdep(x, y)
 }

@@ -2,24 +2,34 @@
 #![cfg_attr(RUSTC_IS_NIGHTLY, feature(platform_intrinsics))]
 #![cfg_attr(RUSTC_IS_NIGHTLY, feature(i128_type))]
 
-//! Portable Bit Manipulation Intrinsics
+//! `bitintr` offers portable bit manipulation intrinsics.
 //!
-//! Portable implementation of bitwise manipulation instructions. The intrinsics
-//! are:
+//! The intrinsics are named after their CPU instruction and organized in
+//! modules named after their architecture/instruction set:
+//! `bitintr::{arch}::{instruction_set}::{instruction_name}`.
 //!
-//! - named after the corresponding CPU instruction,
-//! - organized in instruction set modules: `bitintr::{instruction_set}::{intrinsic_name}`, and
-//! - implemented for all integer types, with software fallback depending on the
-//!   integer type and the instruction sets supported by the target.
+//! They are implemented for all integer types _except_ `u128/i128`. Whether a
+//! fallback software implementation is used depends on the integer types
+//! involved and the instruction sets supported by the target.
+//!
+//! ## Example
+//!
+//! ```rust
+//! extern crate bitintr;
+//! use bitintr::x86::bmi2::*;
+//!
+//! fn main() {
+//!    // Intrinsics are provided as trait methods:
+//!    let method_call = 1.pdep(0);
+//!    // And as free functions:
+//!    let free_call = pdep(1, 0);
+//!    assert_eq!(method_call, free_call);
+//! }
+//! ```
 
 mod int;
-
-mod x86;
-mod alg;
-
 pub use int::Int;
 
-pub mod abm;
-pub mod tbm;
-pub mod bmi;
-pub mod bmi2;
+mod alg;
+pub mod x86;
+pub mod arm;

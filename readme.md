@@ -5,7 +5,8 @@
 > `0b0000_0010_1001_1010`
 
 The intrinsics are named after their CPU instruction and organized in modules
-named after their instruction set: `bitintr::{instruction_set}::{intrinsic_name}`.
+named after their architecture/instruction set:
+`bitintr::{arch}::{instruction_set}::{intrinsic_name}`.
 
 They are implemented for all integer types _except_ `u128/i128`. Whether a
 fallback software implementation is used depends on the integer types involved
@@ -13,24 +14,32 @@ and the instruction sets supported by the target.
 
 The following instruction sets are implemented:
 
-- [`ABM`][abm_link]: Advanced Bit Manipulation instructions.
-- [`TBM`][tbm_link]: Trailing Bit Manipulation instructions.
-- [`BMI`][bmi1_link]: Bit Manipulation Instruction Set 1.0.
-- [`BMI2`][bmi2_link]: Bit Manipulation Instruction Set 2.0.
+- ARM (`bitintr::arm`):
+  - [`ARMv6`][armv6_link]: (`bitintr::arm::v6`).
+  - [`ARMv7`][armv7_link]: (`bitintr::arm::v7`).
+  - [`ARMv8`][armv8_link]: (`bitintr::arm::v8`).
+
+- x86 (`bitintr::x86`):
+  - [`ABM`][abm_link]: Advanced Bit Manipulation instructions (`bitintr::x86::abm`).
+  - [`TBM`][tbm_link]: Trailing Bit Manipulation instructions (`bitintr::x86::tbm`).
+  - [`BMI`][bmi1_link]: Bit Manipulation Instruction Set 1.0 (`bitintr::x86::bmi`).
+  - [`BMI2`][bmi2_link]: Bit Manipulation Instruction Set 2.0 (`bitintr::x86::bmi2`).
+
+**Note**: This library is low-level by purpose. For a portable higher-level
+bitwise manipulation algorithms library you might want to check out
+the [bitwise][bitwise_link] crate.
 
 ## Example
 
 ```rust
 extern crate bitintr;
-use bitintr::bmi2::*;
+use bitintr::x86::bmi2::*;
 
 fn main() {
-    let x = 1;
-    let y = 0;
-    // Intrinsics can be used as methods:
-    let method_call = x.pdep(y);
-    // And as free function calls:
-    let free_call = pdep(x, y);
+    // Intrinsics are provided as trait methods:
+    let method_call = 1.pdep(0);
+    // And as free functions:
+    let free_call = pdep(1, 0);
     assert_eq!(method_call, free_call);
 }
 ```

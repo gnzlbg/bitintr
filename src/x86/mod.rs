@@ -1,6 +1,8 @@
-//! `x86`/`x86_64` Architecture intrinsics.
-//!
-//! Bit manipulation intrinsics of the `x86` and `x86_64` architectures.
+//! x86, x86_64, and AMD64 assembly instructions.
 
+mod intrinsics;
+
+pub mod abm;
+pub mod tbm;
 pub mod bmi;
 pub mod bmi2;

@@ -1,8 +1,17 @@
-//! Bit Manipulation Instruction (BMI) Set 2.
+//! Bit Manipulation Instruction (BMI) Set 2.0.
+//!
+//! The reference is [Intel 64 and IA-32 Architectures Software Developer's
+//! Manual Volume 2: Instruction Set Reference,
+//! A-Z](http://www.intel.de/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-instruction-set-reference-manual-325383.pdf).
+//!
+//! [Wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2_.28Bit_Manipulation_Instruction_Set_2.29).
+//! provides a quick overview of the available instructions.
+
 mod bzhi;
 mod pdep;
 mod pext;
 
-pub use x86::bmi2::bzhi::bzhi;
-pub use x86::bmi2::pdep::pdep;
-pub use x86::bmi2::pext::pext;
+pub use self::bzhi::*;
+pub use alg::x86::bmi2::mulx::*;
+pub use self::pdep::*;
+pub use self::pext::*;

@@ -1,40 +1,62 @@
 use int::IntF32T64;
 use alg;
+use x86;
 
-#[cfg(RUSTC_IS_NIGHTLY)]
-mod intrinsics {
-    use int::IntF32T64;
-    use std::mem::size_of;
-    use x86::bmi::bextri::bextri;
+/// Method version of [`bextr`](fn.bextr.html).
+pub trait BEXTR {
+    fn bextr(self, Self, Self) -> Self;
+}
 
-    pub unsafe fn bextr<T: IntF32T64>(source: T, start: T, length: T) -> T {
-        match size_of::<T>() * 8 {
-            32 => {
-                bextri(source,
-                       ((start & T::from_u32(0xff)) |
-                        ((length & T::from_u32(0xff)) << T::from_u32(8))))
+macro_rules! alg_impl {
+    ($T:ty) => (
+        impl BEXTR for $T {
+            fn bextr(self, start: Self, length: Self) -> Self {
+                alg::x86::bmi::bextr(self, start, length)
             }
-            64 => {
-                bextri(source,
-                       ((start & T::from_u64(0xff)) |
-                        ((length & T::from_u64(0xff)) << T::from_u64(8))))
-            }
-            _ => unreachable!(),
         }
-    }
-
+    )
 }
 
-#[cfg(RUSTC_IS_NIGHTLY)]
-pub fn bextr<T: IntF32T64>(source: T, start: T, length: T) -> T {
-    if cfg!(target_feature = "bmi") {
-        unsafe { intrinsics::bextr(source, start, length) }
-    } else {
-        alg::bmi::bextr(source, start, length)
+alg_impl!(u8);
+alg_impl!(u16);
+alg_impl!(i8);
+alg_impl!(i16);
+
+impl<T: IntF32T64> BEXTR for T {
+    fn bextr(self, start: Self, length: Self) -> Self {
+        x86::intrinsics::bmi::bextr(self, start, length)
     }
 }
 
-#[cfg(not(RUSTC_IS_NIGHTLY))]
-pub fn bextr<T: IntF32T64>(source: T, start: T, length: T) -> T {
-    alg::bmi::bextr(source, start, length)
+/// Bit Field Extract.
+///
+/// Extracts bits in range [`start`, `start` + `length`) from the `source` to
+/// the least significant bits of the result.
+///
+/// Bits [7,0] of `range` specify the index to the first bit in the range to be
+/// extracted, and bits [15,8] specify the length of the range.
+///
+/// Only bits up to `std::mem::size_of::<T>() - 1` are extracted.
+///
+/// The extracted bits are written in the result starting from the
+/// least-significant bit. The high-order bits of the result are zeroed.
+///
+/// # Assembly Instructions
+///
+/// - [`BEXTR`](http://www.felixcloutier.com/x86/BEXTR.html):
+///   - Description: Bit field extract.
+///   - Architecture: x86.
+///   - Instruction set: BMI.
+///   - Registers: 32/64 bit.
+///
+/// # Example
+///
+/// ```
+/// use bitintr::x86::bmi::*;
+///
+/// assert_eq!(bextr(0b0101_0000u8, 4, 4), 0b0000_0101u8);
+/// assert_eq!(0b0101_0000u8.bextr(4, 4), 0b0000_0101u8);
+/// ```
+pub fn bextr<T: BEXTR>(x: T, y: T, z: T) -> T {
+    BEXTR::bextr(x, y, z)
 }

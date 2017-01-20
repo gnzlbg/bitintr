@@ -1,6 +1,6 @@
 [package]
 name = "bitintr"
-version = "0.1.6"
+version = "0.1.7"
 authors = ["gnzlbg <gonzalobg88@gmail.com>"]
 description = "Portable Bit Manipulation Intrinsics."
 documentation = "https://gnzlbg.github.io/bitintr"
