@@ -15,7 +15,7 @@ and the instruction sets supported by the target.
 The following instruction sets are implemented:
 
 - ARM (`bitintr::arm`):
-  - [`ARMv5`][armv5_link]: (`bitintr::arm::v6`).
+  - [`ARMv5`][armv5_link]: (`bitintr::arm::v5`).
   - [`ARMv6`][armv6_link]: (`bitintr::arm::v6`).
   - [`ARMv7`][armv7_link]: (`bitintr::arm::v7`).
   - [`ARMv8`][armv8_link]: (`bitintr::arm::v8`).
