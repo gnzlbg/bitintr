@@ -14,17 +14,17 @@ and the instruction sets supported by the target.
 
 The following instruction sets are implemented:
 
-- ARM (`bitintr::arm`):
-  - [`ARMv5`][armv5_link]: (`bitintr::arm::v5`).
-  - [`ARMv6`][armv6_link]: (`bitintr::arm::v6`).
-  - [`ARMv7`][armv7_link]: (`bitintr::arm::v7`).
-  - [`ARMv8`][armv8_link]: (`bitintr::arm::v8`).
-
 - x86 (`bitintr::x86`):
-  - [`ABM`][abm_link]: Advanced Bit Manipulation instructions (`bitintr::x86::abm`).
-  - [`TBM`][tbm_link]: Trailing Bit Manipulation instructions (`bitintr::x86::tbm`).
-  - [`BMI`][bmi1_link]: Bit Manipulation Instruction Set 1.0 (`bitintr::x86::bmi`).
-  - [`BMI2`][bmi2_link]: Bit Manipulation Instruction Set 2.0 (`bitintr::x86::bmi2`).
+  - [`ABM`][abm_link]: Advanced Bit Manipulation instructions ([`bitintr::x86::abm`](https://gnzlbg.github.io/bitintr/bitintr/x86/abm/index.html)).
+  - [`TBM`][tbm_link]: Trailing Bit Manipulation instructions ([`bitintr::x86::tbm`](https://gnzlbg.github.io/bitintr/bitintr/x86/tbm/index.html)).
+  - [`BMI`][bmi1_link]: Bit Manipulation Instruction Set 1.0 ([`bitintr::x86::bmi`](https://gnzlbg.github.io/bitintr/bitintr/x86/bmi/index.html)).
+  - [`BMI2`][bmi2_link]: Bit Manipulation Instruction Set 2.0 ([`bitintr::x86::bmi2`](https://gnzlbg.github.io/bitintr/bitintr/x86/bmi2/index.html)).
+
+- ARM (`bitintr::arm`):
+  - [`ARMv5`][armv5_link]: [`bitintr::arm::v5`](https://gnzlbg.github.io/bitintr/bitintr/arm/v5/index.html).
+  - [`ARMv6`][armv6_link]: [`bitintr::arm::v6`](https://gnzlbg.github.io/bitintr/bitintr/arm/v6/index.html).
+  - [`ARMv7`][armv7_link]: [`bitintr::arm::v7`](https://gnzlbg.github.io/bitintr/bitintr/arm/v7/index.html).
+  - [`ARMv8`][armv8_link]: [`bitintr::arm::v8`](https://gnzlbg.github.io/bitintr/bitintr/arm/v8/index.html).
 
 **Note**: This library is low-level by purpose. For a portable higher-level
 bitwise manipulation algorithms library you might want to check out
@@ -53,12 +53,12 @@ When compiled with a rust stable compiler the intrinsics are implemented using
 the software fallback. In release builds LLVM _often_ generates the corresponding
 CPU instruction.
 
-When compiled with a rust nightly compiler the following features are used to
-generate the corresponding CPU instruction in _all_ cases:
+When compiled with a rust nightly compiler the following unstable features are
+used to generate the corresponding CPU instruction in _all_ cases:
 
-- `cfg_target_feature` for target-dependent behavior,
-- `platform_intrinsics` for using the bitwise manipulation intrinsics, and
-- `u128` support for _efficient_ 64bit multiplication.
+- [`cfg_target_feature`][cfg_target_feature] for target-dependent behavior,
+- [`platform_intrinsics`][platform_intrinsics_feature] for using the bitwise manipulation compiler intrinsics, and
+- [`i128_type`][i128_type_feature] support for _efficient_ 64-bit multiplication (using `u128`).
 
 ## License
 
@@ -88,3 +88,6 @@ any additional terms or conditions.
 [armv6_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0419c/index.html
 [armv7_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0403e.b/index.html
 [armv8_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0487a.k_10775/index.html
+[cfg_target_feature]: https://github.com/rust-lang/rust/issues/29717
+[platform_intrinsics_feature]: https://doc.rust-lang.org/book/intrinsics.html
+[i128_type_feature]: https://github.com/rust-lang/rust/issues/35118

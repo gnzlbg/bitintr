@@ -1,10 +1,11 @@
-/// ! Generic Integer traits.
+//! Generic Integer traits.
 
 use std::ops::{Add, Sub, Mul, Div};
 use std::ops::{Not, BitAnd, BitOr, BitXor, Shl, Shr};
 use std::cmp::{PartialEq, PartialOrd};
 use std::mem::size_of;
 
+/// Integer trait used to parametrize algorithms for all integer types.
 pub trait Int
     : Sized
     + Copy

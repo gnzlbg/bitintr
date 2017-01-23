@@ -1,10 +1,11 @@
 //! Trailing Bit Manipulation (TBM) instruction set.
 //!
-//! For a quick overview see
-//! [wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#TBM_.28Trailing_Bit_Manipulation.29).
 //! The reference is [AMD64 Architecture Programmer's Manual, Volume 3:
 //! General-Purpose and System
 //! Instructions](http://support.amd.com/TechDocs/24594.pdf).
+//!
+//! [Wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#TBM_.28Trailing_Bit_Manipulation.29)
+//! provides a quick overview of the available instructions.
 
 mod bextr;
 
