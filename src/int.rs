@@ -128,37 +128,3 @@ int_impl!(i16);
 int_impl!(i32);
 int_impl!(i64);
 int_impl!(isize);
-
-
-// BUGBUG: this assumes that USize >= 16 and <= 64
-pub trait IntF16T64: Int {}
-
-macro_rules! signed_or_unsigned_from_16_to_64_and_size_impl {
-    ($T:ty) => (impl IntF16T64 for $T {})
-}
-
-signed_or_unsigned_from_16_to_64_and_size_impl!(u16);
-signed_or_unsigned_from_16_to_64_and_size_impl!(u32);
-signed_or_unsigned_from_16_to_64_and_size_impl!(u64);
-signed_or_unsigned_from_16_to_64_and_size_impl!(usize);
-
-signed_or_unsigned_from_16_to_64_and_size_impl!(i16);
-signed_or_unsigned_from_16_to_64_and_size_impl!(i32);
-signed_or_unsigned_from_16_to_64_and_size_impl!(i64);
-signed_or_unsigned_from_16_to_64_and_size_impl!(isize);
-
-
-// BUGBUG: this assumes that USize >= 32 and <= 64
-pub trait IntF32T64: Int {}
-
-macro_rules! signed_or_unsigned_from_32_to_64_and_size_impl {
-    ($T:ty) => (impl IntF32T64 for $T {})
-}
-
-signed_or_unsigned_from_32_to_64_and_size_impl!(u32);
-signed_or_unsigned_from_32_to_64_and_size_impl!(u64);
-signed_or_unsigned_from_32_to_64_and_size_impl!(usize);
-
-signed_or_unsigned_from_32_to_64_and_size_impl!(i32);
-signed_or_unsigned_from_32_to_64_and_size_impl!(i64);
-signed_or_unsigned_from_32_to_64_and_size_impl!(isize);
