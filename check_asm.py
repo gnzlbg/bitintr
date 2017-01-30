@@ -58,7 +58,6 @@ def compile_file(file):
         cargo_args = cargo_args + '-C target-feature=+{}'.format(file.feature)
     if file.arch == 'armv7' or file.arch == 'armv8':
         cargo_args = cargo_args + '--target={}'.format(arm_triplet(file.arch))
-
     call(str(cargo_args))
 
     rustc_args = 'rustc --verbose -C opt-level=3 -C panic="abort" --extern bitintr=target/release/libbitintr.rlib --crate-type lib';
