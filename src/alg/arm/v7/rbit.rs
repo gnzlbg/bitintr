@@ -25,8 +25,7 @@ pub fn rbit<T: Int>(y: T) -> T {
     {
         let mut up0 = |i, l, r| {
             if k & i > T::from_u32(0) {
-                x = ((x & l) << i)
-                    | ((x & r) >> i);
+                x = ((x & l) << i) | ((x & r) >> i);
             }
         };
 
@@ -37,8 +36,7 @@ pub fn rbit<T: Int>(y: T) -> T {
     {
         let mut up1 = |i, s, l, r| {
             if width > i && (k & s > T::from_u32(0)) {
-                x = ((x & l) << s)
-                    | ((x & r) >> s);
+                x = ((x & l) << s) | ((x & r) >> s);
             }
         };
 

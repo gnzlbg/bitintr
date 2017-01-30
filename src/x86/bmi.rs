@@ -7,9 +7,7 @@
 //! [Wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI1_.28Bit_Manipulation_Instruction_Set_1.29)
 //! provides a quick overview of the available instructions.
 
-mod bextr;
-
-pub use self::bextr::*;
+pub use super::intrinsics::bmi::bextr::*;
 pub use alg::x86::bmi::andn::*;
 pub use alg::x86::bmi::blsi::*;
 pub use alg::x86::bmi::blsmsk::*;

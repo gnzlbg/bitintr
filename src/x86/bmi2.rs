@@ -7,11 +7,7 @@
 //! [Wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI2_.28Bit_Manipulation_Instruction_Set_2.29)
 //! provides a quick overview of the available instructions.
 
-mod bzhi;
-mod pdep;
-mod pext;
-
-pub use self::bzhi::*;
 pub use alg::x86::bmi2::mulx::*;
-pub use self::pdep::*;
-pub use self::pext::*;
+pub use super::intrinsics::bmi2::bzhi::*;
+pub use super::intrinsics::bmi2::pdep::*;
+pub use super::intrinsics::bmi2::pext::*;

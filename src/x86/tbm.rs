@@ -7,9 +7,7 @@
 //! [Wikipedia](https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#TBM_.28Trailing_Bit_Manipulation.29)
 //! provides a quick overview of the available instructions.
 
-mod bextr;
-
-pub use self::bextr::*;
+pub use super::intrinsics::tbm::bextr::*;
 pub use alg::x86::tbm::blcfill::*;
 pub use alg::x86::tbm::blcic::*;
 pub use alg::x86::tbm::blci::*;
