@@ -68,3 +68,32 @@ impl<T: Int> RBIT for T {
         rbit(self)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use arm;
+    use int::Int;
+    use std::fmt::Debug;
+
+    fn rbit_invariant<T: Int + Debug>(i: T) {
+        let j = arm::v7::rbit(i);
+        assert_eq!(i, arm::v7::rbit(j));
+    }
+
+    #[test]
+    fn rbit_u8() {
+        (0..u8::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+    }
+    #[test]
+    fn rbit_u16() {
+        (0..u16::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+    }
+    #[test]
+    fn rbit_u32() {
+        (0..u32::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+    }
+    #[test]
+    fn rbit_u64() {
+        (0..u64::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+    }
+}

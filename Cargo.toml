@@ -13,3 +13,18 @@ build = "build.rs"
 
 [build-dependencies]
 rustc_version = "0.1.*"
+
+[dev-dependencies]
+bencher = "0.1.*"
+
+[profile.test]
+opt-level = 3
+debug = 2
+lto = true
+debug-assertions = true
+codegen-units = 1
+panic = 'unwind'
+
+[[bench]]
+name = "rbit"
+harness = false
