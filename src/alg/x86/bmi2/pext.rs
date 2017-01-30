@@ -3,7 +3,7 @@ use int::Int;
 /// Parallel bits extract.
 ///
 /// See [`x86::bmi2::pdep`](fn.pdep.html).
-pub fn pext<T: Int>(x: T, mask_: T) -> T {
+#[inline] pub fn pext<T: Int>(x: T, mask_: T) -> T {
     let mut res = T::zero();
     let mut mask = mask_;
     let mut bb = T::one();
@@ -21,11 +21,11 @@ pub fn pext<T: Int>(x: T, mask_: T) -> T {
 }
 
 pub trait PEXT {
-    fn pext(self, Self) -> Self;
+    #[inline] fn pext(self, Self) -> Self;
 }
 
 impl<T: Int> PEXT for T {
-    fn pext(self, y: Self) -> Self {
+    #[inline] fn pext(self, y: Self) -> Self {
         pext(self, y)
     }
 }

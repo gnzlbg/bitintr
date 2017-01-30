@@ -6,27 +6,27 @@ extern crate bitintr;
 use bencher::Bencher;
 
 fn u8_runner<F: Fn(u8) -> u8>(bench: &mut Bencher, f: F) {
-    let mut v = (0..u8::max_value()).collect::<Vec<_>>();
+    let mut vs: [u8; std::u8::MAX as usize] = [0; std::u8::MAX as usize];
+    for i in 0..u8::max_value() {
+        vs[i as usize] = i;
+    }
     bench.iter(|| {
-        for idx in 0..v.len() {
-            let x = bencher::black_box(v[idx]);
-            let y = bencher::black_box(f(x));
-            let z = bencher::black_box(y);
-            v[idx] = z;
+        for mut v in vs.iter_mut() {
+            *v = bencher::black_box(f(bencher::black_box(*v)));
         }
     })
 }
 
 fn rbit_u8_3_impl(x: u8) -> u8 {
-    ((x as u64 * 0x0202020202u64 & 0x010884422010u64) % 1023u64) as u8
+    (( ((x as u64) * 0x0202020202u64) & 0x010884422010u64) % 1023u64) as u8
 }
 
 fn rbit_u8_4_impl(x: u8) -> u8 {
-    (((x as u64 * 0x80200802u64) & 0x0884422110u64) * 0x0101010101u64 >> 32) as u8
+    ((( ((x as u64) * 0x80200802u64) & 0x0884422110u64) * 0x0101010101u64) >> 32) as u8
 }
 
 fn rbit_u8_7_impl(x: u8) -> u8 {
-    (((x as u32  * 0x0802u32 & 0x22110u32) | (x as u32 * 0x8020u32 & 0x88440u32)) * 0x10101u32 >> 16) as u8 
+    (((( ((x as u32)  * 0x0802u32) & 0x22110u32) | (((x as u32) * 0x8020u32) & 0x88440u32)) * 0x10101u32) >> 16) as u8 
 }
 
 fn rbit_u8_bitintr(bench: &mut Bencher) {

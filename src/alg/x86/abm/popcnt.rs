@@ -20,17 +20,17 @@ use int::Int;
 /// assert_eq!(popcnt(0b0101_1010u16), 4);
 /// assert_eq!(0b0101_1010u16.popcnt(), 4);
 /// ```
-pub fn popcnt<T: Int>(x: T) -> T {
+#[inline] pub fn popcnt<T: Int>(x: T) -> T {
     x.count_ones() // TODO: software emulation
 }
 
 /// Method version of [`popcnt`](fn.popcnt.html).
 pub trait POPCNT {
-    fn popcnt(self) -> Self;
+    #[inline] fn popcnt(self) -> Self;
 }
 
 impl<T: Int> POPCNT for T {
-    fn popcnt(self) -> T {
+    #[inline] fn popcnt(self) -> T {
         popcnt(self)
     }
 }

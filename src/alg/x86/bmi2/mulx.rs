@@ -2,11 +2,11 @@ use std::mem;
 
 /// Method version of [`mulx`](fn.mulx.html).
 pub trait MULX: Sized {
-    #[inline(always)] fn mulx(self, Self) -> (Self, Self);
+    #[inline] fn mulx(self, Self) -> (Self, Self);
 }
 
 impl MULX for u8 {
-    #[inline(always)] fn mulx(self, y: u8) -> (u8, u8) {
+    #[inline] fn mulx(self, y: u8) -> (u8, u8) {
         let result: u16 = (self as u16) * (y as u16);
         let hi = (result >> 8) as u8;
         (result as u8, hi)
@@ -14,7 +14,7 @@ impl MULX for u8 {
 }
 
 impl MULX for u16 {
-    #[inline(always)] fn mulx(self, y: u16) -> (u16, u16) {
+    #[inline] fn mulx(self, y: u16) -> (u16, u16) {
         let result: u32 = (self as u32) * (y as u32);
         let hi = (result >> 16) as u16;
         (result as u16, hi)
@@ -22,7 +22,7 @@ impl MULX for u16 {
 }
 
 impl MULX for u32 {
-    #[inline(always)] fn mulx(self, y: u32) -> (u32, u32) {
+    #[inline] fn mulx(self, y: u32) -> (u32, u32) {
         let result: u64 = (self as u64) * (y as u64);
         let hi = (result >> 32) as u32;
         (result as u32, hi)
@@ -31,7 +31,7 @@ impl MULX for u32 {
 
 #[cfg(RUSTC_IS_NIGHTLY)]
 impl MULX for u64 {
-    #[inline(always)] fn mulx(self, y: u64) -> (u64, u64) {
+    #[inline] fn mulx(self, y: u64) -> (u64, u64) {
         let result: u128 = (self as u128) * (y as u128);
         let hi = (result >> 64) as u64;
         (result as u64, hi)
@@ -40,7 +40,7 @@ impl MULX for u64 {
 
 #[cfg(not(RUSTC_IS_NIGHTLY))]
 impl MULX for u64 {
-    #[inline(always)] fn mulx(self, y: u64) -> (u64, u64) {
+    #[inline] fn mulx(self, y: u64) -> (u64, u64) {
         let u1 = self & 0xffffffff;
         let v1 = y & 0xffffffff;
         let t = u1 * v1;
@@ -63,7 +63,7 @@ impl MULX for u64 {
 }
 
 impl MULX for usize {
-    #[inline(always)] fn mulx(self, y: usize) -> (usize, usize) {
+    #[inline] fn mulx(self, y: usize) -> (usize, usize) {
         match mem::size_of::<usize>() * 8 {
             8 => {
                 let tmp = (self as u8).mulx(y as u8);
@@ -87,31 +87,31 @@ impl MULX for usize {
 }
 
 impl MULX for i8 {
-    #[inline(always)] fn mulx(self, y: i8) -> (i8, i8) {
+    #[inline] fn mulx(self, y: i8) -> (i8, i8) {
         unsafe { mem::transmute((self as u8).mulx(y as u8)) }
     }
 }
 
 impl MULX for i16 {
-    #[inline(always)] fn mulx(self, y: i16) -> (i16, i16) {
+    #[inline] fn mulx(self, y: i16) -> (i16, i16) {
         unsafe { mem::transmute((self as u16).mulx(y as u16)) }
     }
 }
 
 impl MULX for i32 {
-    #[inline(always)] fn mulx(self, y: i32) -> (i32, i32) {
+    #[inline] fn mulx(self, y: i32) -> (i32, i32) {
         unsafe { mem::transmute((self as u32).mulx(y as u32)) }
     }
 }
 
 impl MULX for i64 {
-    #[inline(always)] fn mulx(self, y: i64) -> (i64, i64) {
+    #[inline] fn mulx(self, y: i64) -> (i64, i64) {
         unsafe { mem::transmute((self as u64).mulx(y as u64)) }
     }
 }
 
 impl MULX for isize {
-    #[inline(always)] fn mulx(self, y: isize) -> (isize, isize) {
+    #[inline] fn mulx(self, y: isize) -> (isize, isize) {
         unsafe { mem::transmute((self as usize).mulx(y as usize)) }
     }
 }
@@ -173,8 +173,8 @@ impl MULX for isize {
 ///   assert_eq!(hi, 0b00110001u64);
 /// }
 /// { // 8-bit
-///   let a: i8 = 128;
-///   let b: i8 = 128;
+///   let a: i8 = 128u8 as i8;
+///   let b: i8 = 128u8 as i8;
 ///   let (lo, hi): (i8, i8) = mulx(a, b);
 ///   // result = _____ = 0b0100_0000_0000_0000u16
 ///   //                    ^~hi~~~~~ ^~lo~~~~~
@@ -182,15 +182,15 @@ impl MULX for isize {
 ///   assert_eq!(hi, 0b0100_0000);
 /// }
 /// { // 16-bit
-///   let a: i16 = 65_500;
-///   let b: i16 = 65_500;
+///   let a: i16 = 65_500u16 as i16;
+///   let b: i16 = 65_500u16 as i16;
 ///   let (lo, hi): (i16, i16)  = mulx(a, b);
 ///   // result = 4290250000 = 0b1111_1111_1011_1000_0000_0101_0001_0000u32
 ///   //                         ^~hi~~~~~~~~~~~~~~~ ^~lo~~~~~~~~~~~~~~~
-///   assert_eq!(lo, 0b0000_0101_0001_0000);
-///   assert_eq!(hi, 0b1111_1111_1011_1000);
+///   assert_eq!(lo, 0b0000_0101_0001_0000u16 as i16);
+///   assert_eq!(hi, 0b1111_1111_1011_1000u16 as i16);
 /// }
 /// ```
-#[inline(always)] pub fn mulx<T: MULX>(x: T, y: T) -> (T, T) {
+#[inline] pub fn mulx<T: MULX>(x: T, y: T) -> (T, T) {
     x.mulx(y)
 }

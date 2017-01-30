@@ -32,17 +32,17 @@ use int::Int;
 /// assert_eq!(lzcnt(0b0101_1010u16), 9u16);
 /// assert_eq!(0b0101_1010u16.lzcnt(), 9u16);
 /// ```
-pub fn lzcnt<T: Int>(x: T) -> T {
+#[inline] pub fn lzcnt<T: Int>(x: T) -> T {
     x.leading_zeros() // TODO: software emulation
 }
 
 /// Method version of [`lzcnt`](fn.lzcnt.html).
 pub trait LZCNT {
-    fn lzcnt(self) -> Self;
+    #[inline] fn lzcnt(self) -> Self;
 }
 
 impl<T: Int> LZCNT for T {
-    fn lzcnt(self) -> T {
+    #[inline] fn lzcnt(self) -> T {
         lzcnt(self)
     }
 }

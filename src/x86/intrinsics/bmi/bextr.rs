@@ -13,7 +13,7 @@ mod intrinsics {
         fn x86_bmi_bextr_64(x: u64, y: u64) -> u64;
     }
 
-    pub unsafe fn bextr<T: Int>(source: T, start: T, length: T) -> T {
+    #[inline] pub unsafe fn bextr<T: Int>(source: T, start: T, length: T) -> T {
         match size_of::<T>() * 8 {
             32 => {
                 T::from_u32(x86_bmi_bextr_32(source.to_u32(),
@@ -62,7 +62,7 @@ mod intrinsics {
 /// assert_eq!(0b0101_0000u8.bextr(4, 4), 0b0000_0101u8);
 /// ```
 #[cfg(RUSTC_IS_NIGHTLY)]
-pub fn bextr<T: Int>(source: T, start: T, length: T) -> T {
+#[inline] pub fn bextr<T: Int>(source: T, start: T, length: T) -> T {
     if cfg!(target_feature = "bmi2") {
         unsafe { intrinsics::bextr(source, start, length) }
     } else {
@@ -70,17 +70,17 @@ pub fn bextr<T: Int>(source: T, start: T, length: T) -> T {
     }
 }
 #[cfg(not(RUSTC_IS_NIGHTLY))]
-pub fn bextr<T: Int>(source: T, start: T, length: T) -> T {
+#[inline] pub fn bextr<T: Int>(source: T, start: T, length: T) -> T {
     alg::x86::bmi::bextr(source, start, length)
 }
 
 /// Method version of [`bextr`](fn.bextr.html).
 pub trait BEXTR {
-    fn bextr(self, Self, Self) -> Self;
+    #[inline] fn bextr(self, Self, Self) -> Self;
 }
 
 impl<T: Int> BEXTR for T {
-    fn bextr(self, start: Self, length: Self) -> Self {
+    #[inline] fn bextr(self, start: Self, length: Self) -> Self {
         bextr(self, start, length)
     }
 }

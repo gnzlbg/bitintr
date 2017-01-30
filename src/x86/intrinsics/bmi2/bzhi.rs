@@ -13,7 +13,7 @@ mod intrinsics {
         fn x86_bmi2_bzhi_64(x: u64, y: u64) -> u64;
     }
 
-    pub unsafe fn bzhi<T: Int>(x: T, y: T) -> T {
+    #[inline] pub unsafe fn bzhi<T: Int>(x: T, y: T) -> T {
         match size_of::<T>() * 8 {
             32 => T::from_u32(x86_bmi2_bzhi_32(x.to_u32(), y.to_u32())),
             64 => T::from_u64(x86_bmi2_bzhi_64(x.to_u64(), y.to_u64())),
@@ -49,7 +49,7 @@ mod intrinsics {
 /// assert_eq!(n.bzhi(5), s);
 /// ```
 #[cfg(RUSTC_IS_NIGHTLY)]
-pub fn bzhi<T: Int>(x: T, bit_position: T) -> T {
+#[inline] pub fn bzhi<T: Int>(x: T, bit_position: T) -> T {
     if cfg!(target_feature = "bmi2") {
         debug_assert!(bit_position < T::bit_size());
         unsafe { intrinsics::bzhi(x, bit_position) }
@@ -58,17 +58,17 @@ pub fn bzhi<T: Int>(x: T, bit_position: T) -> T {
     }
 }
 #[cfg(not(RUSTC_IS_NIGHTLY))]
-pub fn bzhi<T: Int>(x: T, bit_position: T) -> T {
+#[inline] pub fn bzhi<T: Int>(x: T, bit_position: T) -> T {
     alg::x86::bmi2::bzhi(x, bit_position)
 }
 
 /// Method version of [`bzhi`](fn.bzhi.html).
 pub trait BZHI {
-    fn bzhi(self, Self) -> Self;
+    #[inline] fn bzhi(self, Self) -> Self;
 }
 
 impl<T: Int> BZHI for T {
-    fn bzhi(self, y: Self) -> Self {
+    #[inline] fn bzhi(self, y: Self) -> Self {
         bzhi(self, y)
     }
 }

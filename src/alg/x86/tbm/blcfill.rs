@@ -20,17 +20,17 @@ use int::Int;
 /// assert_eq!(blcfill(0b0101_0111u8), 0b0101_0000u8);
 /// assert_eq!(0b1111_1111u8.blcfill(), 0u8);
 /// ```
-pub fn blcfill<T: Int>(x: T) -> T {
+#[inline] pub fn blcfill<T: Int>(x: T) -> T {
     x & (x.wrapping_add(T::one()))
 }
 
 /// Method version of [`blcfill`](fn.blcfill.html).
 pub trait BLCFILL {
-    fn blcfill(self) -> Self;
+    #[inline] fn blcfill(self) -> Self;
 }
 
 impl<T: Int> BLCFILL for T {
-    fn blcfill(self) -> T {
+    #[inline] fn blcfill(self) -> T {
         blcfill(self)
     }
 }

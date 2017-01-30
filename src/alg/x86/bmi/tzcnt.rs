@@ -26,17 +26,17 @@ use int::Int;
 /// assert_eq!(0b0000_0000u32.tzcnt(), 32u32);
 /// assert_eq!(tzcnt(0b0000_0001u64), 0u64);
 /// ```
-pub fn tzcnt<T: Int>(x: T) -> T {
+#[inline] pub fn tzcnt<T: Int>(x: T) -> T {
     x.trailing_zeros() // TODO: ... write the algorithm
 }
 
 /// Method version of [`tzcnt`](fn.tzcnt.html).
 pub trait TZCNT {
-    fn tzcnt(self) -> Self;
+    #[inline] fn tzcnt(self) -> Self;
 }
 
 impl<T: Int> TZCNT for T {
-    fn tzcnt(self) -> Self {
+    #[inline] fn tzcnt(self) -> Self {
         tzcnt(self)
     }
 }

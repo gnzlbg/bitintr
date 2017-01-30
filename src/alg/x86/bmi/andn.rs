@@ -28,17 +28,17 @@ use int::Int;
 /// assert_eq!(andn(0b0100_0000u8, 0b0101_1101u8), 0b0001_1101u8);
 /// assert_eq!(0b0100_0000u8.andn(0b0101_1101u8), 0b0001_1101u8);
 /// ```
-pub fn andn<T: Int>(x: T, y: T) -> T {
+#[inline] pub fn andn<T: Int>(x: T, y: T) -> T {
     !x & y
 }
 
 /// Method version of [`andn`](fn.andn.html).
 pub trait ANDN {
-    fn andn(self, Self) -> Self;
+    #[inline] fn andn(self, Self) -> Self;
 }
 
 impl<T: Int> ANDN for T {
-    fn andn(self, y: Self) -> Self {
+    #[inline] fn andn(self, y: Self) -> Self {
         andn(self, y)
     }
 }

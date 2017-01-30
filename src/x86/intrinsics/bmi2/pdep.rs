@@ -13,7 +13,7 @@ mod intrinsics {
         fn x86_bmi2_pdep_64(x: u64, y: u64) -> u64;
     }
 
-    pub unsafe fn pdep<T: Int>(x: T, mask: T) -> T {
+    #[inline] pub unsafe fn pdep<T: Int>(x: T, mask: T) -> T {
         match size_of::<T>() * 8 {
             32 => T::from_u32(x86_bmi2_pdep_32(x.to_u32(), mask.to_u32())),
             64 => T::from_u64(x86_bmi2_pdep_64(x.to_u64(), mask.to_u64())),
@@ -55,7 +55,7 @@ mod intrinsics {
 /// assert_eq!(n.pdep(m1), s1);
 /// ```
 #[cfg(RUSTC_IS_NIGHTLY)]
-pub fn pdep<T: Int>(x: T, mask: T) -> T {
+#[inline] pub fn pdep<T: Int>(x: T, mask: T) -> T {
     if cfg!(target_feature = "bmi2") {
         unsafe { intrinsics::pdep(x, mask) }
     } else {
@@ -63,17 +63,17 @@ pub fn pdep<T: Int>(x: T, mask: T) -> T {
     }
 }
 #[cfg(not(RUSTC_IS_NIGHTLY))]
-pub fn pdep<T: Int>(x: T, mask: T) -> T {
+#[inline] pub fn pdep<T: Int>(x: T, mask: T) -> T {
     alg::x86::bmi2::pdep(x, mask)
 }
 
 /// Method version of [`pdep`](fn.pdep.html).
 pub trait PDEP {
-    fn pdep(self, Self) -> Self;
+    #[inline] fn pdep(self, Self) -> Self;
 }
 
 impl<T: Int> PDEP for T {
-    fn pdep(self, mask: Self) -> Self {
+    #[inline] fn pdep(self, mask: Self) -> Self {
         pdep(self, mask)
     }
 }

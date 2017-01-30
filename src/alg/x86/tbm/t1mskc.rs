@@ -21,17 +21,17 @@ use int::Int;
 /// assert_eq!(t1mskc(0b0101_0111u8), 0b1111_1000u8);
 /// assert_eq!(0b0101_0110u8.t1mskc(), 0b1111_1111u8);
 /// ```
-pub fn t1mskc<T: Int>(x: T) -> T {
+#[inline] pub fn t1mskc<T: Int>(x: T) -> T {
     !x | (x.wrapping_add(T::one()))
 }
 
 /// Method version of [`t1mskc`](fn.t1mskc.html).
 pub trait T1MSKC {
-    fn t1mskc(self) -> Self;
+    #[inline] fn t1mskc(self) -> Self;
 }
 
 impl<T: Int> T1MSKC for T {
-    fn t1mskc(self) -> T {
+    #[inline] fn t1mskc(self) -> T {
         t1mskc(self)
     }
 }

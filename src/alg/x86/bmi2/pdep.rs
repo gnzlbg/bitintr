@@ -3,7 +3,7 @@ use int::Int;
 /// Parallel bits deposit.
 ///
 /// See [`x86::bmi2::pdep`](fn.pdep.html).
-pub fn pdep<T: Int>(x: T, mask_: T) -> T {
+#[inline] pub fn pdep<T: Int>(x: T, mask_: T) -> T {
     let mut res = T::zero();
     let mut mask = mask_;
     let mut bb = T::one();
@@ -21,11 +21,11 @@ pub fn pdep<T: Int>(x: T, mask_: T) -> T {
 }
 
 pub trait PDEP {
-    fn pdep(self, Self) -> Self;
+    #[inline] fn pdep(self, Self) -> Self;
 }
 
 impl<T: Int> PDEP for T {
-    fn pdep(self, y: Self) -> Self {
+    #[inline] fn pdep(self, y: Self) -> Self {
         pdep(self, y)
     }
 }

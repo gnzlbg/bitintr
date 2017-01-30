@@ -10,22 +10,26 @@ asm_dir = './asm'
 files = set()
 verbose = False
 
+def arm_triplet(arch) :
+    triples = { 'armv7' : 'armv7-unknown-linux-gnueabihf',
+                'armv8' : 'aarch64-unknown-linux-gnu' }
+    return triples[arch]
+
+
 class File(object):
     def __init__(self, path_rs):
         self.path_rs = path_rs
         self.path_asm_should = os.path.join(os.path.splitext(path_rs)[0] + ".asm")
         self.path_asm_output = os.path.join(os.path.splitext(path_rs)[0] + "_output.asm")
         self.name = os.path.splitext(os.path.basename(path_rs))[0]
-        self.feature = None
-        if self.name.count("_") > 0:
-            self.feature = self.name.split("_")[0]
+        self.feature = self.name.split("_")[1]
+        self.arch = self.name.split("_")[0]
+
+        if self.feature == "none":
+            self.feature = None
         
     def __str__(self):
-        s =  "name: " + self.name + ", path-rs: " + self.path_rs + ", path-asm: " + self.path_asm_should
-        if self.feature:
-            s = s + ", feature: " + self.feature
-        return s
-
+        return  "name: " + self.name + ", path-rs: " + self.path_rs + ", path-asm: " + self.path_asm_should + ', arch: ' + self.arch + ", feature: " + str(self.feature)
 
     def __hash__(self):
         return hash(self.name)
@@ -52,13 +56,20 @@ def compile_file(file):
     cargo_args = 'cargo rustc --verbose --release -- -C panic=abort '
     if file.feature:
         cargo_args = cargo_args + '-C target-feature=+{}'.format(file.feature)
+    if file.arch == 'armv7' or file.arch == 'armv8':
+        cargo_args = cargo_args + '--target={}'.format(arm_triplet(file.arch))
+
     call(str(cargo_args))
 
     rustc_args = 'rustc --verbose -C opt-level=3 -C panic="abort" --extern bitintr=target/release/libbitintr.rlib --crate-type lib';
     if file.feature:
         rustc_args = rustc_args + ' -C target-feature=+{}'.format(file.feature)
+    if file.arch == 'armv7' or file.arch == 'armv8':
+        rustc_args = rustc_args + ' --target={}'.format(arm_triplet(file.arch))
     rustc_args = rustc_args + ' --emit asm {} -o {}'.format(file.path_rs, file.path_asm_output)
     call(rustc_args)
+
+
 
     if verbose:
         print "...done!"

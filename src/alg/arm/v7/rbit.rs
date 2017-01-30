@@ -82,18 +82,18 @@ mod tests {
 
     #[test]
     fn rbit_u8() {
-        (0..u8::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+        (0..u8::max_value()).map(|x| rbit_invariant(x)).last();
     }
     #[test]
     fn rbit_u16() {
-        (0..u16::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+        (0..u16::max_value()).map(|x| rbit_invariant(x)).last();
     }
     #[test]
     fn rbit_u32() {
-        (0..u32::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+        (0..u32::max_value()).map(|x| rbit_invariant(x)).last();
     }
     #[test]
     fn rbit_u64() {
-        (0..u64::max_value()).map(|x| rbit_invariant(x)).collect::<Vec<_>>();
+        (0..u64::max_value()).map(|x| rbit_invariant(x)).last();
     }
 }
