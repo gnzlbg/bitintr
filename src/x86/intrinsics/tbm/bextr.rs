@@ -15,12 +15,8 @@ mod intrinsics {
 
     pub unsafe fn bextr<T: Int>(source: T, range: T) -> T {
         match size_of::<T>() * 8 {
-            32 => {
-                T::from_u32(x86_bmi_bextr_32(source.to_u32(), range.to_u32()))
-            }
-            64 => {
-                T::from_u64(x86_bmi_bextr_64(source.to_u64(), range.to_u64()))
-            }
+            32 => T::from_u32(x86_bmi_bextr_32(source.to_u32(), range.to_u32())),
+            64 => T::from_u64(x86_bmi_bextr_64(source.to_u64(), range.to_u64())),
             _ => alg::x86::tbm::bextr(source, range),
         }
     }
@@ -55,20 +51,17 @@ mod intrinsics {
 /// assert_eq!(bextr(0b0000_0000_0101_0000u16, 0b0000_0100_0000_0100u16), 0b0000_0000_0000_0101u16);
 /// assert_eq!(0b0000_0000_0101_0000u16.bextr(0b0000_0100_0000_0100u16), 0b0000_0000_0000_0101u16);
 /// ```
+#[cfg(RUSTC_IS_NIGHTLY)]
 pub fn bextr<T: Int>(source: T, range: T) -> T {
-    #[cfg(RUSTC_IS_NIGHTLY)]
-    {
-        if cfg!(target_feature = "bmi2") {
-            unsafe { intrinsics::bextr(source, range) }
-        } else {
-            alg::x86::tbm::bextr(source, range)
-        }
-    }
-
-    #[cfg(not(RUSTC_IS_NIGHTLY))]
-    {
+    if cfg!(target_feature = "bmi2") {
+        unsafe { intrinsics::bextr(source, range) }
+    } else {
         alg::x86::tbm::bextr(source, range)
     }
+}
+#[cfg(not(RUSTC_IS_NIGHTLY))]
+pub fn bextr<T: Int>(source: T, range: T) -> T {
+    alg::x86::tbm::bextr(source, range)
 }
 
 /// Method version of [`bextr`](fn.bextr.html).

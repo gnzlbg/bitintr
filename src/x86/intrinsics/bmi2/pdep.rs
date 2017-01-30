@@ -54,20 +54,17 @@ mod intrinsics {
 /// assert_eq!(pdep(n, m0), s0);
 /// assert_eq!(n.pdep(m1), s1);
 /// ```
+#[cfg(RUSTC_IS_NIGHTLY)]
 pub fn pdep<T: Int>(x: T, mask: T) -> T {
-    #[cfg(RUSTC_IS_NIGHTLY)]
-    {
-        if cfg!(target_feature = "bmi2") {
-            unsafe { intrinsics::pdep(x, mask) }
-        } else {
-            alg::x86::bmi2::pdep(x, mask)
-        }
+    if cfg!(target_feature = "bmi2") {
+        unsafe { intrinsics::pdep(x, mask) }
+    } else {
+        alg::x86::bmi2::pdep(x, mask)
     }
-
-    #[cfg(not(RUSTC_IS_NIGHTLY))]
-    {
-        alg::x86::bmi2::pdep(x, mask)    
-    }
+}
+#[cfg(not(RUSTC_IS_NIGHTLY))]
+pub fn pdep<T: Int>(x: T, mask: T) -> T {
+    alg::x86::bmi2::pdep(x, mask)
 }
 
 /// Method version of [`pdep`](fn.pdep.html).

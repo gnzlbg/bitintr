@@ -19,30 +19,41 @@ use int::Int;
 /// ```
 pub fn rbit<T: Int>(y: T) -> T {
     let mut x = y;
-    let width  = T::byte_size();
+    let width = T::byte_size();
     let k = T::bit_size() - T::from_u32(1);
 
     {
-        let mut up0 = |i, l, r| {
-            if k & i > T::from_u32(0) {
-                x = ((x & l) << i) | ((x & r) >> i);
-            }
+        let mut up0 = |i, l, r| if k & i > T::from_u32(0) {
+            x = ((x & l) << i) | ((x & r) >> i);
         };
 
-        up0(T::from_u32(1), T::from_u64(0x5555555555555555u64), T::from_u64(0xAAAAAAAAAAAAAAAAu64));
-        up0(T::from_u32(2), T::from_u64(0x3333333333333333u64), T::from_u64(0xCCCCCCCCCCCCCCCCu64));
-        up0(T::from_u32(4), T::from_u64(0x0F0F0F0F0F0F0F0Fu64), T::from_u64(0xF0F0F0F0F0F0F0F0u64));
+        up0(T::from_u32(1),
+            T::from_u64(0x5555555555555555u64),
+            T::from_u64(0xAAAAAAAAAAAAAAAAu64));
+        up0(T::from_u32(2),
+            T::from_u64(0x3333333333333333u64),
+            T::from_u64(0xCCCCCCCCCCCCCCCCu64));
+        up0(T::from_u32(4),
+            T::from_u64(0x0F0F0F0F0F0F0F0Fu64),
+            T::from_u64(0xF0F0F0F0F0F0F0F0u64));
     }
     {
-        let mut up1 = |i, s, l, r| {
-            if width > i && (k & s > T::from_u32(0)) {
-                x = ((x & l) << s) | ((x & r) >> s);
-            }
+        let mut up1 = |i, s, l, r| if width > i && (k & s > T::from_u32(0)) {
+            x = ((x & l) << s) | ((x & r) >> s);
         };
 
-        up1(T::from_u32(1), T::from_u32(8), T::from_u64(0x00FF00FF00FF00FFu64), T::from_u64(0xFF00FF00FF00FF00u64));
-        up1(T::from_u32(2), T::from_u32(16), T::from_u64(0x0000FFFF0000FFFFu64), T::from_u64(0xFFFF0000FFFF0000u64));
-        up1(T::from_u32(4), T::from_u32(32), T::from_u64(0x00000000FFFFFFFFu64), T::from_u64(0xFFFFFFFF00000000u64));
+        up1(T::from_u32(1),
+            T::from_u32(8),
+            T::from_u64(0x00FF00FF00FF00FFu64),
+            T::from_u64(0xFF00FF00FF00FF00u64));
+        up1(T::from_u32(2),
+            T::from_u32(16),
+            T::from_u64(0x0000FFFF0000FFFFu64),
+            T::from_u64(0xFFFF0000FFFF0000u64));
+        up1(T::from_u32(4),
+            T::from_u32(32),
+            T::from_u64(0x00000000FFFFFFFFu64),
+            T::from_u64(0xFFFFFFFF00000000u64));
     }
     x
 }
