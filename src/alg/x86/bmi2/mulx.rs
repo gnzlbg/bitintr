@@ -22,7 +22,6 @@ fn mulx_u32(x: u32, y: u32) -> (u32, u32) {
     (result as u32, hi)
 }
 
-
 #[inline]
 fn mulx_u64(x: u64, y: u64) -> (u64, u64) {
     #[cfg(RUSTC_IS_NIGHTLY)]
