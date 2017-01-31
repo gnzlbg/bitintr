@@ -49,20 +49,21 @@ mod intrinsics {
 /// assert_eq!(bzhi(n, 5), s);
 /// assert_eq!(n.bzhi(5), s);
 /// ```
-#[cfg(RUSTC_IS_NIGHTLY)]
 #[inline]
 pub fn bzhi<T: Int>(x: T, bit_position: T) -> T {
-    if cfg!(target_feature = "bmi2") {
-        debug_assert!(bit_position < T::bit_size());
-        unsafe { intrinsics::bzhi(x, bit_position) }
-    } else {
+    #[cfg(RUSTC_IS_NIGHTLY)]
+    {
+        if cfg!(target_feature = "bmi2") {
+            debug_assert!(bit_position < T::bit_size());
+            unsafe { intrinsics::bzhi(x, bit_position) }
+        } else {
+            alg::x86::bmi2::bzhi(x, bit_position)
+        }
+    }
+    #[cfg(not(RUSTC_IS_NIGHTLY))]
+    {
         alg::x86::bmi2::bzhi(x, bit_position)
     }
-}
-#[cfg(not(RUSTC_IS_NIGHTLY))]
-#[inline]
-pub fn bzhi<T: Int>(x: T, bit_position: T) -> T {
-    alg::x86::bmi2::bzhi(x, bit_position)
 }
 
 /// Method version of [`bzhi`](fn.bzhi.html).

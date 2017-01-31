@@ -52,19 +52,20 @@ mod intrinsics {
 /// assert_eq!(bextr(0b0000_0000_0101_0000u16, 0b0000_0100_0000_0100u16), 0b0000_0000_0000_0101u16);
 /// assert_eq!(0b0000_0000_0101_0000u16.bextr(0b0000_0100_0000_0100u16), 0b0000_0000_0000_0101u16);
 /// ```
-#[cfg(RUSTC_IS_NIGHTLY)]
 #[inline]
 pub fn bextr<T: Int>(source: T, range: T) -> T {
-    if cfg!(target_feature = "bmi2") {
-        unsafe { intrinsics::bextr(source, range) }
-    } else {
+    #[cfg(RUSTC_IS_NIGHTLY)]
+    {
+        if cfg!(target_feature = "bmi2") {
+            unsafe { intrinsics::bextr(source, range) }
+        } else {
+            alg::x86::tbm::bextr(source, range)
+        }
+    }
+    #[cfg(not(RUSTC_IS_NIGHTLY))]
+    {
         alg::x86::tbm::bextr(source, range)
     }
-}
-#[cfg(not(RUSTC_IS_NIGHTLY))]
-#[inline]
-pub fn bextr<T: Int>(source: T, range: T) -> T {
-    alg::x86::tbm::bextr(source, range)
 }
 
 /// Method version of [`bextr`](fn.bextr.html).

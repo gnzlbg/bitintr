@@ -21,6 +21,8 @@ pub trait Int
     + Shl<Self, Output=Self>
     + PartialEq + PartialOrd
 {
+    type Unsigned: Int;
+    type Signed: Int;
     #[inline] fn one() -> Self;
     #[inline] fn zero() -> Self;
     #[inline] fn byte_size() -> Self;
@@ -32,6 +34,8 @@ pub trait Int
     #[inline] fn wrapping_neg(self) -> Self;
     #[inline] fn wrapping_add(self, Self) -> Self;
     #[inline] fn wrapping_sub(self, Self) -> Self;
+    #[inline] fn wrapping_shl(self, Self) -> Self;
+    #[inline] fn wrapping_shr(self, Self) -> Self;
     #[inline] fn to_u32(self) -> u32;
     #[inline] fn to_u64(self) -> u64;
     #[inline] fn from_u16(u16) -> Self;
@@ -45,11 +49,17 @@ pub trait Int
     #[inline] fn to_be(self) -> Self;
     #[inline] fn to_le(self) -> Self;
     #[inline] fn pow(self, exp: u32) -> Self;
+    #[inline] fn to_unsigned(self) -> Self::Unsigned;
+    #[inline] fn to_signed(self) -> Self::Signed;
+    #[inline] fn from_unsigned(Self::Unsigned) -> Self;
+    #[inline] fn from_signed(Self::Signed) -> Self;
 }
 
 macro_rules! int_impl {
-    ($T:ty) => (
+    ($T:ty, $UT:ty, $ST:ty) => (
         impl Int for $T {
+            type Unsigned = $UT;
+            type Signed = $ST;
             #[inline] fn one() -> Self { 1 as Self }
             #[inline] fn zero() -> Self { 0 as Self }
 
@@ -82,6 +92,13 @@ macro_rules! int_impl {
             #[inline] fn wrapping_sub(self, o: Self) -> $T {
                 self.wrapping_sub(o) as $T
             }
+            #[inline] fn wrapping_shl(self, o: Self) -> $T {
+                self.wrapping_shl(o as u32) as $T
+            }
+            #[inline] fn wrapping_shr(self, o: Self) -> $T {
+                self.wrapping_shr(o as u32) as $T
+            }
+
             #[inline] fn to_u32(self) -> u32 { self as u32 }
             #[inline] fn to_u64(self) -> u64 { self as u64 }
             #[inline] fn from_u16(x: u16) -> Self { x as Self }
@@ -111,19 +128,33 @@ macro_rules! int_impl {
             #[inline] fn pow(self, exp: u32) -> Self {
                 <$T>::pow(self, exp)
             }
+
+            #[inline] fn to_unsigned(self) -> Self::Unsigned {
+                self as $UT
+            }
+            #[inline] fn to_signed(self) -> Self::Signed {
+                self as $ST
+            }
+            #[inline] fn from_unsigned(x: Self::Unsigned) -> Self {
+                x as $T
+            }
+            #[inline] fn from_signed(x: Self::Signed) -> Self {
+                x as $T
+            }
+
         }
     )
 }
 
 
-int_impl!(u8);
-int_impl!(u16);
-int_impl!(u32);
-int_impl!(u64);
-int_impl!(usize);
+int_impl!(u8, u8, i8);
+int_impl!(u16, u16, i16);
+int_impl!(u32, u32, i32);
+int_impl!(u64, u64, i64);
+int_impl!(usize, usize, isize);
 
-int_impl!(i8);
-int_impl!(i16);
-int_impl!(i32);
-int_impl!(i64);
-int_impl!(isize);
+int_impl!(i8, u8, i8);
+int_impl!(i16, u16, i16);
+int_impl!(i32, u32, i32);
+int_impl!(i64, u64, i64);
+int_impl!(isize, usize, isize);

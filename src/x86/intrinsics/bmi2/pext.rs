@@ -4,7 +4,7 @@ use alg;
 #[cfg(RUSTC_IS_NIGHTLY)]
 mod intrinsics {
     use int::Int;
-    use core::mem::size_of;
+    use std::mem::size_of;
     use alg;
 
     #[allow(dead_code)]
@@ -56,19 +56,20 @@ mod intrinsics {
 /// assert_eq!(pext(n, m0), s0);
 /// assert_eq!(n.pext(m1), s1);
 /// ```
-#[cfg(RUSTC_IS_NIGHTLY)]
 #[inline]
 pub fn pext<T: Int>(x: T, mask: T) -> T {
-    if cfg!(target_feature = "bmi2") {
-        unsafe { intrinsics::pext(x, mask) }
-    } else {
+    #[cfg(RUSTC_IS_NIGHTLY)]
+    {
+        if cfg!(target_feature = "bmi2") {
+            unsafe { intrinsics::pext(x, mask) }
+        } else {
+            alg::x86::bmi2::pext(x, mask)
+        }
+    }
+    #[cfg(not(RUSTC_IS_NIGHTLY))]
+    {
         alg::x86::bmi2::pext(x, mask)
     }
-}
-#[cfg(not(RUSTC_IS_NIGHTLY))]
-#[inline]
-pub fn pext<T: Int>(x: T, mask: T) -> T {
-    alg::x86::bmi2::pext(x, mask)
 }
 
 /// Method version of [`pext`](fn.pext.html).

@@ -18,9 +18,9 @@ rustc_version = "0.1.*"
 bencher = "0.1.*"
 
 [profile.test]
-opt-level = 3
+opt-level = 0
 debug = true
-lto = true
+lto = false
 debug-assertions = true
 codegen-units = 1
 panic = 'unwind'
