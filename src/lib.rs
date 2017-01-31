@@ -6,7 +6,9 @@
 #![cfg_attr(feature = "cargo-clippy", allow(doc_markdown))]
 #![no_std]
 
-//! `bitintr` offers portable bit manipulation intrinsics.
+//! `bitintr` offers portable bit manipulation intrinsics
+//! ([@github](https://github.com/gnzlbg/bitintr),
+//! [@crates.io](https://crates.io/crates/bitintr)).
 //!
 //! The intrinsics are named after their CPU instruction and organized in
 //! modules named after their architecture/instruction set:
@@ -14,7 +16,9 @@
 //!
 //! They are implemented for all integer types _except_ `u128/i128`. Whether a
 //! fallback software implementation is used depends on the integer types
-//! involved and the instruction sets supported by the target.
+//! involved, the instruction sets supported by the target, and/or whether a
+//! nightly or stable compiler is used (some optimizations are only available in
+//! nightly).
 //!
 //! ## Example
 //!

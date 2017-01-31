@@ -19,11 +19,20 @@ bencher = "0.1.*"
 
 [profile.test]
 opt-level = 3
-debug = 2
+debug = true
 lto = true
 debug-assertions = true
 codegen-units = 1
 panic = 'unwind'
+
+[profile.bench]
+opt-level = 3
+debug = false
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+panic = 'abort'
 
 [[bench]]
 name = "rbit"
