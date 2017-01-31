@@ -10,6 +10,7 @@ readme = "readme.md"
 keywords = ["portable", "bit", "manipulation", "intrinsics"]
 license = "MIT"
 build = "build.rs"
+categories = ["algorithms"]
 
 [build-dependencies]
 rustc_version = "0.1.*"
