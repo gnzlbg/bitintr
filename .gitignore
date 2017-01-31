@@ -9,5 +9,6 @@ Cargo.lock
 # Rustfmt backup files
 *.rs.bk
 
-# ASM output files
+# ASM and LLVM IR output files
 /asm/*_output.asm
+/asm/*_ir.ll
