@@ -3,7 +3,6 @@
 #![cfg_attr(RUSTC_IS_NIGHTLY, feature(i128_type))]
 #![cfg_attr(RUSTC_IS_NIGHTLY, feature(link_llvm_intrinsics))]
 
-#![cfg_attr(feature = "cargo-clippy", allow(doc_markdown))]
 #![no_std]
 
 //! `bitintr` offers portable bit manipulation intrinsics
