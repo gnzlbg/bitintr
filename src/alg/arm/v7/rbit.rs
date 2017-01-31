@@ -73,14 +73,14 @@ fn bitreverse_u8(i: u8) -> u8 {
         .wrapping_shr(32)) as u8
 }
 
-
-
 // bitreverse for i8 using 4 u64 multipy
 #[inline]
 fn bitreverse_i8(i: i8) -> i8 {
     #[cfg(RUSTC_IS_NIGHTLY)]
     {
-        // llvm.bitreverse.i8 generates bad code in LLVM 3.9
+        // BUG: https://github.com/gnzlbg/bitintr/issues/4
+        // TL;DR: llvm.bitreverse.i8 generates very bad code in LLVM 3.9
+        //
         // unsafe { bitrev_i8(i) }
         bitreverse_u8(i as u8) as i8
     }
