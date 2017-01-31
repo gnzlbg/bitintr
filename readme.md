@@ -57,7 +57,8 @@ When compiled with a rust nightly compiler the following unstable features are
 used to generate the corresponding CPU instruction in _all_ cases:
 
 - [`cfg_target_feature`][cfg_target_feature] for target-dependent behavior,
-- [`platform_intrinsics`][platform_intrinsics_feature] for using the bitwise manipulation compiler intrinsics, and
+- [`platform_intrinsics`][platform_intrinsics_feature] for using the bitwise manipulation compiler intrinsics,
+- [`link_llvm_intrinsics`][link_llvm_intrinsics_feature] for using the llvm intrinsics not yet available in rustc, and
 - [`i128_type`][i128_type_feature] support for _efficient_ 64-bit multiplication (using `u128`).
 
 ## License
@@ -91,3 +92,4 @@ any additional terms or conditions.
 [cfg_target_feature]: https://github.com/rust-lang/rust/issues/29717
 [platform_intrinsics_feature]: https://doc.rust-lang.org/book/intrinsics.html
 [i128_type_feature]: https://github.com/rust-lang/rust/issues/35118
+[link_llvm_intrinsics_feature]: https://github.com/rust-lang/rust/issues/29602

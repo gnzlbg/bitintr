@@ -13,7 +13,8 @@ mod intrinsics {
         fn x86_bmi2_pext_64(x: u64, y: u64) -> u64;
     }
 
-    #[inline] pub unsafe fn pext<T: Int>(x: T, mask: T) -> T {
+    #[inline]
+    pub unsafe fn pext<T: Int>(x: T, mask: T) -> T {
         match size_of::<T>() * 8 {
             32 => T::from_u32(x86_bmi2_pext_32(x.to_u32(), mask.to_u32())),
             64 => T::from_u64(x86_bmi2_pext_64(x.to_u64(), mask.to_u64())),
@@ -56,7 +57,8 @@ mod intrinsics {
 /// assert_eq!(n.pext(m1), s1);
 /// ```
 #[cfg(RUSTC_IS_NIGHTLY)]
-#[inline] pub fn pext<T: Int>(x: T, mask: T) -> T {
+#[inline]
+pub fn pext<T: Int>(x: T, mask: T) -> T {
     if cfg!(target_feature = "bmi2") {
         unsafe { intrinsics::pext(x, mask) }
     } else {
@@ -64,17 +66,20 @@ mod intrinsics {
     }
 }
 #[cfg(not(RUSTC_IS_NIGHTLY))]
-#[inline] pub fn pext<T: Int>(x: T, mask: T) -> T {
+#[inline]
+pub fn pext<T: Int>(x: T, mask: T) -> T {
     alg::x86::bmi2::pext(x, mask)
 }
 
 /// Method version of [`pext`](fn.pext.html).
 pub trait PEXT {
-    #[inline] fn pext(self, Self) -> Self;
+    #[inline]
+    fn pext(self, Self) -> Self;
 }
 
 impl<T: Int> PEXT for T {
-    #[inline] fn pext(self, mask: Self) -> Self {
+    #[inline]
+    fn pext(self, mask: Self) -> Self {
         pext(self, mask)
     }
 }

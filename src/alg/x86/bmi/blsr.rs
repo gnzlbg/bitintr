@@ -22,18 +22,21 @@ use int::Int;
 /// assert_eq!(blsr(0b0011_0000u8), 0b0010_0000u8);
 /// assert_eq!(0b0011_0000u8.blsr(), 0b0010_0000u8);
 /// ```
-#[inline] pub fn blsr<T: Int>(x: T) -> T {
+#[inline]
+pub fn blsr<T: Int>(x: T) -> T {
     debug_assert!(x != T::zero());
     x & (x.wrapping_sub(T::one()))
 }
 
 /// Method version of [`blsr`](fn.blsr.html).
 pub trait BLSR {
-    #[inline] fn blsr(self) -> Self;
+    #[inline]
+    fn blsr(self) -> Self;
 }
 
 impl<T: Int> BLSR for T {
-    #[inline] fn blsr(self) -> Self {
+    #[inline]
+    fn blsr(self) -> Self {
         blsr(self)
     }
 }

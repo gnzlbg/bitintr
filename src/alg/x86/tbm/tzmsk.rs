@@ -21,17 +21,20 @@ use int::Int;
 /// assert_eq!(tzmsk(0b0101_1000u8), 0b0000_0111u8);
 /// assert_eq!(0b0101_1001u8.tzmsk(), 0b0000_0000u8);
 /// ```
-#[inline] pub fn tzmsk<T: Int>(x: T) -> T {
+#[inline]
+pub fn tzmsk<T: Int>(x: T) -> T {
     !x & (x.wrapping_sub(T::one()))
 }
 
 /// Method version of [`tzmsk`](fn.tzmsk.html).
 pub trait TZMSK {
-    #[inline] fn tzmsk(self) -> Self;
+    #[inline]
+    fn tzmsk(self) -> Self;
 }
 
 impl<T: Int> TZMSK for T {
-    #[inline] fn tzmsk(self) -> T {
+    #[inline]
+    fn tzmsk(self) -> T {
         tzmsk(self)
     }
 }

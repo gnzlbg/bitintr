@@ -23,17 +23,20 @@ use int::Int;
 /// assert_eq!(n.rev(), m);
 /// assert_eq!(m.rev(), n);
 /// ```
-#[inline] pub fn rev<T: Int>(x: T) -> T {
+#[inline]
+pub fn rev<T: Int>(x: T) -> T {
     x.swap_bytes()
 }
 
 /// Method version of [`rev`](fn.rev.html).
 pub trait REV {
-    #[inline] fn rev(self) -> Self;
+    #[inline]
+    fn rev(self) -> Self;
 }
 
 impl<T: Int> REV for T {
-    #[inline] fn rev(self) -> T {
+    #[inline]
+    fn rev(self) -> T {
         rev(self)
     }
 }

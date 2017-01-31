@@ -20,17 +20,20 @@ use int::Int;
 /// assert_eq!(blsfill(0b0101_0100u8), 0b0101_0111u8);
 /// assert_eq!(0b0000_0000u8.blsfill(), 0b1111_1111u8);
 /// ```
-#[inline] pub fn blsfill<T: Int>(x: T) -> T {
+#[inline]
+pub fn blsfill<T: Int>(x: T) -> T {
     x | (x.wrapping_sub(T::one()))
 }
 
 /// Method version of [`blsfill`](fn.blsfill.html).
 pub trait BLSFILL {
-    #[inline] fn blsfill(self) -> Self;
+    #[inline]
+    fn blsfill(self) -> Self;
 }
 
 impl<T: Int> BLSFILL for T {
-    #[inline] fn blsfill(self) -> T {
+    #[inline]
+    fn blsfill(self) -> T {
         blsfill(self)
     }
 }

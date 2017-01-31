@@ -20,17 +20,20 @@ use int::Int;
 /// assert_eq!(blci(0b0101_0000u8), 0b1111_1110u8);
 /// assert_eq!(0b1111_1111u8.blci(), 0b1111_1111u8);
 /// ```
-#[inline] pub fn blci<T: Int>(x: T) -> T {
+#[inline]
+pub fn blci<T: Int>(x: T) -> T {
     x | !(x.wrapping_add(T::one()))
 }
 
 /// Method version of [`blci`](fn.blci.html).
 pub trait BLCI {
-    #[inline] fn blci(self) -> Self;
+    #[inline]
+    fn blci(self) -> Self;
 }
 
 impl<T: Int> BLCI for T {
-    #[inline] fn blci(self) -> T {
+    #[inline]
+    fn blci(self) -> T {
         blci(self)
     }
 }

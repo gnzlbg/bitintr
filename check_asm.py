@@ -21,6 +21,7 @@ class File(object):
         self.path_rs = path_rs
         self.path_asm_should = os.path.join(os.path.splitext(path_rs)[0] + ".asm")
         self.path_asm_output = os.path.join(os.path.splitext(path_rs)[0] + "_output.asm")
+        self.path_llvmir_output = os.path.join(os.path.splitext(path_rs)[0] + "_ir.ll")
         self.name = os.path.splitext(os.path.basename(path_rs))[0]
         self.feature = self.name.split("_")[1]
         self.arch = self.name.split("_")[0]
@@ -65,8 +66,10 @@ def compile_file(file):
         rustc_args = rustc_args + ' -C target-feature=+{}'.format(file.feature)
     if file.arch == 'armv7' or file.arch == 'armv8':
         rustc_args = rustc_args + ' --target={}'.format(arm_triplet(file.arch))
-    rustc_args = rustc_args + ' --emit asm {} -o {}'.format(file.path_rs, file.path_asm_output)
-    call(rustc_args)
+    rustc_args_asm = rustc_args + ' --emit asm {} -o {}'.format(file.path_rs, file.path_asm_output)
+    call(rustc_args_asm)
+    rustc_args_ll = rustc_args + ' --emit llvm-ir {} -o {}'.format(file.path_rs, file.path_llvmir_output)
+    call(rustc_args_ll)
 
 
 

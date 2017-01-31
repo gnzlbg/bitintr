@@ -25,17 +25,20 @@ use int::Int;
 /// assert_eq!(n.cls(), 10);
 /// assert_eq!(cls(0b1111_1111u8), 8);
 /// ```
-#[inline] pub fn cls<T: Int>(x: T) -> T {
+#[inline]
+pub fn cls<T: Int>(x: T) -> T {
     T::leading_zeros(!x)
 }
 
 /// Method version of [`cls`](fn.cls.html).
 pub trait CLS {
-    #[inline] fn cls(self) -> Self;
+    #[inline]
+    fn cls(self) -> Self;
 }
 
 impl<T: Int> CLS for T {
-    #[inline] fn cls(self) -> T {
+    #[inline]
+    fn cls(self) -> T {
         cls(self)
     }
 }

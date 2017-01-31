@@ -21,17 +21,20 @@ use int::Int;
 /// assert_eq!(blsi(0b1101_0000u8), 0b0001_0000u8);
 /// assert_eq!(0b0100_1000u8.blsi(), 0b0000_1000u8);
 /// ```
-#[inline] pub fn blsi<T: Int>(x: T) -> T {
+#[inline]
+pub fn blsi<T: Int>(x: T) -> T {
     x & x.wrapping_neg()
 }
 
 /// Method version of [`blsi`](fn.blsi.html).
 pub trait BLSI {
-    #[inline] fn blsi(self) -> Self;
+    #[inline]
+    fn blsi(self) -> Self;
 }
 
 impl<T: Int> BLSI for T {
-    #[inline] fn blsi(self) -> Self {
+    #[inline]
+    fn blsi(self) -> Self {
         blsi(self)
     }
 }

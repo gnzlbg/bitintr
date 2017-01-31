@@ -17,17 +17,20 @@ use int::Int;
 /// assert_eq!(blcic(0b0101_0001u8), 0b0000_0010u8);
 /// assert_eq!(blcic(0b1111_1111u8), 0b0000_0000u8);
 /// ```
-#[inline] pub fn blcic<T: Int>(x: T) -> T {
+#[inline]
+pub fn blcic<T: Int>(x: T) -> T {
     !x & (x.wrapping_add(T::one()))
 }
 
 /// Method version of [`blcic`](fn.blcic.html).
 pub trait BLCIC {
-    #[inline] fn blcic(self) -> Self;
+    #[inline]
+    fn blcic(self) -> Self;
 }
 
 impl<T: Int> BLCIC for T {
-    #[inline] fn blcic(self) -> T {
+    #[inline]
+    fn blcic(self) -> T {
         blcic(self)
     }
 }

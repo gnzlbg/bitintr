@@ -23,17 +23,20 @@ use int::Int;
 /// assert_eq!(blsmsk(0b0011_0000u8), 0b0001_1111u8);
 /// assert_eq!(0b0000_0000u8.blsmsk(), 0b1111_1111u8);
 /// ```
-#[inline] pub fn blsmsk<T: Int>(x: T) -> T {
+#[inline]
+pub fn blsmsk<T: Int>(x: T) -> T {
     x ^ (x.wrapping_sub(T::one()))
 }
 
 /// Method version of [`blsmsk`](fn.blsmsk.html).
 pub trait BLSMSK {
-    #[inline] fn blsmsk(self) -> Self;
+    #[inline]
+    fn blsmsk(self) -> Self;
 }
 
 impl<T: Int> BLSMSK for T {
-    #[inline] fn blsmsk(self) -> Self {
+    #[inline]
+    fn blsmsk(self) -> Self {
         blsmsk(self)
     }
 }
