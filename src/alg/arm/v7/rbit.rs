@@ -1,5 +1,4 @@
 use int::Int;
-use std;
 
 #[cfg(RUSTC_IS_NIGHTLY)]
 #[allow(dead_code)]
@@ -17,7 +16,7 @@ extern "C" {
 // generic bitreverse for unsigned integers
 #[allow(dead_code)]
 #[inline]
-fn bitreverse_unsigned<T: Int>(y: T) -> T {
+fn generic_bitreverse_unsigned<T: Int>(y: T) -> T {
     let mut x = y;
     let width = T::byte_size();
     let k = T::bit_size() - T::from_u32(1);
@@ -61,8 +60,8 @@ fn bitreverse_unsigned<T: Int>(y: T) -> T {
 // generic bitreverse:
 #[allow(dead_code)]
 #[inline]
-fn bitreverse<T: Int>(y: T) -> T {
-    T::from_unsigned(bitreverse_unsigned(y.to_unsigned()))
+fn generic_bitreverse<T: Int>(y: T) -> T {
+    T::from_unsigned(generic_bitreverse_unsigned(y.to_unsigned()))
 }
 
 #[allow(dead_code)]
@@ -98,7 +97,7 @@ fn bitreverse_i16(i: i16) -> i16 {
     }
     #[cfg(not(RUSTC_IS_NIGHTLY))]
     {
-        bitreverse(i)
+        generic_bitreverse(i)
     }
 }
 
@@ -110,7 +109,7 @@ fn bitreverse_i32(i: i32) -> i32 {
     }
     #[cfg(not(RUSTC_IS_NIGHTLY))]
     {
-        bitreverse(i)
+        generic_bitreverse(i)
     }
 }
 
@@ -122,88 +121,7 @@ fn bitreverse_i64(i: i64) -> i64 {
     }
     #[cfg(not(RUSTC_IS_NIGHTLY))]
     {
-        bitreverse(i)
-    }
-}
-
-/// Method version of [`rbit`](fn.rbit.html).
-pub trait RBit: Sized {
-    #[inline]
-    fn rbit(self) -> Self;
-}
-
-impl RBit for i8 {
-    #[inline]
-    fn rbit(self) -> i8 {
-        bitreverse_i8(self)
-    }
-}
-
-impl RBit for i16 {
-    #[inline]
-    fn rbit(self) -> i16 {
-        bitreverse_i16(self)
-    }
-}
-
-impl RBit for i32 {
-    #[inline]
-    fn rbit(self) -> i32 {
-        bitreverse_i32(self)
-    }
-}
-
-impl RBit for i64 {
-    #[inline]
-    fn rbit(self) -> i64 {
-        bitreverse_i64(self)
-    }
-}
-
-impl RBit for isize {
-    #[inline]
-    fn rbit(self) -> isize {
-        match std::mem::size_of::<isize>() {
-            32 => bitreverse_i32(self as i32) as isize,
-            64 => bitreverse_i64(self as i64) as isize,
-            _ => unreachable!(),
-        }
-    }
-}
-
-impl RBit for u8 {
-    #[inline]
-    fn rbit(self) -> u8 {
-        (self as i8).rbit() as u8
-    }
-}
-
-impl RBit for u16 {
-    #[inline]
-    fn rbit(self) -> u16 {
-        (self as i16).rbit() as u16
-
-    }
-}
-
-impl RBit for u32 {
-    #[inline]
-    fn rbit(self) -> u32 {
-        (self as i32).rbit() as u32
-    }
-}
-
-impl RBit for u64 {
-    #[inline]
-    fn rbit(self) -> u64 {
-        (self as i64).rbit() as u64
-    }
-}
-
-impl RBit for usize {
-    #[inline]
-    fn rbit(self) -> usize {
-        (self as isize).rbit() as usize
+        generic_bitreverse(i)
     }
 }
 
@@ -226,8 +144,27 @@ impl RBit for usize {
 /// assert_eq!(rbit(0b11111111u32), 0b11111111_00000000_00000000_00000000u32);
 /// ```
 #[inline]
-pub fn rbit<T: RBit>(y: T) -> T {
-    y.rbit()
+pub fn rbit<T: Int>(x: T) -> T {
+    match T::bit_size().to_u8() {
+        8 => T::from_i8(bitreverse_i8(x.to_i8())),
+        16 => T::from_i16(bitreverse_i16(x.to_i16())),
+        32 => T::from_i32(bitreverse_i32(x.to_i32())),
+        64 => T::from_i64(bitreverse_i64(x.to_i64())),
+        _ => unreachable!(),
+    }
+}
+
+/// Method version of [`rbit`](fn.rbit.html).
+pub trait RBit {
+    #[inline]
+    fn rbit(self) -> Self;
+}
+
+impl<T: Int> RBit for T {
+    #[inline]
+    fn rbit(self) -> Self {
+        rbit(self)
+    }
 }
 
 #[cfg(test)]
@@ -237,7 +174,7 @@ mod tests {
     use std::fmt::Debug;
     use alg::arm::v7::RBit;
     #[cfg(RUSTC_IS_NIGHTLY)]
-    use super::bitreverse;
+    use super::generic_bitreverse;
 
     fn rbit_invariant<T: RBit + Int + Debug>(i: T) {
         let j = arm::v7::rbit(i);
@@ -256,7 +193,7 @@ mod tests {
         {
             (0..u8::max_value())
                 .map(|x| {
-                    assert_eq!(arm::v7::rbit(x), bitreverse(x));
+                    assert_eq!(arm::v7::rbit(x), generic_bitreverse(x));
                     x
                 })
                 .count();
@@ -274,7 +211,7 @@ mod tests {
         {
             (0..u16::max_value())
                 .map(|x| {
-                    assert_eq!(arm::v7::rbit(x), bitreverse(x));
+                    assert_eq!(arm::v7::rbit(x), generic_bitreverse(x));
                     x
                 })
                 .count();
@@ -294,7 +231,7 @@ mod tests {
             (0..u32::max_value())
                 .take(1000000)
                 .map(|x| {
-                    assert_eq!(arm::v7::rbit(x), bitreverse(x));
+                    assert_eq!(arm::v7::rbit(x), generic_bitreverse(x));
                     x
                 })
                 .count();
@@ -314,7 +251,7 @@ mod tests {
             (0..u64::max_value())
                 .take(1000000)
                 .map(|x| {
-                    assert_eq!(arm::v7::rbit(x), bitreverse(x));
+                    assert_eq!(arm::v7::rbit(x), generic_bitreverse(x));
                     x
                 })
                 .count();

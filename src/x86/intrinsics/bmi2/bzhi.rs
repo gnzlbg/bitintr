@@ -5,7 +5,6 @@ use alg;
 mod intrinsics {
     use alg;
     use int::Int;
-    use std::mem::size_of;
 
     #[allow(dead_code)]
     extern "platform-intrinsic" {
@@ -15,7 +14,7 @@ mod intrinsics {
 
     #[inline]
     pub unsafe fn bzhi<T: Int>(x: T, y: T) -> T {
-        match size_of::<T>() * 8 {
+        match T::bit_size().to_u8() {
             32 => T::from_u32(x86_bmi2_bzhi_32(x.to_u32(), y.to_u32())),
             64 => T::from_u64(x86_bmi2_bzhi_64(x.to_u64(), y.to_u64())),
             _ => alg::x86::bmi2::bzhi(x, y),

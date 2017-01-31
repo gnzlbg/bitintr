@@ -4,7 +4,6 @@ use alg;
 #[cfg(RUSTC_IS_NIGHTLY)]
 mod intrinsics {
     use int::Int;
-    use std::mem::size_of;
     use alg;
 
     #[allow(dead_code)]
@@ -15,7 +14,7 @@ mod intrinsics {
 
     #[inline]
     pub unsafe fn pext<T: Int>(x: T, mask: T) -> T {
-        match size_of::<T>() * 8 {
+        match T::bit_size().to_u8() {
             32 => T::from_u32(x86_bmi2_pext_32(x.to_u32(), mask.to_u32())),
             64 => T::from_u64(x86_bmi2_pext_64(x.to_u64(), mask.to_u64())),
             _ => alg::x86::bmi2::pext(x, mask),

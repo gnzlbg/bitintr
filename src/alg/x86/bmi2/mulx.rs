@@ -1,59 +1,45 @@
-use std::mem;
+use int::Int;
 
-/// Method version of [`mulx`](fn.mulx.html).
-pub trait MULX: Sized {
-    #[inline]
-    fn mulx(self, Self) -> (Self, Self);
+#[inline]
+fn mulx_u8(x: u8, y: u8) -> (u8, u8) {
+    let result: u16 = (x as u16) * (y as u16);
+    let hi = (result >> 8) as u8;
+    (result as u8, hi)
 }
 
-impl MULX for u8 {
-    #[inline]
-    fn mulx(self, y: u8) -> (u8, u8) {
-        let result: u16 = (self as u16) * (y as u16);
-        let hi = (result >> 8) as u8;
-        (result as u8, hi)
-    }
+
+#[inline]
+fn mulx_u16(x: u16, y: u16) -> (u16, u16) {
+    let result: u32 = (x as u32) * (y as u32);
+    let hi = (result >> 16) as u16;
+    (result as u16, hi)
 }
 
-impl MULX for u16 {
-    #[inline]
-    fn mulx(self, y: u16) -> (u16, u16) {
-        let result: u32 = (self as u32) * (y as u32);
-        let hi = (result >> 16) as u16;
-        (result as u16, hi)
-    }
+#[inline]
+fn mulx_u32(x: u32, y: u32) -> (u32, u32) {
+    let result: u64 = (x as u64) * (y as u64);
+    let hi = (result >> 32) as u32;
+    (result as u32, hi)
 }
 
-impl MULX for u32 {
-    #[inline]
-    fn mulx(self, y: u32) -> (u32, u32) {
-        let result: u64 = (self as u64) * (y as u64);
-        let hi = (result >> 32) as u32;
-        (result as u32, hi)
-    }
-}
 
-#[cfg(RUSTC_IS_NIGHTLY)]
-impl MULX for u64 {
-    #[inline]
-    fn mulx(self, y: u64) -> (u64, u64) {
-        let result: u128 = (self as u128) * (y as u128);
+#[inline]
+fn mulx_u64(x: u64, y: u64) -> (u64, u64) {
+    #[cfg(RUSTC_IS_NIGHTLY)]
+    {
+        let result: u128 = (x as u128) * (y as u128);
         let hi = (result >> 64) as u64;
         (result as u64, hi)
     }
-}
-
-#[cfg(not(RUSTC_IS_NIGHTLY))]
-impl MULX for u64 {
-    #[inline]
-    fn mulx(self, y: u64) -> (u64, u64) {
-        let u1 = self & 0xffffffff;
+    #[cfg(not(RUSTC_IS_NIGHTLY))]
+    {
+        let u1 = x & 0xffffffff;
         let v1 = y & 0xffffffff;
         let t = u1 * v1;
         let w3 = t & 0xffffffff;
         let k = t >> 32;
 
-        let x = self >> 32;
+        let x = x >> 32;
         let t1 = (x * v1) + k;
         let k1 = t1 & 0xffffffff;
         let w1 = t1 >> 32;
@@ -65,66 +51,6 @@ impl MULX for u64 {
         let hi = (x * y1) + w1 + k2;
         let lo = (t2 << 32) + w3;
         (lo, hi)
-    }
-}
-
-impl MULX for usize {
-    #[inline]
-    fn mulx(self, y: usize) -> (usize, usize) {
-        match mem::size_of::<usize>() * 8 {
-            8 => {
-                let tmp = (self as u8).mulx(y as u8);
-                (tmp.0 as usize, tmp.1 as usize)
-            }
-            16 => {
-                let tmp = (self as u16).mulx(y as u16);
-                (tmp.0 as usize, tmp.1 as usize)
-            }
-            32 => {
-                let tmp = (self as u32).mulx(y as u32);
-                (tmp.0 as usize, tmp.1 as usize)
-            }
-            64 => {
-                let tmp = (self as u64).mulx(y as u64);
-                (tmp.0 as usize, tmp.1 as usize)
-            }
-            _ => unreachable!(),
-        }
-    }
-}
-
-impl MULX for i8 {
-    #[inline]
-    fn mulx(self, y: i8) -> (i8, i8) {
-        unsafe { mem::transmute((self as u8).mulx(y as u8)) }
-    }
-}
-
-impl MULX for i16 {
-    #[inline]
-    fn mulx(self, y: i16) -> (i16, i16) {
-        unsafe { mem::transmute((self as u16).mulx(y as u16)) }
-    }
-}
-
-impl MULX for i32 {
-    #[inline]
-    fn mulx(self, y: i32) -> (i32, i32) {
-        unsafe { mem::transmute((self as u32).mulx(y as u32)) }
-    }
-}
-
-impl MULX for i64 {
-    #[inline]
-    fn mulx(self, y: i64) -> (i64, i64) {
-        unsafe { mem::transmute((self as u64).mulx(y as u64)) }
-    }
-}
-
-impl MULX for isize {
-    #[inline]
-    fn mulx(self, y: isize) -> (isize, isize) {
-        unsafe { mem::transmute((self as usize).mulx(y as usize)) }
     }
 }
 
@@ -204,6 +130,38 @@ impl MULX for isize {
 /// }
 /// ```
 #[inline]
-pub fn mulx<T: MULX>(x: T, y: T) -> (T, T) {
-    x.mulx(y)
+pub fn mulx<T: Int>(x: T, y: T) -> (T, T) {
+
+    match T::bit_size().to_u8() {
+        8 => {
+            let (x, y) = mulx_u8(x.to_u8(), y.to_u8());
+            (T::from_u8(x), T::from_u8(y))
+        }
+        16 => {
+            let (x, y) = mulx_u16(x.to_u16(), y.to_u16());
+            (T::from_u16(x), T::from_u16(y))
+        }
+        32 => {
+            let (x, y) = mulx_u32(x.to_u32(), y.to_u32());
+            (T::from_u32(x), T::from_u32(y))
+        }
+        64 => {
+            let (x, y) = mulx_u64(x.to_u64(), y.to_u64());
+            (T::from_u64(x), T::from_u64(y))
+        }
+        _ => unreachable!(),
+    }
+}
+
+/// Method version of [`mulx`](fn.mulx.html).
+pub trait MULX: Sized {
+    #[inline]
+    fn mulx(self, Self) -> (Self, Self);
+}
+
+impl<T: Int> MULX for T {
+    #[inline]
+    fn mulx(self, x: Self) -> (Self, Self) {
+        mulx(self, x)
+    }
 }

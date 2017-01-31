@@ -36,11 +36,22 @@ pub trait Int
     #[inline] fn wrapping_sub(self, Self) -> Self;
     #[inline] fn wrapping_shl(self, Self) -> Self;
     #[inline] fn wrapping_shr(self, Self) -> Self;
+    #[inline] fn to_u8(self) -> u8;
+    #[inline] fn to_u16(self) -> u16;
     #[inline] fn to_u32(self) -> u32;
     #[inline] fn to_u64(self) -> u64;
+    #[inline] fn to_i8(self) -> i8;
+    #[inline] fn to_i16(self) -> i16;
+    #[inline] fn to_i32(self) -> i32;
+    #[inline] fn to_i64(self) -> i64;
+    #[inline] fn from_u8(u8) -> Self;
     #[inline] fn from_u16(u16) -> Self;
     #[inline] fn from_u32(u32) -> Self;
     #[inline] fn from_u64(u64) -> Self;
+    #[inline] fn from_i8(i8) -> Self;
+    #[inline] fn from_i16(i16) -> Self;
+    #[inline] fn from_i32(i32) -> Self;
+    #[inline] fn from_i64(i64) -> Self;
     #[inline] fn rotate_left(self, u32) -> Self;
     #[inline] fn rotate_right(self, u32) -> Self;
     #[inline] fn swap_bytes(self) -> Self;
@@ -99,11 +110,22 @@ macro_rules! int_impl {
                 self.wrapping_shr(o as u32) as $T
             }
 
+            #[inline] fn to_u8(self) -> u8 { self as u8 }
+            #[inline] fn to_u16(self) -> u16 { self as u16 }
             #[inline] fn to_u32(self) -> u32 { self as u32 }
             #[inline] fn to_u64(self) -> u64 { self as u64 }
+            #[inline] fn to_i8(self) -> i8 { self as i8 }
+            #[inline] fn to_i16(self) -> i16 { self as i16 }
+            #[inline] fn to_i32(self) -> i32 { self as i32 }
+            #[inline] fn to_i64(self) -> i64 { self as i64 }
+            #[inline] fn from_u8(x: u8) -> Self { x as Self }
             #[inline] fn from_u16(x: u16) -> Self { x as Self }
             #[inline] fn from_u32(x: u32) -> Self { x as Self }
             #[inline] fn from_u64(x: u64) -> Self { x as Self }
+            #[inline] fn from_i8(x: i8) -> Self { x as Self }
+            #[inline] fn from_i16(x: i16) -> Self { x as Self }
+            #[inline] fn from_i32(x: i32) -> Self { x as Self }
+            #[inline] fn from_i64(x: i64) -> Self { x as Self }
 
             #[inline] fn rotate_left(self, n: u32) -> Self { (self as $T).rotate_left(n) }
             #[inline] fn rotate_right(self, n: u32) -> Self { (self as $T).rotate_right(n) }

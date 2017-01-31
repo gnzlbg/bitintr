@@ -4,7 +4,6 @@ use alg;
 #[cfg(RUSTC_IS_NIGHTLY)]
 mod intrinsics {
     use int::Int;
-    use std::mem::size_of;
     use alg;
 
     #[allow(dead_code)]
@@ -15,7 +14,7 @@ mod intrinsics {
 
     #[inline]
     pub unsafe fn bextr<T: Int>(source: T, start: T, length: T) -> T {
-        match size_of::<T>() * 8 {
+        match T::bit_size().to_u8() {
             32 => {
                 T::from_u32(x86_bmi_bextr_32(source.to_u32(),
                                              ((start.to_u32() & 0xffu32) |
@@ -41,7 +40,7 @@ mod intrinsics {
 /// Bits [7,0] of `range` specify the index to the first bit in the range to be
 /// extracted, and bits [15,8] specify the length of the range.
 ///
-/// Only bits up to `std::mem::size_of::<T>() - 1` are extracted.
+/// Only bits up to `T::bit_size() - 1` are extracted.
 ///
 /// The extracted bits are written in the result starting from the
 /// least-significant bit. The high-order bits of the result are zeroed.
