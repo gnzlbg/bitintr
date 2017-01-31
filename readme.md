@@ -93,3 +93,4 @@ any additional terms or conditions.
 [platform_intrinsics_feature]: https://doc.rust-lang.org/book/intrinsics.html
 [i128_type_feature]: https://github.com/rust-lang/rust/issues/35118
 [link_llvm_intrinsics_feature]: https://github.com/rust-lang/rust/issues/29602
+[bitwise_link]: https://github.com/gnzlbg/bitwise
