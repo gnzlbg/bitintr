@@ -4,7 +4,7 @@
 #![cfg_attr(RUSTC_IS_NIGHTLY, feature(link_llvm_intrinsics))]
 
 #![cfg_attr(feature = "cargo-clippy", allow(doc_markdown))]
-//#![no_std]
+#![no_std]
 
 //! `bitintr` offers portable bit manipulation intrinsics
 //! ([@github](https://github.com/gnzlbg/bitintr),
@@ -35,7 +35,7 @@
 //! }
 //! ```
 
-//extern crate core as std;
+extern crate core as std;
 
 mod int;
 pub use int::Int;

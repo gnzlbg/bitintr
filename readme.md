@@ -26,9 +26,9 @@ The following instruction sets are implemented:
   - [`ARMv7`][armv7_link]: [`bitintr::arm::v7`](https://gnzlbg.github.io/bitintr/bitintr/arm/v7/index.html).
   - [`ARMv8`][armv8_link]: [`bitintr::arm::v8`](https://gnzlbg.github.io/bitintr/bitintr/arm/v8/index.html).
 
-**Note**: This library is low-level by purpose. For a portable higher-level
-bitwise manipulation algorithms library you might want to check out
-the [bitwise][bitwise_link] crate.
+**Note**: This library is low-level by purpose (and works with `#![no_std]`).
+For a portable higher-level bitwise manipulation algorithms library you might
+want to check out the [bitwise][bitwise_link] crate.
 
 ## Example
 
