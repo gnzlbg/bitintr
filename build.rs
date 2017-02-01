@@ -12,9 +12,4 @@ fn main() {
         },
         _ => {}
     };
-
-    // Compile assembly tests:
-//    Command::new("cargo").args(&["rustc", "asm/pdep.rs", "-c", "-fPIC", "-o"])
-  //      .arg(&format!("{}/hello.o", out_dir))
-    //    .status().unwrap();
 }
