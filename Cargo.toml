@@ -1,6 +1,6 @@
 [package]
 name = "bitintr"
-version = "0.1.15"
+version = "0.1.16"
 authors = ["gnzlbg <gonzalobg88@gmail.com>"]
 description = "Portable Bit Manipulation Intrinsics."
 documentation = "https://gnzlbg.github.io/bitintr"
@@ -13,7 +13,7 @@ build = "build.rs"
 categories = ["algorithms", "hardware-support"]
 
 [badges]
-travis-ci = { repository = "https://github.com/gnzlbg/bitintr", branch = "master" }
+travis-ci = { repository = "gnzlbg/bitintr", branch = "master" }
 
 
 [build-dependencies]
