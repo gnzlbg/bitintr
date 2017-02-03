@@ -1,6 +1,6 @@
 //! Generic Integer traits.
 
-use std::ops::{Add, Sub, Mul, Div};
+use std::ops::{Add, Sub, Mul, Div, Rem};
 use std::ops::{Not, BitAnd, BitOr, BitXor, Shl, Shr};
 use std::cmp::{PartialEq, PartialOrd};
 use std::mem::size_of;
@@ -13,6 +13,7 @@ pub trait Int
     + Sub<Output=Self>
     + Mul<Output=Self>
     + Div<Output=Self>
+    + Rem<Output=Self>
     + Not<Output=Self>
     + BitAnd<Output=Self>
     + BitOr<Output=Self>
