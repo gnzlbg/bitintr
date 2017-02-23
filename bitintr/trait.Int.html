@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Int` trait in crate `bitintr`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Int">
+
+    <title>bitintr::Int - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>bitintr</a></p><script>window.sidebarCurrent = {name: 'Int', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>bitintr</a>::<wbr><a class='trait' href=''>Int</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/bitintr/int.rs.html#9-68' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Int: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='trait core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='trait core::marker::Copy'>Copy</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Add.html' title='trait core::ops::Add'>Add</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Sub.html' title='trait core::ops::Sub'>Sub</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Mul.html' title='trait core::ops::Mul'>Mul</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Div.html' title='trait core::ops::Div'>Div</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Rem.html' title='trait core::ops::Rem'>Rem</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Not.html' title='trait core::ops::Not'>Not</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.BitAnd.html' title='trait core::ops::BitAnd'>BitAnd</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.BitOr.html' title='trait core::ops::BitOr'>BitOr</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.BitXor.html' title='trait core::ops::BitXor'>BitXor</a>&lt;Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Shr.html' title='trait core::ops::Shr'>Shr</a>&lt;Self, Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Shl.html' title='trait core::ops::Shl'>Shl</a>&lt;Self, Output=Self&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='trait core::cmp::PartialEq'>PartialEq</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='trait core::cmp::PartialOrd'>PartialOrd</a> {
+    type <a href='#associatedtype.Unsigned' class='type'>Unsigned</a>: <a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Int</a>;
+    type <a href='#associatedtype.Signed' class='type'>Signed</a>: <a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Int</a>;
+    fn <a href='#tymethod.one' class='fnname'>one</a>() -&gt; Self;
+    fn <a href='#tymethod.zero' class='fnname'>zero</a>() -&gt; Self;
+    fn <a href='#tymethod.byte_size' class='fnname'>byte_size</a>() -&gt; Self;
+    fn <a href='#tymethod.bit_size' class='fnname'>bit_size</a>() -&gt; Self;
+    fn <a href='#tymethod.count_ones' class='fnname'>count_ones</a>(self) -&gt; Self;
+    fn <a href='#tymethod.count_zeros' class='fnname'>count_zeros</a>(self) -&gt; Self;
+    fn <a href='#tymethod.leading_zeros' class='fnname'>leading_zeros</a>(self) -&gt; Self;
+    fn <a href='#tymethod.trailing_zeros' class='fnname'>trailing_zeros</a>(self) -&gt; Self;
+    fn <a href='#tymethod.wrapping_neg' class='fnname'>wrapping_neg</a>(self) -&gt; Self;
+    fn <a href='#tymethod.wrapping_add' class='fnname'>wrapping_add</a>(self, _: Self) -&gt; Self;
+    fn <a href='#tymethod.wrapping_sub' class='fnname'>wrapping_sub</a>(self, _: Self) -&gt; Self;
+    fn <a href='#tymethod.wrapping_shl' class='fnname'>wrapping_shl</a>(self, _: Self) -&gt; Self;
+    fn <a href='#tymethod.wrapping_shr' class='fnname'>wrapping_shr</a>(self, _: Self) -&gt; Self;
+    fn <a href='#tymethod.to_u8' class='fnname'>to_u8</a>(self) -&gt; u8;
+    fn <a href='#tymethod.to_u16' class='fnname'>to_u16</a>(self) -&gt; u16;
+    fn <a href='#tymethod.to_u32' class='fnname'>to_u32</a>(self) -&gt; u32;
+    fn <a href='#tymethod.to_u64' class='fnname'>to_u64</a>(self) -&gt; u64;
+    fn <a href='#tymethod.to_i8' class='fnname'>to_i8</a>(self) -&gt; i8;
+    fn <a href='#tymethod.to_i16' class='fnname'>to_i16</a>(self) -&gt; i16;
+    fn <a href='#tymethod.to_i32' class='fnname'>to_i32</a>(self) -&gt; i32;
+    fn <a href='#tymethod.to_i64' class='fnname'>to_i64</a>(self) -&gt; i64;
+    fn <a href='#tymethod.from_u8' class='fnname'>from_u8</a>(_: u8) -&gt; Self;
+    fn <a href='#tymethod.from_u16' class='fnname'>from_u16</a>(_: u16) -&gt; Self;
+    fn <a href='#tymethod.from_u32' class='fnname'>from_u32</a>(_: u32) -&gt; Self;
+    fn <a href='#tymethod.from_u64' class='fnname'>from_u64</a>(_: u64) -&gt; Self;
+    fn <a href='#tymethod.from_i8' class='fnname'>from_i8</a>(_: i8) -&gt; Self;
+    fn <a href='#tymethod.from_i16' class='fnname'>from_i16</a>(_: i16) -&gt; Self;
+    fn <a href='#tymethod.from_i32' class='fnname'>from_i32</a>(_: i32) -&gt; Self;
+    fn <a href='#tymethod.from_i64' class='fnname'>from_i64</a>(_: i64) -&gt; Self;
+    fn <a href='#tymethod.rotate_left' class='fnname'>rotate_left</a>(self, _: u32) -&gt; Self;
+    fn <a href='#tymethod.rotate_right' class='fnname'>rotate_right</a>(self, _: u32) -&gt; Self;
+    fn <a href='#tymethod.swap_bytes' class='fnname'>swap_bytes</a>(self) -&gt; Self;
+    fn <a href='#tymethod.from_be' class='fnname'>from_be</a>(self) -&gt; Self;
+    fn <a href='#tymethod.from_le' class='fnname'>from_le</a>(self) -&gt; Self;
+    fn <a href='#tymethod.to_be' class='fnname'>to_be</a>(self) -&gt; Self;
+    fn <a href='#tymethod.to_le' class='fnname'>to_le</a>(self) -&gt; Self;
+    fn <a href='#tymethod.pow' class='fnname'>pow</a>(self, exp: u32) -&gt; Self;
+    fn <a href='#tymethod.to_unsigned' class='fnname'>to_unsigned</a>(self) -&gt; Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Unsigned</a>;
+    fn <a href='#tymethod.to_signed' class='fnname'>to_signed</a>(self) -&gt; Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Signed</a>;
+    fn <a href='#tymethod.from_unsigned' class='fnname'>from_unsigned</a>(_: Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Unsigned</a>) -&gt; Self;
+    fn <a href='#tymethod.from_signed' class='fnname'>from_signed</a>(_: Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Signed</a>) -&gt; Self;
+}</pre><div class='docblock'><p>Integer trait used to parametrize algorithms for all integer types.</p>
+</div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Unsigned' class='method'><span id='Unsigned.t' class='invisible'><code>type <a href='#associatedtype.Unsigned' class='type'>Unsigned</a>: <a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Int</a></code></span></h3><h3 id='associatedtype.Signed' class='method'><span id='Signed.t' class='invisible'><code>type <a href='#associatedtype.Signed' class='type'>Signed</a>: <a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Int</a></code></span></h3></div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.one' class='method'><span id='one.v' class='invisible'><code>fn <a href='#tymethod.one' class='fnname'>one</a>() -&gt; Self</code></span></h3><h3 id='tymethod.zero' class='method'><span id='zero.v' class='invisible'><code>fn <a href='#tymethod.zero' class='fnname'>zero</a>() -&gt; Self</code></span></h3><h3 id='tymethod.byte_size' class='method'><span id='byte_size.v' class='invisible'><code>fn <a href='#tymethod.byte_size' class='fnname'>byte_size</a>() -&gt; Self</code></span></h3><h3 id='tymethod.bit_size' class='method'><span id='bit_size.v' class='invisible'><code>fn <a href='#tymethod.bit_size' class='fnname'>bit_size</a>() -&gt; Self</code></span></h3><h3 id='tymethod.count_ones' class='method'><span id='count_ones.v' class='invisible'><code>fn <a href='#tymethod.count_ones' class='fnname'>count_ones</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.count_zeros' class='method'><span id='count_zeros.v' class='invisible'><code>fn <a href='#tymethod.count_zeros' class='fnname'>count_zeros</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.leading_zeros' class='method'><span id='leading_zeros.v' class='invisible'><code>fn <a href='#tymethod.leading_zeros' class='fnname'>leading_zeros</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.trailing_zeros' class='method'><span id='trailing_zeros.v' class='invisible'><code>fn <a href='#tymethod.trailing_zeros' class='fnname'>trailing_zeros</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.wrapping_neg' class='method'><span id='wrapping_neg.v' class='invisible'><code>fn <a href='#tymethod.wrapping_neg' class='fnname'>wrapping_neg</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.wrapping_add' class='method'><span id='wrapping_add.v' class='invisible'><code>fn <a href='#tymethod.wrapping_add' class='fnname'>wrapping_add</a>(self, _: Self) -&gt; Self</code></span></h3><h3 id='tymethod.wrapping_sub' class='method'><span id='wrapping_sub.v' class='invisible'><code>fn <a href='#tymethod.wrapping_sub' class='fnname'>wrapping_sub</a>(self, _: Self) -&gt; Self</code></span></h3><h3 id='tymethod.wrapping_shl' class='method'><span id='wrapping_shl.v' class='invisible'><code>fn <a href='#tymethod.wrapping_shl' class='fnname'>wrapping_shl</a>(self, _: Self) -&gt; Self</code></span></h3><h3 id='tymethod.wrapping_shr' class='method'><span id='wrapping_shr.v' class='invisible'><code>fn <a href='#tymethod.wrapping_shr' class='fnname'>wrapping_shr</a>(self, _: Self) -&gt; Self</code></span></h3><h3 id='tymethod.to_u8' class='method'><span id='to_u8.v' class='invisible'><code>fn <a href='#tymethod.to_u8' class='fnname'>to_u8</a>(self) -&gt; u8</code></span></h3><h3 id='tymethod.to_u16' class='method'><span id='to_u16.v' class='invisible'><code>fn <a href='#tymethod.to_u16' class='fnname'>to_u16</a>(self) -&gt; u16</code></span></h3><h3 id='tymethod.to_u32' class='method'><span id='to_u32.v' class='invisible'><code>fn <a href='#tymethod.to_u32' class='fnname'>to_u32</a>(self) -&gt; u32</code></span></h3><h3 id='tymethod.to_u64' class='method'><span id='to_u64.v' class='invisible'><code>fn <a href='#tymethod.to_u64' class='fnname'>to_u64</a>(self) -&gt; u64</code></span></h3><h3 id='tymethod.to_i8' class='method'><span id='to_i8.v' class='invisible'><code>fn <a href='#tymethod.to_i8' class='fnname'>to_i8</a>(self) -&gt; i8</code></span></h3><h3 id='tymethod.to_i16' class='method'><span id='to_i16.v' class='invisible'><code>fn <a href='#tymethod.to_i16' class='fnname'>to_i16</a>(self) -&gt; i16</code></span></h3><h3 id='tymethod.to_i32' class='method'><span id='to_i32.v' class='invisible'><code>fn <a href='#tymethod.to_i32' class='fnname'>to_i32</a>(self) -&gt; i32</code></span></h3><h3 id='tymethod.to_i64' class='method'><span id='to_i64.v' class='invisible'><code>fn <a href='#tymethod.to_i64' class='fnname'>to_i64</a>(self) -&gt; i64</code></span></h3><h3 id='tymethod.from_u8' class='method'><span id='from_u8.v' class='invisible'><code>fn <a href='#tymethod.from_u8' class='fnname'>from_u8</a>(_: u8) -&gt; Self</code></span></h3><h3 id='tymethod.from_u16' class='method'><span id='from_u16.v' class='invisible'><code>fn <a href='#tymethod.from_u16' class='fnname'>from_u16</a>(_: u16) -&gt; Self</code></span></h3><h3 id='tymethod.from_u32' class='method'><span id='from_u32.v' class='invisible'><code>fn <a href='#tymethod.from_u32' class='fnname'>from_u32</a>(_: u32) -&gt; Self</code></span></h3><h3 id='tymethod.from_u64' class='method'><span id='from_u64.v' class='invisible'><code>fn <a href='#tymethod.from_u64' class='fnname'>from_u64</a>(_: u64) -&gt; Self</code></span></h3><h3 id='tymethod.from_i8' class='method'><span id='from_i8.v' class='invisible'><code>fn <a href='#tymethod.from_i8' class='fnname'>from_i8</a>(_: i8) -&gt; Self</code></span></h3><h3 id='tymethod.from_i16' class='method'><span id='from_i16.v' class='invisible'><code>fn <a href='#tymethod.from_i16' class='fnname'>from_i16</a>(_: i16) -&gt; Self</code></span></h3><h3 id='tymethod.from_i32' class='method'><span id='from_i32.v' class='invisible'><code>fn <a href='#tymethod.from_i32' class='fnname'>from_i32</a>(_: i32) -&gt; Self</code></span></h3><h3 id='tymethod.from_i64' class='method'><span id='from_i64.v' class='invisible'><code>fn <a href='#tymethod.from_i64' class='fnname'>from_i64</a>(_: i64) -&gt; Self</code></span></h3><h3 id='tymethod.rotate_left' class='method'><span id='rotate_left.v' class='invisible'><code>fn <a href='#tymethod.rotate_left' class='fnname'>rotate_left</a>(self, _: u32) -&gt; Self</code></span></h3><h3 id='tymethod.rotate_right' class='method'><span id='rotate_right.v' class='invisible'><code>fn <a href='#tymethod.rotate_right' class='fnname'>rotate_right</a>(self, _: u32) -&gt; Self</code></span></h3><h3 id='tymethod.swap_bytes' class='method'><span id='swap_bytes.v' class='invisible'><code>fn <a href='#tymethod.swap_bytes' class='fnname'>swap_bytes</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.from_be' class='method'><span id='from_be.v' class='invisible'><code>fn <a href='#tymethod.from_be' class='fnname'>from_be</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.from_le' class='method'><span id='from_le.v' class='invisible'><code>fn <a href='#tymethod.from_le' class='fnname'>from_le</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.to_be' class='method'><span id='to_be.v' class='invisible'><code>fn <a href='#tymethod.to_be' class='fnname'>to_be</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.to_le' class='method'><span id='to_le.v' class='invisible'><code>fn <a href='#tymethod.to_le' class='fnname'>to_le</a>(self) -&gt; Self</code></span></h3><h3 id='tymethod.pow' class='method'><span id='pow.v' class='invisible'><code>fn <a href='#tymethod.pow' class='fnname'>pow</a>(self, exp: u32) -&gt; Self</code></span></h3><h3 id='tymethod.to_unsigned' class='method'><span id='to_unsigned.v' class='invisible'><code>fn <a href='#tymethod.to_unsigned' class='fnname'>to_unsigned</a>(self) -&gt; Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Unsigned</a></code></span></h3><h3 id='tymethod.to_signed' class='method'><span id='to_signed.v' class='invisible'><code>fn <a href='#tymethod.to_signed' class='fnname'>to_signed</a>(self) -&gt; Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Signed</a></code></span></h3><h3 id='tymethod.from_unsigned' class='method'><span id='from_unsigned.v' class='invisible'><code>fn <a href='#tymethod.from_unsigned' class='fnname'>from_unsigned</a>(_: Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Unsigned</a>) -&gt; Self</code></span></h3><h3 id='tymethod.from_signed' class='method'><span id='from_signed.v' class='invisible'><code>fn <a href='#tymethod.from_signed' class='fnname'>from_signed</a>(_: Self::<a class='trait' href='../bitintr/trait.Int.html' title='trait bitintr::Int'>Signed</a>) -&gt; Self</code></span></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl Int for u8</code></li>
+<li><code>impl Int for u16</code></li>
+<li><code>impl Int for u32</code></li>
+<li><code>impl Int for u64</code></li>
+<li><code>impl Int for usize</code></li>
+<li><code>impl Int for i8</code></li>
+<li><code>impl Int for i16</code></li>
+<li><code>impl Int for i32</code></li>
+<li><code>impl Int for i64</code></li>
+<li><code>impl Int for isize</code></li>
+</ul><script type="text/javascript" async
+                         src="../implementors/bitintr/trait.Int.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "bitintr";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["cls","Counts the leading most significant bits set."]],"trait":[["CLS","Method version of `cls`."]]});

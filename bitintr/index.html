@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `bitintr` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, bitintr">
+
+    <title>bitintr - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'bitintr', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>bitintr</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/bitintr/lib.rs.html#1-44' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p><code>bitintr</code> offers portable bit manipulation intrinsics
+(<a href="https://github.com/gnzlbg/bitintr">@github</a>,
+<a href="https://crates.io/crates/bitintr">@crates.io</a>).</p>
+
+<p>The intrinsics are named after their CPU instruction and organized in
+modules named after their architecture/instruction set:
+<code>bitintr::{arch}::{instruction_set}::{instruction_name}</code>.</p>
+
+<p>They are implemented for all integer types <em>except</em> <code>u128/i128</code>. Whether a
+fallback software implementation is used depends on the integer types
+involved, the instruction sets supported by the target, and/or whether a
+nightly or stable compiler is used (some optimizations are only available in
+nightly).</p>
+
+<h2 id='example' class='section-header'><a href='#example'>Example</a></h2>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>bitintr</span>;
+<span class='kw'>use</span> <span class='ident'>bitintr</span>::<span class='ident'>x86</span>::<span class='ident'>bmi2</span>::<span class='kw-2'>*</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+   <span class='comment'>// Intrinsics are provided as trait methods:</span>
+   <span class='kw'>let</span> <span class='ident'>method_call</span> <span class='op'>=</span> <span class='number'>1</span>.<span class='ident'>pdep</span>(<span class='number'>0</span>);
+   <span class='comment'>// And as free functions:</span>
+   <span class='kw'>let</span> <span class='ident'>free_call</span> <span class='op'>=</span> <span class='ident'>pdep</span>(<span class='number'>1</span>, <span class='number'>0</span>);
+   <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>method_call</span>, <span class='ident'>free_call</span>);
+}</pre>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='arm/index.html'
+                                  title='mod bitintr::arm'>arm</a></td>
+                           <td class='docblock-short'>
+                                <p>ARM assembly instructions.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='x86/index.html'
+                                  title='mod bitintr::x86'>x86</a></td>
+                           <td class='docblock-short'>
+                                <p>x86, x86_64, and AMD64 assembly instructions.</p>
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.Int.html'
+                                  title='trait bitintr::Int'>Int</a></td>
+                           <td class='docblock-short'>
+                                <p>Integer trait used to parametrize algorithms for all integer types.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "bitintr";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

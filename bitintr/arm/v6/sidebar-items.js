@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["rev","Reverse the order of the bytes."]],"trait":[["REV","Method version of `rev`."]]});

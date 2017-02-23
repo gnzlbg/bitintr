@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["arm","ARM assembly instructions."],["x86","x86, x86_64, and AMD64 assembly instructions."]],"trait":[["Int","Integer trait used to parametrize algorithms for all integer types."]]});

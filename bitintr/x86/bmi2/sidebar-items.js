@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["bzhi","Zero the high bits of `x` at position >= `bit_position`."],["mulx","Unsigned multiply without affecting flags."],["pdep","Parallel bits deposit."],["pext","Parallel bits extract."]],"trait":[["BZHI","Method version of `bzhi`."],["MULX","Method version of `mulx`."],["PDEP","Method version of `pdep`."],["PEXT","Method version of `pext`."]]});

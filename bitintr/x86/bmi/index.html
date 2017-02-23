@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `bmi` mod in crate `bitintr`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, bmi">
+
+    <title>bitintr::x86::bmi - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>bitintr</a>::<wbr><a href='../index.html'>x86</a></p><script>window.sidebarCurrent = {name: 'bmi', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>bitintr</a>::<wbr><a href='../index.html'>x86</a>::<wbr><a class='mod' href=''>bmi</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/bitintr/x86/bmi.rs.html#1-15' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Bit Manipulation Instruction (BMI) Set 1.0.</p>
+
+<p>The reference is <a href="http://www.intel.de/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-instruction-set-reference-manual-325383.pdf">Intel 64 and IA-32 Architectures Software Developer&#39;s
+Manual Volume 2: Instruction Set Reference,
+A-Z</a>.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Bit_Manipulation_Instruction_Sets#BMI1_.28Bit_Manipulation_Instruction_Set_1.29">Wikipedia</a>
+provides a quick overview of the available instructions.</p>
+</div><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.ANDN.html'
+                                  title='trait bitintr::x86::bmi::ANDN'>ANDN</a></td>
+                           <td class='docblock-short'>
+                                <p>Method version of <a href="fn.andn.html"><code>andn</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.BEXTR.html'
+                                  title='trait bitintr::x86::bmi::BEXTR'>BEXTR</a></td>
+                           <td class='docblock-short'>
+                                <p>Method version of <a href="fn.bextr.html"><code>bextr</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.BLSI.html'
+                                  title='trait bitintr::x86::bmi::BLSI'>BLSI</a></td>
+                           <td class='docblock-short'>
+                                <p>Method version of <a href="fn.blsi.html"><code>blsi</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.BLSMSK.html'
+                                  title='trait bitintr::x86::bmi::BLSMSK'>BLSMSK</a></td>
+                           <td class='docblock-short'>
+                                <p>Method version of <a href="fn.blsmsk.html"><code>blsmsk</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.BLSR.html'
+                                  title='trait bitintr::x86::bmi::BLSR'>BLSR</a></td>
+                           <td class='docblock-short'>
+                                <p>Method version of <a href="fn.blsr.html"><code>blsr</code></a>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.TZCNT.html'
+                                  title='trait bitintr::x86::bmi::TZCNT'>TZCNT</a></td>
+                           <td class='docblock-short'>
+                                <p>Method version of <a href="fn.tzcnt.html"><code>tzcnt</code></a>.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.andn.html'
+                                  title='fn bitintr::x86::bmi::andn'>andn</a></td>
+                           <td class='docblock-short'>
+                                <p>Bitwise logical <code>AND</code> of inverted <code>x</code> with <code>y</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.bextr.html'
+                                  title='fn bitintr::x86::bmi::bextr'>bextr</a></td>
+                           <td class='docblock-short'>
+                                <p>Bit Field Extract.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.blsi.html'
+                                  title='fn bitintr::x86::bmi::blsi'>blsi</a></td>
+                           <td class='docblock-short'>
+                                <p>Extract lowest set isolated bit.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.blsmsk.html'
+                                  title='fn bitintr::x86::bmi::blsmsk'>blsmsk</a></td>
+                           <td class='docblock-short'>
+                                <p>Get mask up to lowest set bit.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.blsr.html'
+                                  title='fn bitintr::x86::bmi::blsr'>blsr</a></td>
+                           <td class='docblock-short'>
+                                <p>Resets the lowest set bit of <code>x</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.tzcnt.html'
+                                  title='fn bitintr::x86::bmi::tzcnt'>tzcnt</a></td>
+                           <td class='docblock-short'>
+                                <p>Counts the number of trailing least significant zero bits.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "bitintr";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

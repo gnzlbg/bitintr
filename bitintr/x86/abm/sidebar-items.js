@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["lzcnt","Counts the leading most significant zero bits."],["popcnt","Counts the bits that are set."]],"trait":[["LZCNT","Method version of `lzcnt`."],["POPCNT","Method version of `popcnt`."]]});

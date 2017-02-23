@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `blcs` fn in crate `bitintr`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, blcs">
+
+    <title>bitintr::x86::tbm::blcs - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>bitintr</a>::<wbr><a href='../index.html'>x86</a>::<wbr><a href='index.html'>tbm</a></p><script>window.sidebarCurrent = {name: 'blcs', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content fn">
+<h1 class='fqn'><span class='in-band'>Function <a href='../../index.html'>bitintr</a>::<wbr><a href='../index.html'>x86</a>::<wbr><a href='index.html'>tbm</a>::<wbr><a class='fn' href=''>blcs</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/bitintr/alg/x86/tbm/blcs.rs.html#24-26' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn blcs&lt;T:&nbsp;<a class='trait' href='../../../bitintr/trait.Int.html' title='trait bitintr::Int'>Int</a>&gt;(x: T) -&gt; T</pre><div class='docblock'><p>Sets the least significant bit of <code>x</code>.</p>
+
+<p>If there is no zero bit in <code>x</code>, it returns <code>x</code>.</p>
+
+<h1 id='assembly-instructions' class='section-header'><a href='#assembly-instructions'>Assembly Instructions</a></h1>
+<ul>
+<li><a href="http://support.amd.com/TechDocs/24594.pdf"><code>BLCS</code></a>:
+
+<ul>
+<li>Description: Set lowest clear bit.</li>
+<li>Architecture: x86.</li>
+<li>Instruction set: TBM.</li>
+<li>Registers: 32/64 bit.</li>
+</ul></li>
+</ul>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>bitintr</span>::<span class='ident'>x86</span>::<span class='ident'>tbm</span>::<span class='kw-2'>*</span>;
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>blcs</span>(<span class='number'>0b0101_0001u8</span>), <span class='number'>0b0101_0011u8</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>0b1111_1111u8</span>.<span class='ident'>blcs</span>(), <span class='number'>0b1111_1111u8</span>);</pre>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "bitintr";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

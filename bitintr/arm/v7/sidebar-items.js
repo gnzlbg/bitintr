@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["clz","Count Leading Zeros."],["rbit","Reverse the bit order."]],"trait":[["CLZ","Method version of `clz`."],["RBit","Method version of `rbit`."]]});
