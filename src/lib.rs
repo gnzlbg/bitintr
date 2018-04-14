@@ -1,44 +1,112 @@
-#![cfg_attr(RUSTC_IS_NIGHTLY, feature(cfg_target_feature))]
-#![cfg_attr(RUSTC_IS_NIGHTLY, feature(platform_intrinsics))]
-#![cfg_attr(RUSTC_IS_NIGHTLY, feature(i128_type))]
-#![cfg_attr(RUSTC_IS_NIGHTLY, feature(link_llvm_intrinsics))]
-
-#![no_std]
-
 //! `bitintr` offers portable bit manipulation intrinsics
 //! ([@github](https://github.com/gnzlbg/bitintr),
 //! [@crates.io](https://crates.io/crates/bitintr)).
 //!
 //! The intrinsics are named after their CPU instruction and organized in
-//! modules named after their architecture/instruction set:
-//! `bitintr::{arch}::{instruction_set}::{instruction_name}`.
+//! traits of the same name. These traits are implemented for all integer types
+//! _except_ `u128/i128`.
 //!
-//! They are implemented for all integer types _except_ `u128/i128`. Whether a
-//! fallback software implementation is used depends on the integer types
-//! involved, the instruction sets supported by the target, and/or whether a
-//! nightly or stable compiler is used (some optimizations are only available in
-//! nightly).
-//!
-//! ## Example
-//!
-//! ```rust
-//! extern crate bitintr;
-//! use bitintr::x86::bmi2::*;
-//!
-//! fn main() {
-//!    // Intrinsics are provided as trait methods:
-//!    let method_call = 1.pdep(0);
-//!    // And as free functions:
-//!    let free_call = pdep(1, 0);
-//!    assert_eq!(method_call, free_call);
-//! }
-//! ```
+//! The `std::arch` intrinsics are used when the required features are enabled
+//! in the target. You might manually enable features via `-C
+//! target-feature=+...` and/or `-C target-cpu=...`.
 
-extern crate core as std;
+#![cfg_attr(
+    feature = "unstable", feature(cfg_target_feature, stdsimd, core_intrinsics)
+)]
+#![no_std]
 
-mod int;
-pub use int::Int;
+use core::{marker, mem};
 
-mod alg;
-pub mod x86;
-pub mod arm;
+#[cfg(feature = "unstable")]
+use core::intrinsics;
+
+#[cfg(feature = "unstable")]
+mod arch {
+    #[cfg(target_arch = "x86")]
+    pub use core::arch::x86::*;
+
+    #[cfg(target_arch = "x86_64")]
+    pub use core::arch::x86_64::*;
+
+    #[cfg(target_arch = "arm")]
+    pub use core::arch::arm::*;
+
+    #[cfg(target_arch = "aarch64")]
+    pub use core::arch::aarch64::*;
+}
+
+#[macro_use]
+mod macros;
+
+mod rev;
+pub use self::rev::Rev;
+
+mod rbit;
+pub use self::rbit::Rbit;
+
+mod lzcnt;
+pub use self::lzcnt::Lzcnt;
+
+mod popcnt;
+pub use self::popcnt::Popcnt;
+
+mod cls;
+pub use self::cls::Cls;
+
+mod pdep;
+pub use self::pdep::Pdep;
+
+mod pext;
+pub use self::pext::Pext;
+
+mod bzhi;
+pub use self::bzhi::Bzhi;
+
+mod mulx;
+pub use self::mulx::Mulx;
+
+mod andn;
+pub use self::andn::Andn;
+
+mod bextr;
+pub use self::bextr::Bextr;
+
+mod blsi;
+pub use self::blsi::Blsi;
+
+mod blsic;
+pub use self::blsic::Blsic;
+
+mod blsmsk;
+pub use self::blsmsk::Blsmsk;
+
+mod blsr;
+pub use self::blsr::Blsr;
+
+mod tzcnt;
+pub use self::tzcnt::Tzcnt;
+
+mod blcfill;
+pub use self::blcfill::Blcfill;
+
+mod blci;
+pub use self::blci::Blci;
+
+mod blcic;
+pub use self::blcic::Blcic;
+
+mod blcmsk;
+pub use self::blcmsk::Blcmsk;
+
+mod blcs;
+pub use self::blcs::Blcs;
+
+mod blsfill;
+pub use self::blsfill::Blsfill;
+
+
+mod t1mskc;
+pub use self::t1mskc::T1mskc;
+
+mod tzmsk;
+pub use self::tzmsk::Tzmsk;
