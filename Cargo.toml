@@ -3,8 +3,8 @@ name = "bitintr"
 version = "0.2.0"
 authors = ["gnzlbg <gonzalobg88@gmail.com>"]
 description = "Portable Bit Manipulation Intrinsics."
-documentation = "https://gnzlbg.github.io/bitintr"
-homepage = "https://gnzlbg.github.io/bitintr"
+documentation = "https://docs.rs/bitintr"
+homepage = "https://github.com/gnzlbg/bitintr"
 repository = "https://github.com/gnzlbg/bitintr"
 readme = "readme.md"
 keywords = ["portable", "bit", "manipulation", "intrinsics"]
@@ -13,6 +13,9 @@ categories = ["algorithms", "hardware-support", "no-std"]
 
 [badges]
 travis-ci = { repository = "gnzlbg/bitintr", branch = "master" }
+is-it-maintained-issue-resolution = { repository = "gnzlbg/bitintr" }
+is-it-maintained-open-issues = { repository = "gnzlbg/bitintr" }
+maintenance = { status = "experimental" }
 
 [features]
 unstable = []
