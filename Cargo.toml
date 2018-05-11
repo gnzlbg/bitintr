@@ -1,26 +1,24 @@
 [package]
 name = "bitintr"
-version = "0.1.18"
+version = "0.2.0"
 authors = ["gnzlbg <gonzalobg88@gmail.com>"]
 description = "Portable Bit Manipulation Intrinsics."
-documentation = "https://gnzlbg.github.io/bitintr"
-homepage = "https://gnzlbg.github.io/bitintr"
+documentation = "https://docs.rs/bitintr"
+homepage = "https://github.com/gnzlbg/bitintr"
 repository = "https://github.com/gnzlbg/bitintr"
 readme = "readme.md"
 keywords = ["portable", "bit", "manipulation", "intrinsics"]
 license = "MIT"
-build = "build.rs"
 categories = ["algorithms", "hardware-support", "no-std"]
 
 [badges]
 travis-ci = { repository = "gnzlbg/bitintr", branch = "master" }
+is-it-maintained-issue-resolution = { repository = "gnzlbg/bitintr" }
+is-it-maintained-open-issues = { repository = "gnzlbg/bitintr" }
+maintenance = { status = "experimental" }
 
-
-[build-dependencies]
-rustc_version = "0.1.*"
-
-[dev-dependencies]
-bencher = "0.1.*"
+[features]
+unstable = []
 
 [profile.test]
 opt-level = 0

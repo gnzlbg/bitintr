@@ -1,5 +1,6 @@
 //! Top-level example.
 
+/*
 extern crate bitintr;
 use bitintr::x86::bmi2::*;
 
@@ -10,3 +11,5 @@ fn main() {
     let free_call = pdep(1, 0);
     assert_eq!(method_call, free_call);
 }
+ */
+fn main() {}

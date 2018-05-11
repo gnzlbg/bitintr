@@ -28,7 +28,7 @@ class File(object):
 
         if self.feature == "none":
             self.feature = None
-        
+
     def __str__(self):
         return  "name: " + self.name + ", path-rs: " + self.path_rs + ", path-asm: " + self.path_asm_should + ', arch: ' + self.arch + ", feature: " + str(self.feature)
 
@@ -54,18 +54,19 @@ def compile_file(file):
     if verbose:
         print "Checking: " + str(file) + "..."
 
-    cargo_args = 'cargo rustc --verbose --release -- -C panic=abort '
+    cargo_args = 'cargo rustc --verbose --release --features unstable -- -C panic=abort -C codegen-units=1 -C lto=fat '
     if file.feature:
         cargo_args = cargo_args + '-C target-feature=+{}'.format(file.feature)
     if file.arch == 'armv7' or file.arch == 'armv8':
         cargo_args = cargo_args + '--target={}'.format(arm_triplet(file.arch))
     call(str(cargo_args))
 
-    rustc_args = 'rustc --verbose -C opt-level=3 -C panic="abort" --extern bitintr=target/release/libbitintr.rlib --crate-type lib';
+    rustc_args = 'rustc --verbose -C opt-level=3 -C codegen-units=1 -C lto=fat -C panic="abort" --cfg \'feature="unstable"\' --extern bitintr=target/release/libbitintr.rlib --crate-type lib';
     if file.feature:
         rustc_args = rustc_args + ' -C target-feature=+{}'.format(file.feature)
     if file.arch == 'armv7' or file.arch == 'armv8':
         rustc_args = rustc_args + ' --target={}'.format(arm_triplet(file.arch))
+
     rustc_args_asm = rustc_args + ' --emit asm {} -o {}'.format(file.path_rs, file.path_asm_output)
     call(rustc_args_asm)
     rustc_args_ll = rustc_args + ' --emit llvm-ir {} -o {}'.format(file.path_rs, file.path_llvmir_output)
