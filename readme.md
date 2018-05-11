@@ -6,7 +6,7 @@
 
 This library exposes _safe_ and __portable_ low-level bit manipulation
 instruction set architectures. It is `#![no_std]` but requires the
-`core::{intrinsics, arch}` components.
+`core::{intrinsics, arch}` components when compiled with nightly rust.
 
 For higher-level bitwise manipulations check the [bitwise][bitwise_link] crate.
 
