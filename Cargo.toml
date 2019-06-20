@@ -37,3 +37,7 @@ codegen-units = 1
 [[bench]]
 name = "rbit"
 harness = false
+
+# Required to run the benchmarks
+#[dev-dependencies]
+#bencher = "0.1"
