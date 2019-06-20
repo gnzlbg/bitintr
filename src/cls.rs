@@ -12,7 +12,8 @@ pub trait Cls {
     ///
     /// # Instructions
     ///
-    /// - [`CLS`](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0487a.k_10775/index.html):
+    /// - [`CLS`](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.
+    ///   ddi0487a.k_10775/index.html):
     ///   - Description: Count leading sign bits.
     ///   - Architecture: ARMv8.
     ///   - Registers: 32/64 bits.
@@ -30,10 +31,14 @@ pub trait Cls {
 
 macro_rules! impl_cls {
     ($id:ident, $sid:ident, $width:expr) => {
+        #[allow(clippy::use_self)]
         impl Cls for $id {
             #[inline]
             fn cls(self) -> Self {
-                $id::leading_zeros((((((self as $sid) >> ($width - 1)) as $id) ^ self) << 1) | 1) as $id
+                Self::leading_zeros(
+                    (((((self as $sid) >> ($width - 1)) as Self) ^ self) << 1)
+                        | 1,
+                ) as Self
             }
         }
     };

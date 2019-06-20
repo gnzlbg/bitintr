@@ -9,18 +9,11 @@
 //! The `std::arch` intrinsics are used when the required features are enabled
 //! in the target. You might manually enable features via `-C
 //! target-feature=+...` and/or `-C target-cpu=...`.
-
-#![cfg_attr(
-    feature = "unstable", feature(cfg_target_feature, stdsimd, core_intrinsics)
-)]
 #![no_std]
+#![cfg_attr(bitintr_nightly, feature(stdsimd))]
 
 use core::{marker, mem};
 
-#[cfg(feature = "unstable")]
-use core::intrinsics;
-
-#[cfg(feature = "unstable")]
 mod arch {
     #[cfg(target_arch = "x86")]
     pub use core::arch::x86::*;
@@ -103,7 +96,6 @@ pub use self::blcs::Blcs;
 
 mod blsfill;
 pub use self::blsfill::Blsfill;
-
 
 mod t1mskc;
 pub use self::t1mskc::T1mskc;

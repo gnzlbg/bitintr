@@ -11,7 +11,7 @@ _umulx_u32:
 _umulx_u64:
   pushq	%rbp
 	movq	%rsp, %rbp
-	movq	%rsi, %rdx
-	mulxq	%rdi, %rax, %rdx
+	movq	%rsi, %rax
+	mulq	%rdi
 	popq	%rbp
 	retq

@@ -1,7 +1,7 @@
 //! mulx
 
 /// Unsigned multiply without affecting flags.
-pub trait Mulx: ::marker::Sized {
+pub trait Mulx: crate::marker::Sized {
     /// Unsigned multiply without affecting flags.
     ///
     /// Unsigned multiplication of `x` with `y` returning a pair `(lo, hi)`
@@ -80,34 +80,36 @@ pub trait Mulx: ::marker::Sized {
 }
 
 macro_rules! impl_umulx {
-    ($id:ident, $id_l:ident, $bit_width:expr) => {
+    ($id:ident, $id_l:ident) => {
+        #[allow(clippy::use_self)]
         impl Mulx for $id {
             #[inline]
             fn mulx(self, y: Self) -> (Self, Self) {
+                const BIT_WIDTH: $id_l =
+                    (crate::mem::size_of::<$id>() * 8) as $id_l;
                 let x = self;
                 let result: $id_l = (x as $id_l) * (y as $id_l);
-                let hi = (result >> $bit_width) as $id;
-                (result as $id, hi)
+                let hi = (result >> BIT_WIDTH) as Self;
+                (result as Self, hi)
             }
         }
     };
 }
 
-impl_umulx!(u8, u16, 8);
-impl_umulx!(u16, u32, 16);
-impl_umulx!(u32, u64, 32);
-impl_umulx!(u64, u128, 64);
+impl_umulx!(u8, u16);
+impl_umulx!(u16, u32);
+impl_umulx!(u32, u64);
+impl_umulx!(u64, u128);
 
 macro_rules! impl_smulx {
     ($id:ident, $uid:ident) => {
         impl Mulx for $id {
             #[inline]
             fn mulx(self, y: Self) -> (Self, Self) {
-                unsafe {
-                    let ux: $uid = ::mem::transmute(self);
-                    let uy: $uid = ::mem::transmute(y);
-                    ::mem::transmute(ux.mulx(uy))
-                }
+                let ux = self as $uid;
+                let uy = y as $uid;
+                let (rx, ry) = ux.mulx(uy);
+                (rx as _, ry as _)
             }
         }
     };

@@ -4,18 +4,10 @@
 
 > `0b0000_0010_1001_1010`
 
-This library exposes _safe_ and __portable_ low-level bit manipulation
-instruction set architectures. It is `#![no_std]` but requires the
-`core::{intrinsics, arch}` components when compiled with nightly rust.
+This `#![no_std]` library exposes _safe_ and _portable_ low-level bit manipulation
+instruction set architectures. The Minimum Supported Rust Version is 1.36.0.
 
 For higher-level bitwise manipulations check the [bitwise][bitwise_link] crate.
-
-This library compiles on `stable` Rust, but provides an `unstable` crate feature that
-makes uses of the following nightly features:
-
-* [`cfg_target_feature`][cfg_target_feature] for target-feature dependent behavior,
-* `stdsimd`: for `core::arch` intrinsics,
-* `core_intrinsics`: for `core::intrinsics`.
 
 The intrinsics are exposed via traits named after their CPU instruction. These
 traits are implemented for all integer types _except_ `u128/i128`.
@@ -72,5 +64,4 @@ any additional terms or conditions.
 [armv6_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0419c/index.html
 [armv7_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0403e.b/index.html
 [armv8_link]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ddi0487a.k_10775/index.html
-[cfg_target_feature]: https://github.com/rust-lang/rust/issues/29717
 [bitwise_link]: https://github.com/gnzlbg/bitwise

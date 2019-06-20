@@ -1,6 +1,6 @@
 [package]
 name = "bitintr"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["gnzlbg <gonzalobg88@gmail.com>"]
 description = "Portable Bit Manipulation Intrinsics."
 documentation = "https://docs.rs/bitintr"
@@ -10,6 +10,8 @@ readme = "readme.md"
 keywords = ["portable", "bit", "manipulation", "intrinsics"]
 license = "MIT"
 categories = ["algorithms", "hardware-support", "no-std"]
+build = "build.rs"
+edition = "2018"
 
 [badges]
 travis-ci = { repository = "gnzlbg/bitintr", branch = "master" }
@@ -17,16 +19,12 @@ is-it-maintained-issue-resolution = { repository = "gnzlbg/bitintr" }
 is-it-maintained-open-issues = { repository = "gnzlbg/bitintr" }
 maintenance = { status = "experimental" }
 
-[features]
-unstable = []
-
 [profile.test]
 opt-level = 0
 debug = true
 lto = false
 debug-assertions = true
 codegen-units = 1
-panic = 'unwind'
 
 [profile.bench]
 opt-level = 3
@@ -35,7 +33,6 @@ rpath = false
 lto = true
 debug-assertions = false
 codegen-units = 1
-panic = 'abort'
 
 [[bench]]
 name = "rbit"

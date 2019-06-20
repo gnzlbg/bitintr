@@ -2,8 +2,8 @@
 
 /// Mask from trailing zeros
 pub trait Tzmsk {
-    /// Sets all bits below the least significant one of `self` and clears all other
-    /// bits.
+    /// Sets all bits below the least significant one of `self` and clears all
+    /// other bits.
     ///
     /// If the least significant bit of `self` is 1, it returns zero.
     ///
@@ -37,4 +37,3 @@ macro_rules! impl_tzmsk {
 }
 
 impl_all!(impl_tzmsk: u8, u16, u32, u64, i8, i16, i32, i64);
-

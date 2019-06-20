@@ -38,13 +38,4 @@ macro_rules! impl_blsmsk {
     };
 }
 
-impl_all!(
-    impl_blsmsk: u8,
-    u16,
-    u32,
-    u64,
-    i8,
-    i16,
-    i32,
-    i64
-);
+impl_all!(impl_blsmsk: u8, u16, u32, u64, i8, i16, i32, i64);

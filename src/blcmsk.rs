@@ -2,7 +2,8 @@
 
 /// Mask from lowest clear bit.
 pub trait Blcmsk {
-    /// Sets the least significant bit of `self` and clears all bits above that bit.
+    /// Sets the least significant bit of `self` and clears all bits above that
+    /// bit.
     ///
     /// If there is no zero bit in `self`, it sets all the bits.
     ///

@@ -26,7 +26,8 @@ pub trait Lzcnt {
     /// - Note: This instruction is officially part of BMI1 but Intel (and
     /// AMD)   CPUs advertise it as being part of ABM.
     ///
-    /// - [`CLZ`](https://www.pjrc.com/teensy/beta/DDI0403D_arm_architecture_v7m_reference_manual.pdf):
+    /// - [`CLZ`](https://www.pjrc.com/teensy/beta/
+    ///   DDI0403D_arm_architecture_v7m_reference_manual.pdf):
     ///   - Description: Count Leading Zeros.
     ///   - Architecture: ARM.
     ///   - Instruction set: v7.
@@ -47,7 +48,7 @@ macro_rules! impl_lzcnt {
         impl Lzcnt for $id {
             #[inline]
             fn lzcnt(self) -> Self {
-                self.leading_zeros() as $id
+                self.leading_zeros() as Self
             }
 
             #[inline]

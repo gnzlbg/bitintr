@@ -2,8 +2,8 @@
 
 /// Inverse mask from trailing ones
 pub trait T1mskc {
-    /// Clears all bits below the least significant zero of `self` and sets all other
-    /// bits.
+    /// Clears all bits below the least significant zero of `self` and sets all
+    /// other bits.
     ///
     /// If the least significant bit of `self` is 0, it sets all bits.
     ///
@@ -37,4 +37,3 @@ macro_rules! impl_t1mskc {
 }
 
 impl_all!(impl_t1mskc: u8, u16, u32, u64, i8, i16, i32, i64);
-
