@@ -36,13 +36,4 @@ macro_rules! impl_popcnt {
     };
 }
 
-impl_all!(
-    impl_popcnt: u8,
-    u16,
-    u32,
-    u64,
-    i8,
-    i16,
-    i32,
-    i64
-);
+impl_all!(impl_popcnt: u8, u16, u32, u64, i8, i16, i32, i64);

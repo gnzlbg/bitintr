@@ -64,63 +64,72 @@ pub trait Bextr {
     fn bextri(self, range: u32) -> Self;
 }
 
-macro_rules! empty {
-    ($_x:ident, $_y:ident, $_z:ident, $_i:ident) => {};
-}
-
-#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-macro_rules! bextr_spec {
-    ($x:ident, $y:ident, $z:ident, $intr:ident) => {
-        #[cfg(feature = "unstable")]
-        #[cfg(
-            all(
-                any(target_arch = "x86", target_arch = "x86_64"),
-                target_feature = "bmi"
-            )
-        )]
-        {
-            return unsafe {
-                ::mem::transmute(::arch::$intr(
-                    ::mem::transmute($x),
-                    ::mem::transmute($y),
-                    ::mem::transmute($z),
-                ))
-            };
+macro_rules! bextr_impl {
+    ($ty:ty) => {
+        #[inline]
+        fn bextr_(value: $ty, start: $ty, length: $ty) -> $ty {
+            (value >> start) & ((1 << length) - 1)
+        }
+    };
+    ($ty:ty, $intr:ident) => {
+        cfg_if! {
+            if  #[cfg(all(
+                  any(target_arch = "x86", target_arch = "x86_64"),
+                  target_feature = "bmi2"
+            ))] {
+                #[inline]
+                #[target_feature(enable = "bmi2")]
+                unsafe fn bextr_(value: $ty, start: $ty, length: $ty) -> $ty {
+                    crate::arch::$intr(
+                        value as _,
+                        start as u32,
+                        length as u32,
+                    ) as _
+                }
+            } else {
+                bextr_impl!($ty);
+            }
         }
     };
 }
 
 macro_rules! impl_bextr {
-    ($id:ident, $arch_pdep:ident, $intr:ident) => {
+    ($id:ident $(,$args:ident)*) => {
         impl Bextr for $id {
             #[inline]
+            #[allow(unused_unsafe)]
             fn bextr(self, start: Self, length: Self) -> Self {
-                $arch_pdep!(self, start, length, $intr);
-                (self >> start) & ((1 << length) - 1)
+                bextr_impl!($id $(,$args)*);
+                // UNSAFETY: this is always safe, because
+                // the unsafe `#[target_feature]` function
+                // is only generated when the feature is
+                // statically-enabled at compile-time.
+                unsafe { bextr_(self, start, length) }
             }
             #[inline]
             fn bextri(self, range: u32) -> Self {
                 self.bextr((range & 0xff) as Self, (range >> 8) as Self)
             }
+
         }
-    };
-    ($id:ident) => {
-        impl_bextr!($id, empty, empty);
     };
 }
 
 impl_all!(impl_bextr: u8, u16, i8, i16);
 
-#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-impl_bextr!(u32, bextr_spec, _bextr_u32);
-#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-impl_bextr!(i32, bextr_spec, _bextr_u32);
-#[cfg(target_arch = "x86_64")]
-impl_bextr!(u64, bextr_spec, _bextr_u64);
-#[cfg(target_arch = "x86_64")]
-impl_bextr!(i64, bextr_spec, _bextr_u64);
-
-#[cfg(not(any(target_arch = "x86", target_arch = "x86_64")))]
-impl_all!(impl_bextr: u32, i32);
-#[cfg(not(target_arch = "x86_64"))]
-impl_all!(impl_bextr: i64, u64);
+cfg_if! {
+    if #[cfg(any(target_arch = "x86", target_arch = "x86_64"))] {
+        impl_bextr!(u32, _bextr_u32);
+        impl_bextr!(i32, _bextr_u32);
+        cfg_if! {
+            if #[cfg(target_arch = "x86_64")] {
+                impl_bextr!(u64, _bextr_u64);
+                impl_bextr!(i64, _bextr_u64);
+            } else {
+                impl_all!(impl_bextr: i64, u64);
+            }
+        }
+    } else {
+        impl_all!(impl_bextr: u32, i32, i64, u64);
+    }
+}

@@ -23,7 +23,7 @@ pub trait Pext {
     ///
     /// ```
     /// # use bitintr::*;
-    /// let n  = 0b1011_1110_1001_0011u16;
+    /// let n = 0b1011_1110_1001_0011u16;
     ///
     /// let m0 = 0b0110_0011_1000_0101u16;
     /// let s0 = 0b0000_0000_0011_0101u16;
@@ -37,71 +37,78 @@ pub trait Pext {
     fn pext(self, mask: Self) -> Self;
 }
 
-macro_rules! empty {
-    ($_x:ident, $_y:ident, $_i:ident) => {};
-}
-
-#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-macro_rules! pext_spec {
-    ($x:ident, $y:ident, $intr:ident) => {
-        #[cfg(feature = "unstable")]
-        #[cfg(
-            all(
+macro_rules! pext_impl {
+    ($ty:ty) => {
+        #[inline]
+        fn pext_(value: $ty, mut mask: $ty) -> $ty {
+            let mut res = 0;
+            let mut bb = 1;
+            loop {
+                if mask == 0 {
+                    break;
+                }
+                if value & mask & (mask.wrapping_neg()) != 0 {
+                    res |= bb;
+                }
+                mask &= mask - 1;
+                bb += bb;
+            }
+            res
+        }
+    };
+    ($ty:ty, $intr:ident) => {
+        cfg_if! {
+            if  #[cfg(all(
                 any(target_arch = "x86", target_arch = "x86_64"),
                 target_feature = "bmi2"
-            )
-        )]
-        {
-            return unsafe {
-                ::mem::transmute(::arch::$intr(
-                    ::mem::transmute($x),
-                    ::mem::transmute($y),
-                ))
-            };
+            ))] {
+                #[inline]
+                #[target_feature(enable = "bmi2")]
+                unsafe fn pext_(value: $ty, mask: $ty) -> $ty {
+                    crate::arch::$intr(
+                        value as _,
+                        mask as _,
+                    ) as _
+                }
+            } else {
+                pext_impl!($ty);
+            }
         }
     };
 }
 
 macro_rules! impl_pext {
-    ($id:ident, $arch_pext:ident, $intr:ident) => {
+    ($id:ident $(,$args:ident)*) => {
         impl Pext for $id {
             #[inline]
-            #[allow(unreachable_code)]
-            fn pext(self, mut mask: Self) -> Self {
-                $arch_pext!(self, mask, $intr);
-                let mut res = 0;
-                let mut bb = 1;
-                loop {
-                    if mask == 0 {
-                        break;
-                    }
-                    if self & mask & (mask.wrapping_neg()) != 0 {
-                        res = res | bb;
-                    }
-                    mask = mask & (mask - 1);
-                    bb = bb + bb;
-                }
-                res
+            #[allow(unused_unsafe)]
+            fn pext(self, mask: Self) -> Self {
+                pext_impl!($id $(,$args)*);
+                // UNSAFETY: this is always safe, because
+                // the unsafe `#[target_feature]` function
+                // is only generated when the feature is
+                // statically-enabled at compile-time.
+                unsafe { pext_(self, mask) }
             }
         }
-    };
-    ($id:ident) => {
-        impl_pext!($id, empty, empty);
-    };
+    }
 }
 
 impl_all!(impl_pext: u8, u16, i8, i16);
 
-#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-impl_pext!(u32, pext_spec, _pext_u32);
-#[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-impl_pext!(i32, pext_spec, _pext_u32);
-#[cfg(target_arch = "x86_64")]
-impl_pext!(u64, pext_spec, _pext_u64);
-#[cfg(target_arch = "x86_64")]
-impl_pext!(i64, pext_spec, _pext_u64);
-
-#[cfg(not(any(target_arch = "x86", target_arch = "x86_64")))]
-impl_all!(impl_pext: u32, i32);
-#[cfg(not(target_arch = "x86_64"))]
-impl_all!(impl_pext: i64, u64);
+cfg_if! {
+    if #[cfg(any(target_arch = "x86", target_arch = "x86_64"))] {
+        impl_pext!(u32, _pext_u32);
+        impl_pext!(i32, _pext_u32);
+        cfg_if! {
+            if #[cfg(target_arch = "x86_64")] {
+                impl_pext!(u64, _pext_u64);
+                impl_pext!(i64, _pext_u64);
+            } else {
+                impl_all!(impl_pext: i64, u64);
+            }
+        }
+    } else {
+        impl_all!(impl_pext: u32, i32, i64, u64);
+    }
+}

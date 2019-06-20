@@ -54,14 +54,14 @@ def compile_file(file):
     if verbose:
         print "Checking: " + str(file) + "..."
 
-    cargo_args = 'cargo rustc --verbose --release --features unstable -- -C panic=abort -C codegen-units=1 -C lto=fat '
+    cargo_args = 'cargo rustc --verbose --release -- -C panic=abort -C codegen-units=1 -C lto=fat --cfg=\'bitintr_nightly\' '
     if file.feature:
         cargo_args = cargo_args + '-C target-feature=+{}'.format(file.feature)
     if file.arch == 'armv7' or file.arch == 'armv8':
         cargo_args = cargo_args + '--target={}'.format(arm_triplet(file.arch))
     call(str(cargo_args))
 
-    rustc_args = 'rustc --verbose -C opt-level=3 -C codegen-units=1 -C lto=fat -C panic="abort" --cfg \'feature="unstable"\' --extern bitintr=target/release/libbitintr.rlib --crate-type lib';
+    rustc_args = 'rustc --verbose -C opt-level=3 -C codegen-units=1 -C lto=fat -C panic="abort" --extern bitintr=target/release/libbitintr.rlib --crate-type lib';
     if file.feature:
         rustc_args = rustc_args + ' -C target-feature=+{}'.format(file.feature)
     if file.arch == 'armv7' or file.arch == 'armv8':
