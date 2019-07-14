@@ -42,7 +42,7 @@ macro_rules! pext_impl {
         #[inline]
         fn pext_(value: $ty, mut mask: $ty) -> $ty {
             let mut res = 0;
-            let mut bb = 1;
+            let mut bb: $ty = 1;
             loop {
                 if mask == 0 {
                     break;
@@ -51,7 +51,7 @@ macro_rules! pext_impl {
                     res |= bb;
                 }
                 mask &= mask - 1;
-                bb += bb;
+                bb = bb.wrapping_add(bb);
             }
             res
         }
