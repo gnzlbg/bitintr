@@ -43,7 +43,7 @@ macro_rules! pdep_impl {
         #[inline]
         fn pdep_(value: $ty, mut mask: $ty) -> $ty {
             let mut res = 0;
-            let mut bb = 1;
+            let mut bb: $ty = 1;
             loop {
                 if mask == 0 {
                     break;
@@ -52,7 +52,7 @@ macro_rules! pdep_impl {
                     res |= mask & mask.wrapping_neg();
                 }
                 mask &= mask - 1;
-                bb += bb;
+                bb = bb.wrapping_add(bb);
             }
             res
         }
