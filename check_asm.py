@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Script to check the assembly generated
 import os
 import os.path
@@ -42,17 +42,17 @@ def find_files():
 
 def call(args):
     if verbose:
-        print "command: " + str(args)
+        print("command: " + str(args))
     p = Popen(args, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
     output, err = p.communicate(b"input data that is passed to subprocess' stdin")
     rc = p.returncode
     if verbose:
-        print output
-        print err
+        print(output)
+        print(err)
 
 def compile_file(file):
     if verbose:
-        print "Checking: " + str(file) + "..."
+        print("Checking: " + str(file) + "...")
 
     cargo_args = 'cargo rustc --verbose --release -- -C panic=abort -C codegen-units=1 -C lto=fat --cfg=\'bitintr_nightly\' '
     if file.feature:
@@ -75,7 +75,7 @@ def compile_file(file):
 
 
     if verbose:
-        print "...done!"
+        print("...done!")
 
 def diff_files(rustc_output, asm_snippet):
     with open(rustc_output, 'r') as rustc_output_file:
@@ -100,11 +100,11 @@ def diff_files(rustc_output, asm_snippet):
             results_differ = True
 
     if results_differ:
-        print "Error: results differ"
-        print "Is:"
-        print rustc_output_lines
-        print "Should:"
-        print asm_snippet_lines
+        print("Error: results differ")
+        print("Is:")
+        print(rustc_output_lines)
+        print("Should:")
+        print(asm_snippet_lines)
         return False
 
     return True
@@ -127,7 +127,7 @@ def main():
 
     if verbose:
         for f in files:
-            print f
+            print(f)
     error = False
     for f in files:
         result = check_file(f)
