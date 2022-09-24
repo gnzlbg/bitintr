@@ -12,7 +12,7 @@ pub trait Lzcnt {
     /// When the operand is zero, it returns its size in bits.
     ///
     /// **Keywords**: Leading Zeros Count, Count Leading Zeros, Bit Scan
-    /// Severse, Find Last Set.
+    /// Reverse, Find Last Set.
     ///
     /// See also [`arm::v7::clz`](../../arm/v7/fn.clz.html).
     ///
