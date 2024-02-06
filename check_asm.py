@@ -54,7 +54,7 @@ def compile_file(file):
     if verbose:
         print "Checking: " + str(file) + "..."
 
-    cargo_args = 'cargo rustc --verbose --release -- -C panic=abort -C codegen-units=1 -C lto=fat --cfg=\'bitintr_nightly\' '
+    cargo_args = 'cargo rustc --verbose --release -- -C panic=abort -C codegen-units=1 -C lto=fat '
     if file.feature:
         cargo_args = cargo_args + '-C target-feature=+{}'.format(file.feature)
     if file.arch == 'armv7' or file.arch == 'armv8':
