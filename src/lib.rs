@@ -10,7 +10,6 @@
 //! in the target. You might manually enable features via `-C
 //! target-feature=+...` and/or `-C target-cpu=...`.
 #![no_std]
-#![cfg_attr(bitintr_nightly, feature(stdsimd))]
 
 use core::{marker, mem};
 

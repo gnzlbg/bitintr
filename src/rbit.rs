@@ -26,96 +26,79 @@ pub trait Rbit {
     fn rbit(self) -> Self;
 }
 
-cfg_if! {
-    // The reverse_bits methods have been stabilized and should land
-    // in Rust 1.37.0 .
-    if #[cfg(bitintr_nightly)] {
-        macro_rules! impl_rbit {
-            ($id:ident) => {
-                impl Rbit for $id {
-                    #[inline]
-                    fn rbit(self) -> Self {
-                        self.reverse_bits()
-                    }
+macro_rules! impl_rbit {
+    ($id:ident) => {
+        impl Rbit for $id {
+            #[inline]
+            fn rbit(self) -> Self {
+                if crate::mem::size_of::<Self>() == 1 {
+                    return (((self as u8 as u64).wrapping_mul(0x80200802_u64)
+                      & 0x0884422110_u64)
+                     .wrapping_mul(0x0101010101_u64)
+                     .wrapping_shr(32)) as Self;
                 }
-            };
-        }
-    } else {
-        macro_rules! impl_rbit {
-            ($id:ident) => {
-                impl Rbit for $id {
-                    #[inline]
-                    fn rbit(self) -> Self {
-                        if crate::mem::size_of::<Self>() == 1 {
-                            return (((self as u8 as u64).wrapping_mul(0x80200802_u64)
-                              & 0x0884422110_u64)
-                             .wrapping_mul(0x0101010101_u64)
-                             .wrapping_shr(32)) as Self;
-                        }
-                        let mut x = self;
-                        let byte_width = crate::mem::size_of::<Self>() as u32;
-                        let bit_width = byte_width * 8;
-                        let k = bit_width - 1;
+                let mut x = self;
+                let byte_width = crate::mem::size_of::<Self>() as u32;
+                let bit_width = byte_width * 8;
+                let k = bit_width - 1;
 
-                        {
-                            let mut up0 = |i: u32, l: u64, r: u64| {
-                                if k & i > 0 {
-                                    x = (((x as u64 & l).wrapping_shl(i))
-                                         | ((x as u64 & r).wrapping_shr(i)))
-                                        as Self;
-                                }
-                            };
-
-                            up0(
-                                1,
-                                0x5555555555555555_u64,
-                                0xAAAAAAAAAAAAAAAA_u64,
-                            );
-                            up0(
-                                2,
-                                0x3333333333333333_u64,
-                                0xCCCCCCCCCCCCCCCC_u64,
-                            );
-                            up0(
-                                4,
-                                0x0F0F0F0F0F0F0F0F_u64,
-                                0xF0F0F0F0F0F0F0F0_u64,
-                            );
-                        }
-                        {
-                            let mut up1 = |i: u32, s: u32, l: u64, r: u64| {
-                                if byte_width > i && (k & s > 0) {
-                                    x = (((x as u64 & l).wrapping_shl(s))
-                                         | ((x as u64 & r).wrapping_shr(s)))
+                {
+                    let mut up0 = |i: u32, l: u64, r: u64| {
+                        if k & i > 0 {
+                            x = (((x as u64 & l).wrapping_shl(i))
+                                 | ((x as u64 & r).wrapping_shr(i)))
                                 as Self;
-                                }
-                            };
-
-                            up1(
-                                1,
-                                8,
-                                0x00FF00FF00FF00FF_u64,
-                                0xFF00FF00FF00FF00_u64,
-                            );
-                            up1(
-                                2,
-                                16,
-                                0x0000FFFF0000FFFF_u64,
-                                0xFFFF0000FFFF0000_u64,
-                            );
-                            up1(
-                                4,
-                                32,
-                                0x00000000FFFFFFFF_u64,
-                                0xFFFFFFFF00000000_u64,
-                            );
                         }
-                        x
-                    }
+                    };
+
+                    up0(
+                        1,
+                        0x5555555555555555_u64,
+                        0xAAAAAAAAAAAAAAAA_u64,
+                    );
+                    up0(
+                        2,
+                        0x3333333333333333_u64,
+                        0xCCCCCCCCCCCCCCCC_u64,
+                    );
+                    up0(
+                        4,
+                        0x0F0F0F0F0F0F0F0F_u64,
+                        0xF0F0F0F0F0F0F0F0_u64,
+                    );
                 }
-            };
+                {
+                    let mut up1 = |i: u32, s: u32, l: u64, r: u64| {
+                        if byte_width > i && (k & s > 0) {
+                            x = (((x as u64 & l).wrapping_shl(s))
+                                 | ((x as u64 & r).wrapping_shr(s)))
+                        as Self;
+                        }
+                    };
+
+                    up1(
+                        1,
+                        8,
+                        0x00FF00FF00FF00FF_u64,
+                        0xFF00FF00FF00FF00_u64,
+                    );
+                    up1(
+                        2,
+                        16,
+                        0x0000FFFF0000FFFF_u64,
+                        0xFFFF0000FFFF0000_u64,
+                    );
+                    up1(
+                        4,
+                        32,
+                        0x00000000FFFFFFFF_u64,
+                        0xFFFFFFFF00000000_u64,
+                    );
+                }
+                x
+            }
         }
-    }
+    };
 }
 
 impl_all!(impl_rbit: u8, u16, u32, u64, i8, i16, i32, i64);
